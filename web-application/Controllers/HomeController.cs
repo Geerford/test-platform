@@ -1,29 +1,25 @@
-﻿using System;
+﻿using Application.Interfaces;
+using Core;
+using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
-using System.Web.Mvc;
 
 namespace web_application.Controllers
 {
+    [Route("api/[controller]")]
     public class HomeController : Controller
     {
-        public ActionResult Index()
+        private readonly IUserService service;
+
+        public HomeController(IUserService service)
         {
-            return View();
+            this.service = service;
         }
 
-        public ActionResult About()
+        [HttpGet("[action]")]
+        public IActionResult Index()
         {
-            ViewBag.Message = "Your application description page.";
-
-            return View();
-        }
-
-        public ActionResult Contact()
-        {
-            ViewBag.Message = "Your contact page.";
-
+            List<User> x = service.GetAll().ToList();
             return View();
         }
     }

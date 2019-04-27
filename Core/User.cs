@@ -29,9 +29,9 @@ namespace Core
         public virtual Role Role { get; set; }
 
         public virtual Report Report { get; set; }
-        //
+
         public virtual int? CurrentCuratorID { get; set; }
-        //
+
         public virtual Curator CurrentCurator { get; set; }
 
         public int GroupID { get; set; }

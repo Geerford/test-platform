@@ -26,7 +26,7 @@ namespace Interfaces
 
         IRepository<Section> Section { get; }
 
-        IRepository<Template> QuTemplateestion { get; }
+        IRepository<Template> Template { get; }
 
         IRepository<Test> Test { get; }
 

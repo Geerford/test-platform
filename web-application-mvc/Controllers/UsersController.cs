@@ -1,26 +1,27 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Data.Entity;
-using System.Linq;
-using System.Net;
-using System.Web;
-using System.Web.Mvc;
+﻿using Application.Interfaces;
 using Core;
-using Infrastructure.Data;
+using System.Net;
+using System.Web.Mvc;
 
 namespace web_application_mvc.Controllers
 {
     public class UsersController : Controller
     {
-        private Context db = new Context();
+        IUserService userService;
+        ICuratorService curatorService;
+        IGroupService groupService;
+
+        public UsersController(IUserService userService, ICuratorService curatorService, IGroupService groupService)
+        {
+            this.userService = userService;
+            this.curatorService = curatorService;
+            this.groupService = groupService;
+        }
 
         // GET: Users
         public ActionResult Index()
         {
-            var user = db.User.Include(u => u.CurrentCurator).Include(u => u.Group);
-            var x = user.ToList();
-            return View(user.ToList());
+            return View(userService.GetAll());
         }
 
         // GET: Users/Details/5
@@ -30,7 +31,7 @@ namespace web_application_mvc.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            User user = db.User.Find(id);
+            User user = userService.Get(id);
             if (user == null)
             {
                 return HttpNotFound();
@@ -41,27 +42,23 @@ namespace web_application_mvc.Controllers
         // GET: Users/Create
         public ActionResult Create()
         {
-            ViewBag.CurrentCuratorID = new SelectList(db.Curator, "ID", "ID");
-            ViewBag.GroupID = new SelectList(db.Group, "ID", "Description");
+            ViewBag.CurrentCuratorID = new SelectList(curatorService.GetAll(), "ID", "ID");
+            ViewBag.GroupID = new SelectList(groupService.GetAll(), "ID", "Description");
             return View();
         }
 
         // POST: Users/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "ID,Name,Surname,Midname,Username,Password,Phone,Email,Status,CurrentCuratorID,GroupID")] User user)
         {
             if (ModelState.IsValid)
             {
-                db.User.Add(user);
-                db.SaveChanges();
+                userService.Create(user);
                 return RedirectToAction("Index");
             }
-
-            ViewBag.CurrentCuratorID = new SelectList(db.Curator, "ID", "ID", user.CurrentCuratorID);
-            ViewBag.GroupID = new SelectList(db.Group, "ID", "Description", user.GroupID);
+            ViewBag.CurrentCuratorID = new SelectList(curatorService.GetAll(), "ID", "ID", user.CurrentCuratorID);
+            ViewBag.GroupID = new SelectList(groupService.GetAll(), "ID", "Description", user.GroupID);
             return View(user);
         }
 
@@ -72,31 +69,28 @@ namespace web_application_mvc.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            User user = db.User.Find(id);
+            User user = userService.Get(id);
             if (user == null)
             {
                 return HttpNotFound();
             }
-            ViewBag.CurrentCuratorID = new SelectList(db.Curator, "ID", "ID", user.CurrentCuratorID);
-            ViewBag.GroupID = new SelectList(db.Group, "ID", "Description", user.GroupID);
+            ViewBag.CurrentCuratorID = new SelectList(curatorService.GetAll(), "ID", "ID", user.CurrentCuratorID);
+            ViewBag.GroupID = new SelectList(groupService.GetAll(), "ID", "Description", user.GroupID);
             return View(user);
         }
 
         // POST: Users/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "ID,Name,Surname,Midname,Username,Password,Phone,Email,Status,CurrentCuratorID,GroupID")] User user)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(user).State = EntityState.Modified;
-                db.SaveChanges();
+                userService.Edit(user);
                 return RedirectToAction("Index");
             }
-            ViewBag.CurrentCuratorID = new SelectList(db.Curator, "ID", "ID", user.CurrentCuratorID);
-            ViewBag.GroupID = new SelectList(db.Group, "ID", "Description", user.GroupID);
+            ViewBag.CurrentCuratorID = new SelectList(curatorService.GetAll(), "ID", "ID", user.CurrentCuratorID);
+            ViewBag.GroupID = new SelectList(groupService.GetAll(), "ID", "Description", user.GroupID);
             return View(user);
         }
 
@@ -107,7 +101,7 @@ namespace web_application_mvc.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            User user = db.User.Find(id);
+            User user = userService.Get(id);
             if (user == null)
             {
                 return HttpNotFound();
@@ -120,9 +114,8 @@ namespace web_application_mvc.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            User user = db.User.Find(id);
-            db.User.Remove(user);
-            db.SaveChanges();
+            User user = userService.Get(id);
+            userService.Delete(user);
             return RedirectToAction("Index");
         }
 
@@ -130,7 +123,9 @@ namespace web_application_mvc.Controllers
         {
             if (disposing)
             {
-                db.Dispose();
+                userService.Dispose();
+                curatorService.Dispose();
+                groupService.Dispose();
             }
             base.Dispose(disposing);
         }

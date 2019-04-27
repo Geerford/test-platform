@@ -165,7 +165,7 @@ namespace Infrastructure.Data
             }
         }
 
-        public IRepository<Template> QuTemplateestion
+        public IRepository<Template> Template
         {
             get
             {

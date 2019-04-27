@@ -25,6 +25,19 @@ namespace web_application_mvc.Ninject
         }
         private void AddBindings()
         {
+            kernel.Bind<IActivityService>().To<ActivityService>();
+            kernel.Bind<IAnswerService>().To<AnswerService>();
+            kernel.Bind<ICourseService>().To<CourseService>();
+            kernel.Bind<ICuratorService>().To<CuratorService>();
+            kernel.Bind<IGradeService>().To<GradeService>();
+            kernel.Bind<IGroupService>().To<GroupService>();
+            kernel.Bind<IQuestionService>().To<QuestionService>();
+            kernel.Bind<IReportService>().To<ReportService>();
+            kernel.Bind<IRoleService>().To<RoleService>();
+            kernel.Bind<ISectionService>().To<SectionService>();
+            kernel.Bind<ITemplateService>().To<TemplateService>();
+            kernel.Bind<ITestService>().To<TestService>();
+            kernel.Bind<ITypeService>().To<TypeService>();
             kernel.Bind<IUserService>().To<UserService>();
         }
     }

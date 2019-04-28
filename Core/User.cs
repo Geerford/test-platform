@@ -14,19 +14,19 @@ namespace Core
 
         public string Midname { get; set; }
 
-        public string Username { get; set; }
+        public string Email { get; set; }
 
         public string Password { get; set; }
 
         public string Phone { get; set; }
 
-        public string Email { get; set; }
-
         public bool Status { get; set; } // IsActive
 
         public virtual Curator Curator { get; set; }
+        
+        public int RoleID { get; set; }
 
-        public virtual Role Role { get; set; }
+        public Role Role { get; set; }
 
         public virtual Report Report { get; set; }
 
@@ -34,9 +34,9 @@ namespace Core
 
         public virtual Curator CurrentCurator { get; set; }
 
-        public int GroupID { get; set; }
+        public virtual int? GroupID { get; set; }
 
-        public Group Group { get; set; }
+        public virtual Group Group { get; set; }
 
         public ICollection<Activity> Activities { get; set; }
 

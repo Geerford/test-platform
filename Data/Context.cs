@@ -48,10 +48,6 @@ namespace Infrastructure.Data
 
             #region One to One
             modelBuilder.Entity<User>()
-                        .HasRequired(u => u.Role)
-                        .WithRequiredPrincipal(r => r.User);
-
-            modelBuilder.Entity<User>()
                         .HasRequired(u => u.Curator)
                         .WithRequiredPrincipal(c => c.User);
             
@@ -62,12 +58,17 @@ namespace Infrastructure.Data
 
             #region One to Many
             modelBuilder.Entity<User>()
+                        .HasRequired(u => u.Role)
+                        .WithMany(r => r.Users)
+                        .HasForeignKey(u => u.RoleID);
+
+            modelBuilder.Entity<User>()
                         .HasOptional(u => u.CurrentCurator)
                         .WithMany(c => c.Students)
                         .HasForeignKey(u => u.CurrentCuratorID);
 
             modelBuilder.Entity<User>()
-                        .HasRequired(u => u.Group)
+                        .HasOptional(u => u.Group)
                         .WithMany(g => g.Students)
                         .HasForeignKey(u => u.GroupID);
 

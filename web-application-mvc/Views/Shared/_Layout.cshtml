@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@ViewBag.Title - My ASP.NET Application</title>
+    <title>Призма - обучающая система</title>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
 </head>
@@ -25,6 +25,7 @@
                     <li>@Html.ActionLink("Отчеты", "Statistics", "Home")</li>
                     <li>@Html.ActionLink("Профиль", "Profile", "Home")</li>
                 </ul>
+                @Html.Partial("_LoginPartial")
             </div>
         </div>
     </div>
@@ -32,7 +33,9 @@
         @RenderBody()
         <hr />
         <footer>
-            <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
+            <div class="footer-text">
+                &copy; @DateTime.Now.Year - <a href="mailto:geerkus@gmail.com">nevdev</a>
+            </div>
         </footer>
     </div>
 

@@ -19,6 +19,6 @@ namespace Core
 
         public DateTime End { get; set; }
 
-        public ICollection<User> Students { get; set; }
+        public virtual ICollection<User> Students { get; set; }
     }
 }

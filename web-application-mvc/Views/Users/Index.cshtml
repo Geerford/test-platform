@@ -18,6 +18,9 @@
             @Html.DisplayNameFor(model => model.Group.Description)
         </th>
         <th>
+            @Html.DisplayNameFor(model => model.Role.Description)
+        </th>
+        <th>
             @Html.DisplayNameFor(model => model.Name)
         </th>
         <th>
@@ -27,16 +30,13 @@
             @Html.DisplayNameFor(model => model.Midname)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Username)
+            @Html.DisplayNameFor(model => model.Email)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.Password)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.Phone)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Email)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.Status)
@@ -53,6 +53,9 @@
             @Html.DisplayFor(modelItem => item.Group.Description)
         </td>
         <td>
+            @Html.DisplayFor(modelItem => item.Role.Description)
+        </td>
+        <td>
             @Html.DisplayFor(modelItem => item.Name)
         </td>
         <td>
@@ -62,16 +65,13 @@
             @Html.DisplayFor(modelItem => item.Midname)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Username)
+            @Html.DisplayFor(modelItem => item.Email)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.Password)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.Phone)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Email)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.Status)

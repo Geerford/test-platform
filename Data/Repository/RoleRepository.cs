@@ -31,13 +31,13 @@ namespace Infrastructure.Data.Repository
         public Role Get(int id)
         {
             return Database.Role.Where(x => x.ID == id)
-                                .Include(x => x.User)
+                                .Include(x => x.Users)
                                 .FirstOrDefault();
         }
 
         public IEnumerable<Role> GetAll()
         {
-            return Database.Role.Include(x => x.User);
+            return Database.Role.Include(x => x.Users);
         }
 
         public void Update(Role item)

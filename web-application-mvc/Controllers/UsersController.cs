@@ -1,7 +1,7 @@
-﻿using Application.Interfaces;
-using Core;
-using System.Net;
+﻿using System.Net;
 using System.Web.Mvc;
+using Application.Interfaces;
+using Core;
 
 namespace web_application_mvc.Controllers
 {
@@ -10,12 +10,15 @@ namespace web_application_mvc.Controllers
         IUserService userService;
         ICuratorService curatorService;
         IGroupService groupService;
+        IRoleService roleService;
 
-        public UsersController(IUserService userService, ICuratorService curatorService, IGroupService groupService)
+        public UsersController(IUserService userService, ICuratorService curatorService, IGroupService groupService,
+            IRoleService roleService)
         {
             this.userService = userService;
             this.curatorService = curatorService;
             this.groupService = groupService;
+            this.roleService = roleService;
         }
 
         // GET: Users
@@ -44,13 +47,14 @@ namespace web_application_mvc.Controllers
         {
             ViewBag.CurrentCuratorID = new SelectList(curatorService.GetAll(), "ID", "ID");
             ViewBag.GroupID = new SelectList(groupService.GetAll(), "ID", "Description");
+            ViewBag.RoleID = new SelectList(roleService.GetAll(), "ID", "Description");
             return View();
         }
 
         // POST: Users/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ID,Name,Surname,Midname,Username,Password,Phone,Email,Status,CurrentCuratorID,GroupID")] User user)
+        public ActionResult Create([Bind(Include = "ID,Name,Surname,Midname,Email,Password,Phone,Status,RoleID,CurrentCuratorID,GroupID")] User user)
         {
             if (ModelState.IsValid)
             {
@@ -59,6 +63,7 @@ namespace web_application_mvc.Controllers
             }
             ViewBag.CurrentCuratorID = new SelectList(curatorService.GetAll(), "ID", "ID", user.CurrentCuratorID);
             ViewBag.GroupID = new SelectList(groupService.GetAll(), "ID", "Description", user.GroupID);
+            ViewBag.RoleID = new SelectList(roleService.GetAll(), "ID", "Description", user.RoleID);
             return View(user);
         }
 
@@ -76,13 +81,14 @@ namespace web_application_mvc.Controllers
             }
             ViewBag.CurrentCuratorID = new SelectList(curatorService.GetAll(), "ID", "ID", user.CurrentCuratorID);
             ViewBag.GroupID = new SelectList(groupService.GetAll(), "ID", "Description", user.GroupID);
+            ViewBag.RoleID = new SelectList(roleService.GetAll(), "ID", "Description", user.RoleID);
             return View(user);
         }
 
         // POST: Users/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ID,Name,Surname,Midname,Username,Password,Phone,Email,Status,CurrentCuratorID,GroupID")] User user)
+        public ActionResult Edit([Bind(Include = "ID,Name,Surname,Midname,Email,Password,Phone,Status,RoleID,CurrentCuratorID,GroupID")] User user)
         {
             if (ModelState.IsValid)
             {
@@ -91,6 +97,7 @@ namespace web_application_mvc.Controllers
             }
             ViewBag.CurrentCuratorID = new SelectList(curatorService.GetAll(), "ID", "ID", user.CurrentCuratorID);
             ViewBag.GroupID = new SelectList(groupService.GetAll(), "ID", "Description", user.GroupID);
+            ViewBag.RoleID = new SelectList(roleService.GetAll(), "ID", "Description", user.RoleID);
             return View(user);
         }
 
@@ -126,6 +133,7 @@ namespace web_application_mvc.Controllers
                 userService.Dispose();
                 curatorService.Dispose();
                 groupService.Dispose();
+                roleService.Dispose();
             }
             base.Dispose(disposing);
         }

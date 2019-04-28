@@ -1,0 +1,21 @@
+﻿@model Core.User
+
+<h1>Профиль</h1>
+<ul>
+    <li>
+        @Model.Name
+    </li>
+    <li>
+        @Model.Surname
+    </li>
+    <li>
+        @Model.Midname
+    </li>
+    <li>
+        @Model.Email
+    </li>
+    <li>
+        @Model.Phone
+    </li>
+</ul>
+@Html.Action("Admin")

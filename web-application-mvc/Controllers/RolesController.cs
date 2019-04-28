@@ -8,12 +8,10 @@ namespace web_application_mvc.Controllers
     public class RolesController : Controller
     {
         IRoleService roleService;
-        IUserService userService;
 
-        public RolesController(IRoleService roleService, IUserService userService)
+        public RolesController(IRoleService roleService)
         {
             this.roleService = roleService;
-            this.userService = userService;
         }
 
         // GET: Roles
@@ -40,7 +38,6 @@ namespace web_application_mvc.Controllers
         // GET: Roles/Create
         public ActionResult Create()
         {
-            ViewBag.ID = new SelectList(userService.GetAll(), "ID", "Name");
             return View();
         }
 
@@ -54,7 +51,7 @@ namespace web_application_mvc.Controllers
                 roleService.Create(role);
                 return RedirectToAction("Index");
             }
-            ViewBag.ID = new SelectList(userService.GetAll(), "ID", "Name", role.ID);
+
             return View(role);
         }
 
@@ -70,7 +67,6 @@ namespace web_application_mvc.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.ID = new SelectList(userService.GetAll(), "ID", "Name", role.ID);
             return View(role);
         }
 
@@ -84,7 +80,6 @@ namespace web_application_mvc.Controllers
                 roleService.Edit(role);
                 return RedirectToAction("Index");
             }
-            ViewBag.ID = new SelectList(userService.GetAll(), "ID", "Name", role.ID);
             return View(role);
         }
 
@@ -118,7 +113,6 @@ namespace web_application_mvc.Controllers
             if (disposing)
             {
                 roleService.Dispose();
-                userService.Dispose();
             }
             base.Dispose(disposing);
         }

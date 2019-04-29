@@ -27,8 +27,8 @@ namespace web_application_mvc.Controllers
         [HttpGet]
         public ActionResult Index()
         {
-            QuizVM quiz = new QuizVM();
-            quiz.ListOfQuizz = testService.GetAll().Select(q => new SelectListItem
+            TestVM quiz = new TestVM();
+            quiz.Questions = testService.GetAll().Select(q => new SelectListItem
             {
                 Text = q.Title,
                 Value = q.ID.ToString()
@@ -39,12 +39,12 @@ namespace web_application_mvc.Controllers
         }
 
         [HttpPost]
-        public ActionResult Index(QuizVM quiz)
+        public ActionResult Index(TestVM quiz)
         {
-            QuizVM quizSelected = testService.GetAll().Where(t => t.ID == quiz.QuizID).Select(q => new QuizVM
+            TestVM quizSelected = testService.GetAll().Where(t => t.ID == quiz.ID).Select(q => new TestVM
             {
-                QuizID = q.ID,
-                QuizName = q.Title,
+                ID = q.ID,
+                Name = q.Title,
 
             }).FirstOrDefault();
 
@@ -61,12 +61,12 @@ namespace web_application_mvc.Controllers
         [HttpGet] 
         public ActionResult Work()
         {
-            QuizVM quizSelected = Session["SelectedQuiz"] as QuizVM;
+            TestVM quizSelected = Session["SelectedQuiz"] as TestVM;
             IQueryable<QuestionVM> questions = null;
 
             if (quizSelected != null)
             {
-                questions = questionService.GetAll().Where(x => x.TestID == quizSelected.QuizID)
+                questions = questionService.GetAll().Where(x => x.TestID == quizSelected.ID)
                     .Select(q => new QuestionVM
                     {
                         QuestionID = q.ID,
@@ -81,37 +81,36 @@ namespace web_application_mvc.Controllers
                 
 
             }
-            var y = questions.ToList(); //
             return View(questions);
         }
 
         [HttpPost]
-        public ActionResult Work(List<QuizAnswersVM> resultQuiz)
+        public ActionResult Work(List<AnswersVM> resultQuiz)
         {
-            List<QuizAnswersVM> finalResultQuiz = new List<QuizAnswersVM>();
+            List<AnswersVM> finalResultQuiz = new List<AnswersVM>();
 
-            foreach (QuizAnswersVM answser in resultQuiz)
+            foreach (AnswersVM answser in resultQuiz)
             {
-                if(answser.AnswerQ != null)
+                if(answser.Answer != null)
                 {
-                    QuizAnswersVM result = questionService.GetAll().Where(x => x.ID == answser.QuestionID)
-                        .FirstOrDefault().Answers.Where(d => d.Correct).Select(a => new QuizAnswersVM
+                    AnswersVM result = questionService.GetAll().Where(x => x.ID == answser.QuestionID)
+                        .FirstOrDefault().Answers.Where(d => d.Correct).Select(a => new AnswersVM
                     {
                         QuestionID = a.ID,
-                        AnswerQ = a.Desctiption,
-                        isCorrect = a.Desctiption.Equals(answser.AnswerQ)
+                        Answer = a.Desctiption,
+                        IsCorrect = a.Desctiption.Equals(answser.Answer)
                     }).FirstOrDefault();
 
                     finalResultQuiz.Add(result);
                 }
                 else
                 {
-                    QuizAnswersVM result = questionService.GetAll().Where(x => x.ID == answser.QuestionID)
-                    .FirstOrDefault().Answers.Where(d => d.Correct).Select(a => new QuizAnswersVM
+                    AnswersVM result = questionService.GetAll().Where(x => x.ID == answser.QuestionID)
+                    .FirstOrDefault().Answers.Where(d => d.Correct).Select(a => new AnswersVM
                     {
                         QuestionID = a.ID,
-                        AnswerQ = a.Desctiption,
-                        isCorrect = false
+                        Answer = a.Desctiption,
+                        IsCorrect = false
                     }).FirstOrDefault();
 
                     finalResultQuiz.Add(result);
@@ -121,7 +120,7 @@ namespace web_application_mvc.Controllers
             foreach(var item in finalResultQuiz)
             {
                 ++count;
-                if (item.isCorrect)
+                if (item.IsCorrect)
                 {
                     ++correct;
                 }
@@ -132,12 +131,10 @@ namespace web_application_mvc.Controllers
                 var identity = (ClaimsIdentity)User.Identity;
                 var id = identity.Claims.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier).Value;
                 var user = userService.Get(int.Parse(id));
-                double mark = correct / count;
+                double mark = (double)correct / count;
                 var grade = new Core.Grade
                 {
-                    //Test = question.Test,
                     TestID = question.TestID,
-                   // User = user,
                     UserID = user.ID,
                     Value = mark
                 };

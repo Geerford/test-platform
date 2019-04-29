@@ -15,8 +15,10 @@ namespace Core
 
         public string Department { get; set; }
 
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:yyyy-MM-dd}")]
         public DateTime Start { get; set; }
 
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:yyyy-MM-dd}")]
         public DateTime End { get; set; }
 
         public virtual ICollection<User> Students { get; set; }

@@ -50,6 +50,15 @@
             @Html.DisplayFor(model => model.End)
         </dd>
 
+        <dt>
+            @Html.DisplayNameFor(model => model.Students)
+        </dt>
+        @foreach (Core.User item in ViewBag.Students)
+        {
+            <dd>
+                @Html.ActionLink(item.Surname + " " + item.Name, "Details", "Users", new { id = item.ID}, new { })
+            </dd>
+        }
     </dl>
 </div>
 <p>

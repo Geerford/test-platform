@@ -49,6 +49,7 @@
               }
             <span id="countQuections" style="display:none;">@count</span>
             <button type="button" id="SubmitQuiz" class="btn btn-default" style="margin-top: 10px;"><span class="glyphicon glyphicon-ok"></span> Завершить </button>
+            
       
 
       }
@@ -67,7 +68,6 @@
 
                 //count Questions
                 var sel = $('#countQuections').text();
-
                 console.log(sel);
 
                 var resultQuiz = [], countQuestion = parseInt(sel), question = {}, j = 1;
@@ -78,7 +78,7 @@
                         question = {
                             QuestionID: $('#ID_Q' + i).text(),
                             QuestionText: $('#Q' + i).text(),
-                            AnswerQ: $('input[name=inlineRadioOptions' + i + ']:checked').val()
+                            Answer: $('input[name=inlineRadioOptions' + i + ']:checked').val()
                         }
                         resultQuiz.push(question);
                     }
@@ -86,7 +86,7 @@
                         question = {
                             QuestionID: $('#ID_Q' + i).text(),
                             QuestionText: $('#Q' + i).text(),
-                            AnswerQ: document.getElementById('inlineText' + countInput).value
+                            Answer: document.getElementById('inlineText' + countInput).value
                         };
                         ++countInput;
                         resultQuiz.push(question);
@@ -95,25 +95,21 @@
                 }
 
                 $.ajax({
-
                     type: 'POST',
                     url: '@Url.Action("Work", "Test")',
                     data: { resultQuiz },
-
                     success: function (response) {
-
                         if (response.result.length > 0)
                         {
                             for(var i = 0; i <response.result.length; i++ )
                             {
-                                if(response.result[i].isCorrect == true)
+                                if(response.result[i].IsCorrect == true)
                                 {
-
                                     $('#AnsQ' + j).html('<div class="alert alert-success alert-test" role="alert"><span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span> Верный ответ</div>');
                                 }
                                 else
                                 {
-                                    $('#AnsQ' + j).html('<div class="alert alert-danger alert-test" role="alert"> <span class="glyphicon glyphicon-thumbs-down" aria-hidden="true"></span> Неверный ответ - Правильный ответ: <b>' + response.result[i].AnswerQ + '</b></div>');
+                                    $('#AnsQ' + j).html('<div class="alert alert-danger alert-test" role="alert"> <span class="glyphicon glyphicon-thumbs-down" aria-hidden="true"></span> Неверный ответ - Правильный ответ: <b>' + response.result[i].Answer + '</b></div>');
                                 }
                                 j++;
                             }
@@ -123,22 +119,17 @@
                             alert("Something Wrong");
                         }
 
-
-                        //console.log(response.result.length);
+                        document.getElementById('SubmitQuiz').style.visibility = 'hidden';
+                        setTimeout(function () {
+                            window.location = "@Url.Action("Index")";
+                        }, 15000);
 
                     },
                     error: function (response) {
-
                     }
                 });
-
                 console.log(resultQuiz);
-
             });
-
-
-
         });
-
     </script>
 }

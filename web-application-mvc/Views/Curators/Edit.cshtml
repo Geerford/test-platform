@@ -17,6 +17,25 @@
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         @Html.HiddenFor(model => model.ID)
 
+        @foreach (Core.User item in ViewBag.Students)
+        {
+            <div style="padding-right:15px;margin-left:200px">
+                <input id="@item.ID" type="checkbox" name="students" value="@item.ID" checked />
+                <label for="@item.ID">
+                    @Html.ActionLink(item.Surname + " " + item.Name, "Details", "Users", new { id = item.ID}, new { })
+                </label>
+            </div>
+        }
+        @foreach (Core.User item in ViewBag.Users)
+        {
+            <div style="padding-right:15px;margin-left:200px">
+                <input id="@item.ID" type="checkbox" name="users" value="@item.ID" />
+                <label for="@item.ID">
+                    @Html.ActionLink(item.Surname + " " + item.Name, "Details", "Users", new { id = item.ID }, new { })
+                </label>
+            </div>
+        }
+
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
                 <input type="submit" value="Save" class="btn btn-default" />

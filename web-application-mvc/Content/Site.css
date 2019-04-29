@@ -22,3 +22,21 @@ select,
 textarea {
     max-width: 280px;
 }
+
+.alert-test{
+    padding: 0 !important;
+    margin-bottom: 0 !important;
+}
+
+.test{
+    margin: 0 auto;
+}
+
+.question-test {
+    border: 1px solid #bdbdbd;
+    width: 100%;
+    border-radius: 4px;
+    margin-top: 40px;
+    background-color: #f0ffff;
+    padding: 8px;
+}

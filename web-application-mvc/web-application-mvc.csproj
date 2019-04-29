@@ -200,6 +200,7 @@
     <Compile Include="Controllers\RolesController.cs" />
     <Compile Include="Controllers\SectionsController.cs" />
     <Compile Include="Controllers\TemplatesController.cs" />
+    <Compile Include="Controllers\TestController.cs" />
     <Compile Include="Controllers\TestsController.cs" />
     <Compile Include="Controllers\TypesController.cs" />
     <Compile Include="Controllers\UsersController.cs" />
@@ -208,6 +209,9 @@
     </Compile>
     <Compile Include="Models\LoginViewModel.cs" />
     <Compile Include="Models\RegisterViewModel.cs" />
+    <Compile Include="Models\QuestionViewModel.cs" />
+    <Compile Include="Models\TestQuestionViewModel.cs" />
+    <Compile Include="Models\TestViewModel.cs" />
     <Compile Include="Ninject\NinjectDependencyResolver.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -324,6 +328,9 @@
     <Content Include="Views\Roles\Details.cshtml" />
     <Content Include="Views\Roles\Edit.cshtml" />
     <Content Include="Views\Roles\Index.cshtml" />
+    <Content Include="Views\Profile\Edit.cshtml" />
+    <Content Include="Views\Test\Work.cshtml" />
+    <Content Include="Views\Test\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -1,0 +1,144 @@
+﻿@model IQueryable<web_application_mvc.Models.QuestionVM>
+
+@{ 
+    int count = 1, countR = 0, countT = 0;
+}
+
+
+<div class="container">
+    <div class="test">
+      @if (Model != null && Model.Any())
+      {
+
+          foreach (var question in Model)
+          {
+                <div class="question">
+
+                    <div class="Question" style="padding: 2%;">
+                        <span class="label label-warning"> @string.Format("{0}{1}.", "Q", count)</span>
+                        <span id="@string.Format("{0}{1}", "ID_Q", count)" style="display:none;">@question.QuestionID</span>
+                        <span id="@string.Format("{0}{1}", "Type_Q", count)" style="display:none;">@question.QuestionType</span>
+                        <p style="display: inline; padding: 2%;" id="@string.Format("{0}{1}", "Q", count)">@question.QuestionText</p>
+                    </div>
+
+                    <div class="Choices" style="margin-left: 8%;">
+                        @if (question.QuestionType.Equals("Выбор ответа"))
+                        {
+                            foreach (var choice in question.Choices)
+                            {
+                                <label class="radio-inline">
+                                    <input type="radio" name="@string.Format("{0}{1}", "inlineRadioOptions", count)" id="@string.Format("{0}{1}", "inlineRadio", countR)" value="@choice.ChoiceText" style="margin-left: -16px;"> @choice.ChoiceText
+                                </label><br />
+                                countR++;
+                            }
+                        }
+                        else
+                        {
+                            <label class="radio-inline">
+                                <input class="form-control" type="text" name="@string.Format("{0}{1}", "inlineTextOptions", count)" id="@string.Format("{0}{1}", "inlineText", countT)" value="" style="margin-left: -16px;">
+                            </label><br />
+                            countT++;
+                        }
+                    </div> <!--END Choices-->
+                 
+                <div id="@string.Format("{0}{1}{2}", "Ans","Q", count)">
+                </div>
+
+                </div> <!-- END BlockQ -->
+                  count++;
+              }
+            <span id="countQuections" style="display:none;">@count</span>
+            <button type="button" id="SubmitQuiz" class="btn btn-default" style="margin-top: 10px;"><span class="glyphicon glyphicon-ok"></span> Завершить </button>
+      
+
+      }
+
+    </div> <!-- END QUIZ -->
+
+</div> <!-- END CONTAINER -->
+
+@section MyScritps
+{
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+
+            $('#SubmitQuiz').on('click', function () {
+
+                //count Questions
+                var sel = $('#countQuections').text();
+
+                console.log(sel);
+
+                var resultQuiz = [], countQuestion = parseInt(sel), question = {}, j = 1;
+
+                var countInput = 0;
+                for (var i = 1; i < countQuestion; i++) {
+                    if ($('#Type_Q' + i).text() === "Выбор ответа") {
+                        question = {
+                            QuestionID: $('#ID_Q' + i).text(),
+                            QuestionText: $('#Q' + i).text(),
+                            AnswerQ: $('input[name=inlineRadioOptions' + i + ']:checked').val()
+                        }
+                        resultQuiz.push(question);
+                    }
+                    else {
+                        question = {
+                            QuestionID: $('#ID_Q' + i).text(),
+                            QuestionText: $('#Q' + i).text(),
+                            AnswerQ: document.getElementById('inlineText' + countInput).value
+                        };
+                        ++countInput;
+                        resultQuiz.push(question);
+                    }
+                    console.log(countInput);
+                }
+
+                $.ajax({
+
+                    type: 'POST',
+                    url: '@Url.Action("Work", "Test")',
+                    data: { resultQuiz },
+
+                    success: function (response) {
+
+                        if (response.result.length > 0)
+                        {
+                            for(var i = 0; i <response.result.length; i++ )
+                            {
+                                if(response.result[i].isCorrect == true)
+                                {
+
+                                    $('#AnsQ' + j).html('<div class="alert alert-success alert-test" role="alert"><span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span> Верный ответ</div>');
+                                }
+                                else
+                                {
+                                    $('#AnsQ' + j).html('<div class="alert alert-danger alert-test" role="alert"> <span class="glyphicon glyphicon-thumbs-down" aria-hidden="true"></span> Неверный ответ - Правильный ответ: <b>' + response.result[i].AnswerQ + '</b></div>');
+                                }
+                                j++;
+                            }
+                        }
+                        else
+                        {
+                            alert("Something Wrong");
+                        }
+
+
+                        //console.log(response.result.length);
+
+                    },
+                    error: function (response) {
+
+                    }
+                });
+
+                console.log(resultQuiz);
+
+            });
+
+
+
+        });
+
+    </script>
+}

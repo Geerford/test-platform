@@ -32,16 +32,20 @@ namespace Infrastructure.Data.Repository
         {
             return Database.Test.Where(x => x.ID == id)
                                 .Include(x => x.Grades)
-                                .Include(x => x.Questions)
+                                .Include(x => x.Questions.Select(y => y.Answers))
+                                .Include(x => x.Questions.Select(y => y.Type))
                                 .Include(x => x.Section)
+                                .Include(x => x.Section.Courses)
                                 .FirstOrDefault();
         }
 
         public IEnumerable<Test> GetAll()
         {
             return Database.Test.Include(x => x.Grades)
-                                .Include(x => x.Questions)
-                                .Include(x => x.Section);
+                                .Include(x => x.Questions.Select(y => y.Answers))
+                                .Include(x => x.Questions.Select(y => y.Type))
+                                .Include(x => x.Section)
+                                .Include(x => x.Section.Courses);
         }
 
         public void Update(Test item)

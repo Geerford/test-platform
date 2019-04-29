@@ -33,13 +33,15 @@ namespace Infrastructure.Data.Repository
             return Database.Question.Where(x => x.ID == id)
                                     .Include(x => x.Test)
                                     .Include(x => x.Type)
+                                    .Include(x => x.Answers)
                                     .FirstOrDefault();
         }
 
         public IEnumerable<Question> GetAll()
         {
             return Database.Question.Include(x => x.Test)
-                                    .Include(x => x.Type);
+                                    .Include(x => x.Type)
+                                    .Include(x => x.Answers);
         }
 
         public void Update(Question item)

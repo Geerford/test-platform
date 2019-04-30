@@ -34,6 +34,8 @@ namespace Interfaces
 
         IRepository<User> User { get; }
 
+        IMMRepository<GroupSection> GroupSection { get; }
+
         void Save();
     }
 }

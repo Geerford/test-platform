@@ -40,6 +40,8 @@ namespace Infrastructure.Data
 
         private UserRepository UserRepository;
 
+        private GroupSectionRepository GroupSectionRepository;
+
         public UnitOfWork(string connectionString)
         {
             Database = new Context(connectionString);
@@ -210,6 +212,18 @@ namespace Infrastructure.Data
                     UserRepository = new UserRepository(Database);
                 }
                 return UserRepository;
+            }
+        }
+
+        public IMMRepository<GroupSection> GroupSection
+        {
+            get
+            {
+                if(GroupSectionRepository == null)
+                {
+                    GroupSectionRepository = new GroupSectionRepository(Database);
+                }
+                return GroupSectionRepository;
             }
         }
 

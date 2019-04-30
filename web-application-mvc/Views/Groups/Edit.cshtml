@@ -43,31 +43,60 @@
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.End, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.Label("Дата окончания практики", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.EditorFor(model => model.End, new { htmlAttributes = new { @class = "form-control", @type = "date" } })
                 @Html.ValidationMessageFor(model => model.End, "", new { @class = "text-danger" })
             </div>
         </div>
 
-        @foreach (Core.User item in ViewBag.Students)
-        {
-            <div style="padding-right:15px;margin-left:200px">
-                <input id="@item.ID" type="checkbox" name="students" value="@item.ID" checked />
-                <label for="@item.ID">
-                    @Html.ActionLink(item.Surname + " " + item.Name, "Details", "Users", new { id = item.ID}, new { })
-                </label>
+        <div class="form-group">
+            @Html.Label("Студенты", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @foreach (Core.User item in ViewBag.Students)
+                {
+                    <div style="padding-right:15px;margin-left:200px">
+                        <input id="@item.ID" type="checkbox" name="students" value="@item.ID" checked />
+                        <label for="@item.ID">
+                            @Html.ActionLink(item.Surname + " " + item.Name, "Details", "Users", new { id = item.ID }, new { })
+                        </label>
+                    </div>
+                }
+                @foreach (Core.User item in ViewBag.Users)
+                {
+                    <div style="padding-right:15px;margin-left:200px">
+                        <input id="@item.ID" type="checkbox" name="users" value="@item.ID" />
+                        <label for="@item.ID">
+                            @Html.ActionLink(item.Surname + " " + item.Name, "Details", "Users", new { id = item.ID }, new { })
+                        </label>
+                    </div>
+                }
             </div>
-        }
-        @foreach (Core.User item in ViewBag.Users)
-        {
-            <div style="padding-right:15px;margin-left:200px">
-                <input id="@item.ID" type="checkbox" name="users" value="@item.ID" />
-                <label for="@item.ID">
-                    @Html.ActionLink(item.Surname + " " + item.Name, "Details", "Users", new { id = item.ID }, new { })
-                </label>
+        </div>
+
+        <div class="form-group">
+            @Html.Label("Доступ к разделам", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @foreach (Core.Section item in ViewBag.Sections)
+                {
+                    <div style="padding-right:15px;margin-left:200px">
+                        <input id="@item.ID" type="checkbox" name="sections" value="@item.ID" checked />
+                        <label for="@item.ID">
+                            @Html.ActionLink(item.Description, "Details", "Section", new { id = item.ID }, new { })
+                        </label>
+                    </div>
+                }
+                @foreach (Core.Section item in ViewBag.SectionsNew)
+                {
+                    <div style="padding-right:15px;margin-left:200px">
+                        <input id="@item.ID" type="checkbox" name="sectionsnew" value="@item.ID" />
+                        <label for="@item.ID">
+                            @Html.ActionLink(item.Description, "Details", "Section", new { id = item.ID }, new { })
+                        </label>
+                    </div>
+                }
             </div>
-        }
+        </div>
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">

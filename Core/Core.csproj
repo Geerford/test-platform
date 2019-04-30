@@ -56,6 +56,7 @@
     <Compile Include="Curator.cs" />
     <Compile Include="Grade.cs" />
     <Compile Include="Group.cs" />
+    <Compile Include="GroupSection.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Question.cs" />
     <Compile Include="Report.cs" />

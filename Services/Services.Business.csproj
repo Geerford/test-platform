@@ -51,6 +51,7 @@
     <Compile Include="Service\CourseService.cs" />
     <Compile Include="Service\CuratorService.cs" />
     <Compile Include="Service\GradeService.cs" />
+    <Compile Include="Service\GroupSectionService.cs" />
     <Compile Include="Service\GroupService.cs" />
     <Compile Include="Service\QuestionService.cs" />
     <Compile Include="Service\ReportService.cs" />

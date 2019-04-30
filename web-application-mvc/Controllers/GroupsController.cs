@@ -1,9 +1,11 @@
 ﻿using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Net;
 using System.Web.Mvc;
 using Application.Interfaces;
 using Core;
+using Infrastructure.Data;
 
 namespace web_application_mvc.Controllers
 {
@@ -11,11 +13,16 @@ namespace web_application_mvc.Controllers
     {
         IGroupService groupService;
         IUserService userService;
+        ISectionService sectionService;
+        IGroupSectionService groupSectionService;
 
-        public GroupsController(IGroupService groupService, IUserService userService)
+        public GroupsController(IGroupService groupService, IUserService userService,
+            ISectionService sectionService, IGroupSectionService groupSectionService)
         {
             this.groupService = groupService;
             this.userService = userService;
+            this.sectionService = sectionService;
+            this.groupSectionService = groupSectionService;
         }
 
         // GET: Groups
@@ -37,6 +44,12 @@ namespace web_application_mvc.Controllers
                 return HttpNotFound();
             }
             ViewBag.Students = group.Students;
+            List<Section> sections = new List<Section>();
+            foreach(var item in groupSectionService.GetAll().Where(x => x.GroupID == group.ID))
+            {
+                sections.Add(sectionService.Get(item.SectionID));
+            }
+            ViewBag.Sections = sections;
             return View(group);
         }
 
@@ -44,6 +57,7 @@ namespace web_application_mvc.Controllers
         public ActionResult Create()
         {
             ViewBag.Students = userService.GetAll().Where(x => x.GroupID == null).ToList();
+            ViewBag.Sections = sectionService.GetAll().ToList();
             return View();
         }
 
@@ -58,18 +72,37 @@ namespace web_application_mvc.Controllers
             }
             if (ModelState.IsValid)
             {
-                List<string> students = new List<string>();
+                List<string> students = new List<string>(), sections = new List<string>();
                 if (formval["students"] != null)
                 {
                     students = formval["students"].Split(',').ToList();
                 }
-                if(students.Count > 0)
+                if (formval["sections"] != null)
                 {
-                    foreach (var studentID in formval["students"].Split(',').ToList())
+                    sections = formval["sections"].Split(',').ToList();
+                }
+                group.Students = new List<User>();
+                if (students.Count > 0 || sections.Count > 0)
+                {
+                    if(students.Count > 0)
                     {
-                        User user = userService.Get(int.Parse(studentID));
-                        user.Group = group;
-                        userService.Edit(user);
+                        foreach (var studentID in students)
+                        {
+                            User user = userService.Get(int.Parse(studentID));
+                            user.Group = group;
+                            userService.Edit(user);
+                        }
+                    }
+                    if(sections.Count > 0)
+                    {
+                        foreach (var sectionID in sections)
+                        {
+                            groupSectionService.Create(new GroupSection
+                            {
+                                GroupID = group.ID,
+                                SectionID = int.Parse(sectionID)
+                            });
+                        }
                     }
                 }
                 else
@@ -79,6 +112,7 @@ namespace web_application_mvc.Controllers
                 return RedirectToAction("Index");
             }
             ViewBag.Students = userService.GetAll().Where(x => x.GroupID == null).ToList();
+            ViewBag.Sections = sectionService.GetAll().ToList();
             return View(group);
         }
 
@@ -96,6 +130,27 @@ namespace web_application_mvc.Controllers
             }
             ViewBag.Users = userService.GetAll().Where(x => x.GroupID == null).ToList();
             ViewBag.Students = group.Students;
+
+            List<Section> sectionsSelected = new List<Section>(), sectionsNotSelected = sectionService.GetAll().ToList();
+            foreach (var item in groupSectionService.GetAll().Where(x => x.GroupID == group.ID))
+            {
+                sectionsSelected.Add(sectionService.Get(item.SectionID));
+                sectionsNotSelected.Remove(sectionsNotSelected.Where(x => x.ID == item.SectionID).FirstOrDefault());
+            }
+            /*
+            foreach (var item in sectionService.GetAll())
+            {
+                for (int i = 0; i < notSelected.Count; i++)
+                {
+                    if (item.ID == i)
+                    {
+                        sectionsNotSelected.Add(item);
+                        notSelected.Remove(notSelected[i]);
+                    }
+                }
+            }*/
+            ViewBag.Sections = sectionsSelected;
+            ViewBag.SectionsNew = sectionsNotSelected;
             return View(group);
         }
 
@@ -106,7 +161,8 @@ namespace web_application_mvc.Controllers
         {
             if (ModelState.IsValid)
             {
-                List<string> students = new List<string>(), users = new List<string>();
+                List<string> students = new List<string>(), users = new List<string>(), 
+                    sections = new List<string>(), sectionsnew = new List<string>();
                 if (formval["students"] != null)
                 {
                     students = formval["students"].Split(',').ToList();
@@ -115,13 +171,34 @@ namespace web_application_mvc.Controllers
                 {
                     users = formval["users"].Split(',').ToList();
                 }
-                List<User> all = userService.GetAll().Where(x => x.GroupID == group.ID).ToList();
-                foreach (var item in all)
+                if (formval["sections"] != null)
+                {
+                    sections = formval["sections"].Split(',').ToList();
+                }
+                if (formval["sectionsnew"] != null)
+                {
+                    sections = formval["sectionsnew"].Split(',').ToList();
+                }
+                //Clear
+                foreach (var item in userService.GetAll().Where(x => x.GroupID == group.ID).ToList())
                 {
                     item.GroupID = null;
                     userService.Edit(item);
                 }
-                if (students.Count > 0 || users.Count > 0)
+                List<GroupSection> trytodelete = new List<GroupSection>();
+                foreach (var item in groupSectionService.GetAll())
+                {
+                    if (item.GroupID == group.ID)
+                    {
+                        trytodelete.Add(item);
+                    }
+                }
+                foreach(var item in trytodelete)
+                {
+                    groupSectionService.Delete(item);
+                }
+
+                if (students.Count > 0 || users.Count > 0 || sections.Count > 0 || sectionsnew.Count > 0)
                 {
                     if (students.Count > 0)
                     {
@@ -141,6 +218,17 @@ namespace web_application_mvc.Controllers
                             userService.Edit(user);
                         }
                     }
+                    if (sections.Count > 0)
+                    {
+                        foreach (var sectionID in sections)
+                        {
+                            groupSectionService.Create(new GroupSection
+                            {
+                                GroupID = group.ID,
+                                SectionID = int.Parse(sectionID)
+                            });
+                        }
+                    }
                 }
                 else
                 {
@@ -150,6 +238,27 @@ namespace web_application_mvc.Controllers
             }
             ViewBag.Users = userService.GetAll().Where(x => x.GroupID == null).ToList();
             ViewBag.Students = group.Students;
+
+            List<Section> sectionsSelected = new List<Section>(), sectionsNotSelected = sectionService.GetAll().ToList();
+            foreach (var item in groupSectionService.GetAll().Where(x => x.GroupID == group.ID))
+            {
+                sectionsSelected.Add(sectionService.Get(item.SectionID));
+                sectionsNotSelected.Remove(sectionsNotSelected.Where(x => x.ID == item.SectionID).FirstOrDefault());
+            }
+            /*
+            foreach (var item in sectionService.GetAll())
+            {
+                for (int i = 0; i < notSelected.Count; i++)
+                {
+                    if (item.ID == i)
+                    {
+                        sectionsNotSelected.Add(item);
+                        notSelected.Remove(notSelected[i]);
+                    }
+                }
+            }*/
+            ViewBag.Sections = sectionsSelected;
+            ViewBag.SectionsNew = sectionsNotSelected;
             return View(group);
         }
 

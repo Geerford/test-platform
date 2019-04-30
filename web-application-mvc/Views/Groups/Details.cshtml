@@ -51,12 +51,22 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.Students)
+            @Html.Label("Студенты")
         </dt>
         @foreach (Core.User item in ViewBag.Students)
         {
             <dd>
-                @Html.ActionLink(item.Surname + " " + item.Name, "Details", "Users", new { id = item.ID}, new { })
+                @Html.ActionLink(item.Surname + " " + item.Name, "Details", "Users", new { id = item.ID }, new { })
+            </dd>
+        }
+
+        <dt>
+            @Html.Label("Секции")
+        </dt>
+        @foreach (Core.Section item in ViewBag.Sections)
+        {
+            <dd>
+                @Html.ActionLink(item.Description, "Details", "Section", new { id = item.ID }, new { })
             </dd>
         }
     </dl>

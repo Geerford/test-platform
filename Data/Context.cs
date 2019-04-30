@@ -33,6 +33,8 @@ namespace Infrastructure.Data
 
         public DbSet<User> User { get; set; }
 
+        public DbSet<GroupSection> GroupSection { get; set; }
+
         static Context() => Database.SetInitializer(new Initializer());
 
         public Context() { }

@@ -31,13 +31,12 @@ namespace Infrastructure.Data.Repository
         public Template Get(int id)
         {
             return Database.Template.Where(x => x.ID == id)
-                                    .Include(x => x.Reports)
                                     .FirstOrDefault();
         }
 
         public IEnumerable<Template> GetAll()
         {
-            return Database.Template.Include(x => x.Reports);
+            return Database.Template;
         }
 
         public void Update(Template item)

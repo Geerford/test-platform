@@ -1,4 +1,5 @@
-﻿using System.Net;
+﻿using System.Linq;
+using System.Net;
 using System.Web.Mvc;
 using Application.Interfaces;
 using Core;
@@ -17,7 +18,7 @@ namespace web_application_mvc.Controllers
             this.testService = testService;
             this.userService = userService;
         }
-
+        
         // GET: Grades
         public ActionResult Index()
         {
@@ -43,7 +44,7 @@ namespace web_application_mvc.Controllers
         public ActionResult Create()
         {
             ViewBag.TestID = new SelectList(testService.GetAll(), "ID", "Title");
-            ViewBag.UserID = new SelectList(userService.GetAll(), "ID", "Name");
+            ViewBag.UserID = new SelectList(userService.GetAll().Where(x => x.Role.Value.Equals("Студент")), "ID", "Name");
             return View();
         }
 
@@ -57,8 +58,9 @@ namespace web_application_mvc.Controllers
                 gradeService.Create(grade);
                 return RedirectToAction("Index");
             }
+
             ViewBag.TestID = new SelectList(testService.GetAll(), "ID", "Title", grade.TestID);
-            ViewBag.UserID = new SelectList(userService.GetAll(), "ID", "Name", grade.UserID);
+            ViewBag.UserID = new SelectList(userService.GetAll().Where(x => x.Role.Value.Equals("Студент")), "ID", "Name");
             return View(grade);
         }
 
@@ -75,7 +77,7 @@ namespace web_application_mvc.Controllers
                 return HttpNotFound();
             }
             ViewBag.TestID = new SelectList(testService.GetAll(), "ID", "Title", grade.TestID);
-            ViewBag.UserID = new SelectList(userService.GetAll(), "ID", "Name", grade.UserID);
+            ViewBag.UserID = new SelectList(userService.GetAll().Where(x => x.Role.Value.Equals("Студент")), "ID", "Name");
             return View(grade);
         }
 
@@ -90,7 +92,7 @@ namespace web_application_mvc.Controllers
                 return RedirectToAction("Index");
             }
             ViewBag.TestID = new SelectList(testService.GetAll(), "ID", "Title", grade.TestID);
-            ViewBag.UserID = new SelectList(userService.GetAll(), "ID", "Name", grade.UserID);
+            ViewBag.UserID = new SelectList(userService.GetAll().Where(x => x.Role.Value.Equals("Студент")), "ID", "Name");
             return View(grade);
         }
 

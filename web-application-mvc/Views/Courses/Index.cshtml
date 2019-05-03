@@ -1,45 +1,42 @@
 ﻿@model IEnumerable<Core.Course>
 
-@{
-    ViewBag.Title = "Index";
-}
-
-<h2>Index</h2>
-
+<h2>Лекции</h2>
 <p>
-    @Html.ActionLink("Create New", "Create")
+    @Html.ActionLink("Добавить", "Create")
 </p>
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.Section.Description)
+            @Html.Label("Описание")
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Description)
+            @Html.Label("Ссылка")
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Link)
+            @Html.Label("Раздел")
         </th>
-        <th></th>
+        <th>
+            @Html.Label("Действия")
+        </th>
     </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Section.Description)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Description)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Link)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.ID }) |
-            @Html.ActionLink("Details", "Details", new { id=item.ID }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.ID })
-        </td>
-    </tr>
-}
-
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.ActionLink(item.Section.Description, "Details", new { id = item.ID })
+            </td>
+            <td>
+                @Html.ActionLink(item.Description, "Details", new { id = item.ID })
+            </td>
+            <td>
+                @Html.ActionLink(item.Link, "Details", new { id = item.ID })
+            </td>
+            <td>
+                @Html.ActionLink("Редактировать", "Edit", new { id = item.ID }) |
+                @Html.ActionLink("Подробнее", "Details", new { id = item.ID }) |
+                @Html.ActionLink("Удалить", "Delete", new { id = item.ID })
+            </td>
+        </tr>
+    }
 </table>

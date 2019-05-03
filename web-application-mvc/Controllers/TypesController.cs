@@ -1,16 +1,20 @@
-﻿using System.Net;
+﻿using System.Linq;
+using System.Net;
 using System.Web.Mvc;
 using Application.Interfaces;
+using web_application_mvc.Models;
 
 namespace web_application_mvc.Controllers
 {
     public class TypesController : Controller
     {
         ITypeService typeService;
+        IQuestionService questionService;
 
-        public TypesController(ITypeService typeService)
+        public TypesController(ITypeService typeService, IQuestionService questionService)
         {
             this.typeService = typeService;
+            this.questionService = questionService;
         }
 
         // GET: Types
@@ -31,7 +35,12 @@ namespace web_application_mvc.Controllers
             {
                 return HttpNotFound();
             }
-            return View(type);
+            TypeViewModel model = new TypeViewModel
+            {
+                Type = type,
+                Questions = questionService.GetAll().Where(x => x.TypeID == id)
+            };
+            return View(model);
         }
 
         // GET: Types/Create
@@ -43,7 +52,7 @@ namespace web_application_mvc.Controllers
         // POST: Types/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ID,Desription,Status")] Core.Type type)
+        public ActionResult Create([Bind(Include = "ID,Description,Status")] Core.Type type)
         {
             if (ModelState.IsValid)
             {
@@ -72,7 +81,7 @@ namespace web_application_mvc.Controllers
         // POST: Types/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ID,Desription,Status")] Core.Type type)
+        public ActionResult Edit([Bind(Include = "ID,Description,Status")] Core.Type type)
         {
             if (ModelState.IsValid)
             {
@@ -94,7 +103,12 @@ namespace web_application_mvc.Controllers
             {
                 return HttpNotFound();
             }
-            return View(type);
+            TypeViewModel model = new TypeViewModel
+            {
+                Type = type,
+                Questions = questionService.GetAll().Where(x => x.TypeID == id)
+            };
+            return View(model);
         }
 
         // POST: Types/Delete/5

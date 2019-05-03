@@ -1,33 +1,28 @@
 ﻿@model IEnumerable<Core.Template>
 
-@{
-    ViewBag.Title = "Index";
-}
-
-<h2>Index</h2>
-
+<h2>Шаблоны</h2>
 <p>
-    @Html.ActionLink("Create New", "Create")
+    @Html.ActionLink("Добавить", "Create")
 </p>
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.Description)
+            @Html.Label("Описание")
         </th>
-        <th></th>
+        <th>
+            @Html.Label("Действия")
+        </th>
     </tr>
-
 @foreach (var item in Model) {
     <tr>
         <td>
             @Html.DisplayFor(modelItem => item.Description)
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.ID }) |
-            @Html.ActionLink("Details", "Details", new { id=item.ID }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.ID })
+            @Html.ActionLink("Редактировать", "Edit", new { id = item.ID }) |
+            @Html.ActionLink("Подробнее", "Details", new { id = item.ID }) |
+            @Html.ActionLink("Удалить", "Delete", new { id = item.ID })
         </td>
     </tr>
 }
-
 </table>

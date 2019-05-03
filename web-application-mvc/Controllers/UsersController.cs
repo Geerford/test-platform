@@ -1,4 +1,5 @@
-﻿using System.Net;
+﻿using System.Linq;
+using System.Net;
 using System.Web.Mvc;
 using Application.Interfaces;
 using Core;
@@ -45,9 +46,9 @@ namespace web_application_mvc.Controllers
         // GET: Users/Create
         public ActionResult Create()
         {
-            ViewBag.CurrentCuratorID = new SelectList(curatorService.GetAll(), "ID", "ID");
+            ViewBag.CurrentCuratorID = new SelectList(curatorService.GetAll(), "ID", "User.Surname");
             ViewBag.GroupID = new SelectList(groupService.GetAll(), "ID", "Description");
-            ViewBag.RoleID = new SelectList(roleService.GetAll(), "ID", "Description");
+            ViewBag.RoleID = new SelectList(roleService.GetAll(), "ID", "Value");
             return View();
         }
 
@@ -61,9 +62,9 @@ namespace web_application_mvc.Controllers
                 userService.Create(user);
                 return RedirectToAction("Index");
             }
-            ViewBag.CurrentCuratorID = new SelectList(curatorService.GetAll(), "ID", "ID", user.CurrentCuratorID);
+            ViewBag.CurrentCuratorID = new SelectList(curatorService.GetAll(), "ID", "User.Surname", user.CurrentCuratorID);
             ViewBag.GroupID = new SelectList(groupService.GetAll(), "ID", "Description", user.GroupID);
-            ViewBag.RoleID = new SelectList(roleService.GetAll(), "ID", "Description", user.RoleID);
+            ViewBag.RoleID = new SelectList(roleService.GetAll(), "ID", "Value", user.RoleID);
             return View(user);
         }
 
@@ -79,9 +80,9 @@ namespace web_application_mvc.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.CurrentCuratorID = new SelectList(curatorService.GetAll(), "ID", "ID", user.CurrentCuratorID);
+            ViewBag.CurrentCuratorID = new SelectList(curatorService.GetAll(), "ID", "User.Surname", user.CurrentCuratorID);
             ViewBag.GroupID = new SelectList(groupService.GetAll(), "ID", "Description", user.GroupID);
-            ViewBag.RoleID = new SelectList(roleService.GetAll(), "ID", "Description", user.RoleID);
+            ViewBag.RoleID = new SelectList(roleService.GetAll(), "ID", "Value", user.RoleID);
             return View(user);
         }
 
@@ -95,9 +96,9 @@ namespace web_application_mvc.Controllers
                 userService.Edit(user);
                 return RedirectToAction("Index");
             }
-            ViewBag.CurrentCuratorID = new SelectList(curatorService.GetAll(), "ID", "ID", user.CurrentCuratorID);
+            ViewBag.CurrentCuratorID = new SelectList(curatorService.GetAll(), "ID", "User.Surname", user.CurrentCuratorID);
             ViewBag.GroupID = new SelectList(groupService.GetAll(), "ID", "Description", user.GroupID);
-            ViewBag.RoleID = new SelectList(roleService.GetAll(), "ID", "Description", user.RoleID);
+            ViewBag.RoleID = new SelectList(roleService.GetAll(), "ID", "Value", user.RoleID);
             return View(user);
         }
 

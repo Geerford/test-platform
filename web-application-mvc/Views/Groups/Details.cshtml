@@ -1,77 +1,93 @@
 ﻿@model Core.Group
 
-@{
-    ViewBag.Title = "Details";
-}
+<h2>Группа</h2>
+<hr />
+<dl class="dl-horizontal">
+    <dt>
+        @Html.Label("Университет")
+    </dt>
+    <dd>
+        @Html.DisplayFor(model => model.University)
+    </dd>
+    <dt>
+        @Html.Label("Факультет")
+    </dt>
+    <dd>
+        @Html.DisplayFor(model => model.Department)
+    </dd>
+    <dt>
+        @Html.Label("Группа")
+    </dt>
+    <dd>
+        @Html.DisplayFor(model => model.Description)
+    </dd>
+    <dt>
+        @Html.Label("Начало практики")
+    </dt>
+    <dd>
+        @Html.DisplayFor(model => model.Start)
+    </dd>
+    <dt>
+        @Html.Label("Окончание практики")
+    </dt>
+    <dd>
+        @Html.DisplayFor(model => model.End)
+    </dd>
+</dl>
 
-<h2>Details</h2>
-
-<div>
-    <h4>Group</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Description)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Description)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.University)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.University)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Department)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Department)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Start)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Start)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.End)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.End)
-        </dd>
-
-        <dt>
-            @Html.Label("Студенты")
-        </dt>
-        @foreach (Core.User item in ViewBag.Students)
+@if (Model.Students != null && Model.Students.Count > 0)
+{
+    <h2>Студенты</h2>
+    <table class="table">
+        <tr>
+            <th>
+                @Html.Label("Фамилия")
+            </th>
+            <th>
+                @Html.Label("Имя")
+            </th>
+            <th>
+                @Html.Label("Отчество")
+            </th>
+        </tr>
+        @foreach (Core.User item in Model.Students)
         {
-            <dd>
-                @Html.ActionLink(item.Surname + " " + item.Name, "Details", "Users", new { id = item.ID }, new { })
-            </dd>
+            <tr>
+                <td>
+                    @Html.ActionLink(item.Surname, "Details", "Users", new { id = item.ID }, new { })
+                </td>
+                <td>
+                    @Html.ActionLink(item.Name, "Details", "Users", new { id = item.ID }, new { })
+                </td>
+                <td>
+                    @Html.ActionLink(item.Midname, "Details", "Users", new { id = item.ID }, new { })
+                </td>
+            </tr>
         }
-
-        <dt>
-            @Html.Label("Секции")
-        </dt>
+    </table>
+    <hr />
+}
+@if (ViewBag.Sections != null && ViewBag.Sections.Count > 0)
+{
+    <h2>Разделы</h2>
+    <table class="table">
+        <tr>
+            <th>
+                @Html.Label("Название")
+            </th>
+        </tr>
         @foreach (Core.Section item in ViewBag.Sections)
         {
-            <dd>
-                @Html.ActionLink(item.Description, "Details", "Section", new { id = item.ID }, new { })
-            </dd>
+            <tr>
+                <td>
+                    @Html.ActionLink(item.Description, "Details", "Sections", new { id = item.ID }, new { })
+                </td>
+            </tr>
         }
-    </dl>
-</div>
+    </table>
+    <hr />
+}
 <p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.ID }) |
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("Редактировать", "Edit", new { id = Model.ID }) |
+    @Html.ActionLink("Список групп", "Index")
 </p>

@@ -1,11 +1,9 @@
 ﻿using System.Collections.Generic;
-using System.Data.Entity;
 using System.Linq;
 using System.Net;
 using System.Web.Mvc;
 using Application.Interfaces;
 using Core;
-using Infrastructure.Data;
 
 namespace web_application_mvc.Controllers
 {
@@ -43,20 +41,22 @@ namespace web_application_mvc.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.Students = group.Students;
             List<Section> sections = new List<Section>();
             foreach(var item in groupSectionService.GetAll().Where(x => x.GroupID == group.ID))
             {
                 sections.Add(sectionService.Get(item.SectionID));
             }
-            ViewBag.Sections = sections;
+            if (sections.Count > 0)
+            {
+                ViewBag.Sections = sections;
+            }
             return View(group);
         }
 
         // GET: Groups/Create
         public ActionResult Create()
         {
-            ViewBag.Students = userService.GetAll().Where(x => x.GroupID == null).ToList();
+            ViewBag.Students = userService.GetAll().Where(x => x.GroupID == null && x.Role.Value.Equals("Студент")).ToList();
             ViewBag.Sections = sectionService.GetAll().ToList();
             return View();
         }
@@ -111,7 +111,7 @@ namespace web_application_mvc.Controllers
                 }
                 return RedirectToAction("Index");
             }
-            ViewBag.Students = userService.GetAll().Where(x => x.GroupID == null).ToList();
+            ViewBag.Students = userService.GetAll().Where(x => x.GroupID == null && x.Role.Value.Equals("Студент")).ToList();
             ViewBag.Sections = sectionService.GetAll().ToList();
             return View(group);
         }
@@ -128,7 +128,7 @@ namespace web_application_mvc.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.Users = userService.GetAll().Where(x => x.GroupID == null).ToList();
+            ViewBag.Users = userService.GetAll().Where(x => x.GroupID == null && x.Role.Value.Equals("Студент")).ToList();
             ViewBag.Students = group.Students;
 
             List<Section> sectionsSelected = new List<Section>(), sectionsNotSelected = sectionService.GetAll().ToList();
@@ -137,18 +137,6 @@ namespace web_application_mvc.Controllers
                 sectionsSelected.Add(sectionService.Get(item.SectionID));
                 sectionsNotSelected.Remove(sectionsNotSelected.Where(x => x.ID == item.SectionID).FirstOrDefault());
             }
-            /*
-            foreach (var item in sectionService.GetAll())
-            {
-                for (int i = 0; i < notSelected.Count; i++)
-                {
-                    if (item.ID == i)
-                    {
-                        sectionsNotSelected.Add(item);
-                        notSelected.Remove(notSelected[i]);
-                    }
-                }
-            }*/
             ViewBag.Sections = sectionsSelected;
             ViewBag.SectionsNew = sectionsNotSelected;
             return View(group);
@@ -159,6 +147,10 @@ namespace web_application_mvc.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit(FormCollection formval, [Bind(Include = "ID,Description,University,Department,Start,End")] Group group)
         {
+            if (group.Start > group.End)
+            {
+                ModelState.AddModelError("End", "Начальная дата должна быть меньше конечной");
+            }
             if (ModelState.IsValid)
             {
                 List<string> students = new List<string>(), users = new List<string>(), 
@@ -177,7 +169,7 @@ namespace web_application_mvc.Controllers
                 }
                 if (formval["sectionsnew"] != null)
                 {
-                    sections = formval["sectionsnew"].Split(',').ToList();
+                    sectionsnew = formval["sectionsnew"].Split(',').ToList();
                 }
                 //Clear
                 foreach (var item in userService.GetAll().Where(x => x.GroupID == group.ID).ToList())
@@ -229,6 +221,17 @@ namespace web_application_mvc.Controllers
                             });
                         }
                     }
+                    if (sectionsnew.Count > 0)
+                    {
+                        foreach (var sectionID in sectionsnew)
+                        {
+                            groupSectionService.Create(new GroupSection
+                            {
+                                GroupID = group.ID,
+                                SectionID = int.Parse(sectionID)
+                            });
+                        }
+                    }
                 }
                 else
                 {
@@ -236,7 +239,7 @@ namespace web_application_mvc.Controllers
                 }
                 return RedirectToAction("Index");
             }
-            ViewBag.Users = userService.GetAll().Where(x => x.GroupID == null).ToList();
+            ViewBag.Users = userService.GetAll().Where(x => x.GroupID == null && x.Role.Value.Equals("Студент")).ToList();
             ViewBag.Students = group.Students;
 
             List<Section> sectionsSelected = new List<Section>(), sectionsNotSelected = sectionService.GetAll().ToList();
@@ -245,18 +248,6 @@ namespace web_application_mvc.Controllers
                 sectionsSelected.Add(sectionService.Get(item.SectionID));
                 sectionsNotSelected.Remove(sectionsNotSelected.Where(x => x.ID == item.SectionID).FirstOrDefault());
             }
-            /*
-            foreach (var item in sectionService.GetAll())
-            {
-                for (int i = 0; i < notSelected.Count; i++)
-                {
-                    if (item.ID == i)
-                    {
-                        sectionsNotSelected.Add(item);
-                        notSelected.Remove(notSelected[i]);
-                    }
-                }
-            }*/
             ViewBag.Sections = sectionsSelected;
             ViewBag.SectionsNew = sectionsNotSelected;
             return View(group);

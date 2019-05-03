@@ -1,39 +1,36 @@
 ﻿@model IEnumerable<Core.Activity>
 
-@{
-    ViewBag.Title = "Index";
-}
-
-<h2>Index</h2>
-
+<h2>Посещения</h2>
 <p>
-    @Html.ActionLink("Create New", "Create")
+    @Html.ActionLink("Добавить", "Create")
 </p>
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.User.Name)
+            @Html.Label("ФИО студента")
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Date)
+            @Html.Label("Дата")
         </th>
-        <th></th>
+        <th>
+            @Html.Label("Действия")
+        </th>
     </tr>
-
 @foreach (var item in Model) {
     <tr>
         <td>
-            @Html.DisplayFor(modelItem => item.User.Name)
+            @Html.ActionLink(item.User.Surname, "Details", "Users", new { id = item.User.ID }, null)
+            @Html.ActionLink(item.User.Name, "Details", "Users", new { id = item.User.ID }, null)
+            @Html.ActionLink(item.User.Midname, "Details", "Users", new { id = item.User.ID }, null)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Date)
+            @Html.ActionLink(item.Date.ToShortDateString(), "Details", new { id = item.ID })
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.ID }) |
-            @Html.ActionLink("Details", "Details", new { id=item.ID }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.ID })
+            @Html.ActionLink("Редактировать", "Edit", new { id = item.ID }) |
+            @Html.ActionLink("Подробнее", "Details", new { id = item.ID }) |
+            @Html.ActionLink("Удалить", "Delete", new { id = item.ID })
         </td>
     </tr>
 }
-
 </table>

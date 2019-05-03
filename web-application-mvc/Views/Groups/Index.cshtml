@@ -1,57 +1,52 @@
 ﻿@model IEnumerable<Core.Group>
 
-@{
-    ViewBag.Title = "Index";
-}
-
-<h2>Index</h2>
-
+<h2>Группы</h2>
 <p>
-    @Html.ActionLink("Create New", "Create")
+    @Html.ActionLink("Добавить", "Create")
 </p>
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.Description)
+            @Html.Label("Университет")
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.University)
+            @Html.Label("Факультет")
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Department)
+            @Html.Label("Группа")
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Start)
+            @Html.Label("Начало практики")
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.End)
+            @Html.Label("Окончание практики")
         </th>
-        <th></th>
+        <th>
+            @Html.Label("Действия")
+        </th>
     </tr>
-
 @foreach (var item in Model) {
     <tr>
         <td>
-            @Html.DisplayFor(modelItem => item.Description)
+            @Html.ActionLink(item.University, "Details", new { id = item.ID })
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.University)
+            @Html.ActionLink(item.Department, "Details", new { id = item.ID })
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Department)
+            @Html.ActionLink(item.Description, "Details", new { id = item.ID })
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Start)
+            @Html.ActionLink(item.Start.ToShortDateString(), "Details", new { id = item.ID })
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.End)
+            @Html.ActionLink(item.End.ToShortDateString(), "Details", new { id = item.ID })
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.ID }) |
-            @Html.ActionLink("Details", "Details", new { id=item.ID }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.ID })
+            @Html.ActionLink("Редактировать", "Edit", new { id = item.ID }) |
+            @Html.ActionLink("Подробнее", "Details", new { id = item.ID }) |
+            @Html.ActionLink("Удалить", "Delete", new { id = item.ID })
         </td>
     </tr>
 }
-
 </table>

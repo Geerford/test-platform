@@ -1,0 +1,82 @@
+﻿<h1>Все о каштанах</h1>
+<link rel="stylesheet" type="text/css" href="~/Content/test.css">
+<script defer type="text/javascript" src="~/Scripts/test.js"></script>
+<form name="test" action="#">
+    <div class="question">
+        <p>Описание</p>
+        <textarea class="description"></textarea>
+        <p>Тип</p>
+        <select name="types" onchange="toggleDisplay.call(this)">
+            <option disabled selected>Выберите тип</option>
+            <option value="enter">Ввод ответа</option>
+            <option value="choose">Выбор ответа</option>
+        </select>
+        <div hidden class="choose-answer">
+            <div class="variant">
+                <input type="text">
+                <input type="checkbox" name="is-correct" value="false">
+            </div>
+            <span class="btn-add-answer" onclick="addVariant()">Добавить вариант</span>
+        </div>
+        <div hidden class="enter-answer">
+            <input type="text">
+        </div>
+    </div>
+    <span class="btn-add-quest" onclick="addQuestion();">Добавить вопрос</span>
+</form>
+<button type="button" id="SaveTest" class="btn btn-default"><span class="glyphicon glyphicon-ok"></span> Сохранить </button>
+
+@section MyScritps
+{
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#SaveTest').on('click', function () {
+                var questionsTitle = document.getElementsByClassName("description");
+                var result = [], countQuestion = questionsTitle.length, question = {};
+                for (var i = 1; i < countQuestion; i++) {
+                    question = {
+                        Description: questionsTitle[i].value
+                        //List ANSWERS
+                    };
+                    result.push(question);
+                }
+
+
+                $.ajax({
+                    type: 'POST',
+                    url: '@Url.Action("Work", "Test")',
+                    data: { resultQuiz },
+                    success: function (response) {
+                        if (response.result.length > 0)
+                        {
+                            for(var i = 0; i <response.result.length; i++ )
+                            {
+                                if(response.result[i].IsCorrect == true)
+                                {
+                                    $('#AnsQ' + j).html('<div class="alert alert-success alert-test" role="alert"><span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span> Верный ответ</div>');
+                                }
+                                else
+                                {
+                                    $('#AnsQ' + j).html('<div class="alert alert-danger alert-test" role="alert"> <span class="glyphicon glyphicon-thumbs-down" aria-hidden="true"></span> Неверный ответ - Правильный ответ: <b>' + response.result[i].Answer + '</b></div>');
+                                }
+                                j++;
+                            }
+                        }
+                        else
+                        {
+                            alert("Something Wrong");
+                        }
+
+                        document.getElementById('SubmitQuiz').style.visibility = 'hidden';
+                        setTimeout(function () {
+                            window.location = "@Url.Action("Index")";
+                        }, 15000);
+                    },
+                    error: function (response) {
+                    }
+                });
+                console.log(resultQuiz);
+            });
+        });
+    </script>
+}

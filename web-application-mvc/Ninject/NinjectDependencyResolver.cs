@@ -40,6 +40,7 @@ namespace web_application_mvc.Ninject
             kernel.Bind<ITypeService>().To<TypeService>();
             kernel.Bind<IUserService>().To<UserService>();
             kernel.Bind<IGroupSectionService>().To<GroupSectionService>();
+            kernel.Bind<IReportQAService>().To<ReportQAService>();
         }
     }
 }

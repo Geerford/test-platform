@@ -35,6 +35,8 @@ namespace Infrastructure.Data
 
         public DbSet<GroupSection> GroupSection { get; set; }
 
+        public DbSet<ReportQA> ReportQA { get; set; }
+
         static Context() => Database.SetInitializer(new Initializer());
 
         public Context() { }
@@ -50,17 +52,17 @@ namespace Infrastructure.Data
 
             #region One to One
             modelBuilder.Entity<User>()
-                        .HasRequired(u => u.Curator)
-                        .WithRequiredPrincipal(c => c.User);
+                        .HasOptional(u => u.Curator)
+                        .WithOptionalPrincipal(c => c.User);
             
             modelBuilder.Entity<User>()
-                        .HasRequired(u => u.Report)
-                        .WithRequiredPrincipal(r => r.User);
+                        .HasOptional(u => u.Report)
+                        .WithOptionalPrincipal(r => r.User);
             #endregion
 
             #region One to Many
             modelBuilder.Entity<User>()
-                        .HasRequired(u => u.Role)
+                        .HasOptional(u => u.Role)
                         .WithMany(r => r.Users)
                         .HasForeignKey(u => u.RoleID);
 
@@ -117,17 +119,6 @@ namespace Infrastructure.Data
                         .HasRequired(q => q.Type)
                         .WithMany(t => t.Questions)
                         .HasForeignKey(q => q.TypeID);
-            #endregion
-            #region Many to Many
-            modelBuilder.Entity<Report>()
-                        .HasMany(r => r.Templates)
-                        .WithMany(t => t.Reports)
-                        .Map(cs =>
-                        {
-                            cs.MapLeftKey("ReportID");
-                            cs.MapRightKey("TemplateID");
-                            cs.ToTable("ReportTemplate");
-                        });
             #endregion
         }
     }

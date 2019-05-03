@@ -1,87 +1,98 @@
 ﻿@model IEnumerable<Core.User>
 
-@{
-    ViewBag.Title = "Index";
-}
-
-<h2>Index</h2>
-
+<h2>Пользователи</h2>
 <p>
-    @Html.ActionLink("Create New", "Create")
+    @Html.ActionLink("Добавить", "Create")
 </p>
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.CurrentCurator.ID)
+            @Html.Label("Фамилия")
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Group.Description)
+            @Html.Label("Имя")
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Role.Description)
+            @Html.Label("Отчество")
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Name)
+            @Html.Label("Группа")
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Surname)
+            @Html.Label("Роль")
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Midname)
+            @Html.Label("Электронная почта")
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Email)
+            @Html.Label("Пароль")
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Password)
+            @Html.Label("Телефон")
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Phone)
+            @Html.Label("Статус")
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Status)
+            @Html.Label("Куратор")
         </th>
-        <th></th>
+        <th>
+            @Html.Label("Действия")
+        </th>
     </tr>
-
 @foreach (var item in Model) {
     <tr>
         <td>
-            @Html.DisplayFor(modelItem => item.CurrentCurator.ID)
+            @Html.ActionLink(item.Surname, "Details", new { id = item.ID })
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Group.Description)
+            @Html.ActionLink(item.Name, "Details", new { id = item.ID })
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Role.Description)
+            @Html.ActionLink(item.Midname, "Details", new { id = item.ID })
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Name)
+            @if (item.Group != null)
+            {
+                @Html.ActionLink(item.Group.Description, "Details", "Groups", new { id = item.Group.ID }, null)
+            }
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Surname)
+            @if (item.Role != null)
+            {
+                @Html.ActionLink(item.Role.Value, "Details", "Roles", new { id = item.Role.ID }, null)
+            }
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Midname)
+            @Html.ActionLink(item.Email, "Details", new { id = item.ID })
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Email)
+            @Html.ActionLink(item.Password, "Details", new { id = item.ID })
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Password)
+            @Html.ActionLink(item.Phone, "Details", new { id = item.ID })
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Phone)
+            @if (item.Status)
+            {
+                @Html.ActionLink("Активирован", "Details", new { id = item.ID })
+            }
+            else
+            {
+                @Html.ActionLink("Деактивирован", "Details", new { id = item.ID })
+            }
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Status)
+            @if (item.CurrentCurator != null)
+            {
+                @Html.ActionLink(item.CurrentCurator.User.Surname, "Details", "Users", new { id = item.CurrentCurator.ID }, null)
+            }
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.ID }) |
-            @Html.ActionLink("Details", "Details", new { id=item.ID }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.ID })
+            @Html.ActionLink("Редактировать", "Edit", new { id = item.ID }) |
+            @Html.ActionLink("Подробнее", "Details", new { id = item.ID }) |
+            @Html.ActionLink("Удалить", "Delete", new { id = item.ID })
         </td>
     </tr>
 }
-
 </table>

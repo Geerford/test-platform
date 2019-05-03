@@ -3,24 +3,19 @@
 @{ 
     int count = 1, countR = 0, countT = 0;
 }
-
-
 <div class="container">
     <div class="test">
       @if (Model != null && Model.Any())
       {
-
           foreach (var question in Model)
           {
                 <div class="question-test">
-
                     <div class="Question" style="padding: 2%;">
                         <span class="label label-warning"> @string.Format("{0}{1}.", "Q", count)</span>
                         <span id="@string.Format("{0}{1}", "ID_Q", count)" style="display:none;">@question.QuestionID</span>
                         <span id="@string.Format("{0}{1}", "Type_Q", count)" style="display:none;">@question.QuestionType</span>
                         <p style="display: inline; padding: 2%;" id="@string.Format("{0}{1}", "Q", count)">@question.QuestionText</p>
                     </div>
-
                     <div class="Choices" style="margin-left: 8%;">
                         @if (question.QuestionType.Equals("Выбор ответа"))
                         {
@@ -39,33 +34,21 @@
                             </label><br />
                             countT++;
                         }
-                    </div> <!--END Choices-->
-                 
-                <div id="@string.Format("{0}{1}{2}", "Ans","Q", count)">
+                    </div> 
+                    <div id="@string.Format("{0}{1}{2}", "Ans","Q", count)"></div>
                 </div>
-
-                </div> <!-- END BlockQ -->
                   count++;
               }
             <span id="countQuections" style="display:none;">@count</span>
             <button type="button" id="SubmitQuiz" class="btn btn-default" style="margin-top: 10px;"><span class="glyphicon glyphicon-ok"></span> Завершить </button>
-            
-      
-
       }
-
-    </div> <!-- END QUIZ -->
-
-</div> <!-- END CONTAINER -->
-
+    </div>
+</div> 
 @section MyScritps
 {
     <script type="text/javascript">
-
         $(document).ready(function () {
-
             $('#SubmitQuiz').on('click', function () {
-
                 //count Questions
                 var sel = $('#countQuections').text();
                 console.log(sel);

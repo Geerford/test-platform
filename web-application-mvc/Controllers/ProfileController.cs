@@ -4,16 +4,21 @@ using System.Linq;
 using System.Net;
 using System.Security.Claims;
 using System.Web.Mvc;
+using web_application_mvc.Models;
 
 namespace web_application_mvc.Controllers
 {
     public class ProfileController : Controller
     {
-        IUserService service;
+        IUserService userService;
+        IActivityService activityService;
+        IGradeService gradeService;
 
-        public ProfileController(IUserService service)
+        public ProfileController(IUserService userService, IActivityService activityService, IGradeService gradeService)
         {
-            this.service = service;
+            this.userService = userService;
+            this.activityService = activityService;
+            this.gradeService = gradeService;
         }
 
         // GET: Profile
@@ -22,7 +27,7 @@ namespace web_application_mvc.Controllers
         {
             var identity = (ClaimsIdentity)User.Identity;
             var id = identity.Claims.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier).Value;
-            var user = service.Get(int.Parse(id));
+            var user = userService.Get(int.Parse(id));
             if(user == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -35,8 +40,7 @@ namespace web_application_mvc.Controllers
         {
             var identity = (ClaimsIdentity)User.Identity;
             var id = identity.Claims.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier).Value;
-
-            var user = service.Get(int.Parse(id));
+            var user = userService.Get(int.Parse(id));
             if (user == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -51,7 +55,7 @@ namespace web_application_mvc.Controllers
         {
             if (ModelState.IsValid)
             {
-                service.Edit(user);
+                userService.Edit(user);
                 return RedirectToAction("Index");
             }
             return View(user);
@@ -61,6 +65,20 @@ namespace web_application_mvc.Controllers
         public ActionResult Admin()
         {
             return PartialView("_AdminPartial");
+        }
+
+        [Authorize]
+        public ActionResult Student()
+        {
+            var identity = (ClaimsIdentity)User.Identity;
+            var id = identity.Claims.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier).Value;
+            var user = userService.Get(int.Parse(id));
+            GradeActivityViewModel model = new GradeActivityViewModel()
+            {
+                Grades = gradeService.GetAll().Where(x => x.UserID == user.ID),
+                Activities = activityService.GetAll().Where(x => x.UserID == user.ID)
+            };
+            return PartialView("_StudentPartial", model);
         }
     }
 }

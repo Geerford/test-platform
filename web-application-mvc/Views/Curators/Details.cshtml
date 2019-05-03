@@ -1,35 +1,45 @@
 ﻿@model Core.Curator
 
-@{
-    ViewBag.Title = "Details";
-}
-
-<h2>Details</h2>
-
-<div>
-    <h4>Curator</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.User.Name)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.User.Name)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Students)
-        </dt>
-        @foreach (Core.User item in ViewBag.Students)
+<h2>Куратор</h2>
+<hr />
+<dl class="dl-horizontal">
+    <dt>
+        @Html.Label("ФИО куратора")
+    </dt>
+    <dd>
+        @Html.ActionLink(Model.User.Surname, "Details", "Users", new { id = Model.User.ID }, null)
+        @Html.ActionLink(Model.User.Name, "Details", "Users", new { id = Model.User.ID }, null)
+        @Html.ActionLink(Model.User.Midname, "Details", "Users", new { id = Model.User.ID }, null)
+    </dd>
+</dl>
+@if (Model.Students != null && Model.Students.Count > 0)
+{
+    <h2>Студенты</h2>
+    <table class="table">
+        <tr>
+            <th>
+                @Html.Label("ФИО")
+            </th>
+            <th>
+                @Html.Label("Группа")
+            </th>
+        </tr>
+        @foreach (Core.User item in Model.Students)
         {
-            <dd>
-                @Html.ActionLink(item.Surname + " " + item.Name, "Details", "Users", new { id = item.ID }, new { })
-            </dd>
+            <tr>
+                <td>
+                    @Html.ActionLink(item.Surname, "Details", "Users", new { id = item.ID }, new { })
+                    @Html.ActionLink(item.Name, "Details", "Users", new { id = item.ID }, new { })
+                    @Html.ActionLink(item.Midname, "Details", "Users", new { id = item.ID }, new { })
+                </td>
+                <td>
+                    @Html.ActionLink(item.Group.Description, "Details", "Groups", new { id = item.ID }, new { })
+                </td>
+            </tr>
         }
-    </dl>
-</div>
+    </table>
+}
 <p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.ID }) |
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("Редактировать", "Edit", new { id = Model.ID }) |
+    @Html.ActionLink("Список кураторов", "Index")
 </p>

@@ -1,42 +1,57 @@
 ﻿@model Core.Grade
 
-@{
-    ViewBag.Title = "Details";
-}
-
-<h2>Details</h2>
-
-<div>
-    <h4>Grade</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Test.Title)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Test.Title)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.User.Name)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.User.Name)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Value)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Value)
-        </dd>
-
-    </dl>
-</div>
+<h2>Оценка</h2>
+<hr />
+<dl class="dl-horizontal">
+    <dt>
+        @Html.Label("Название теста")
+    </dt>
+    <dd>
+        @Html.ActionLink(Model.Test.Title, "Details", "Tests", new { id = Model.Test.ID }, null)
+    </dd>
+    <dt>
+        @Html.Label("ФИО студента")
+    </dt>
+    <dd>
+        @Html.ActionLink(Model.User.Surname, "Details", "Users", new { id = Model.User.ID }, null)
+        @Html.ActionLink(Model.User.Name, "Details", "Users", new { id = Model.User.ID }, null)
+        @Html.ActionLink(Model.User.Midname, "Details", "Users", new { id = Model.User.ID }, null)
+    </dd>
+    <dt>
+        @Html.Label("Группа студента")
+    </dt>
+    <dd>
+        @Html.ActionLink(Model.User.Group.Description, "Details", "Groups", new { id = Model.User.Group.ID }, null)
+    </dd>
+    <dt>
+        @Html.Label("Оценка за тест")
+    </dt>
+    <dd>
+        @if (Model.Value > 0.85)
+        {
+            @Html.ActionLink("Отлично", "Details", "Tests", new { id = Model.Test.ID }, null)
+        }
+        else
+        {
+            if (Model.Value <= 0.85 && Model.Value > 0.7)
+            {
+                @Html.ActionLink("Хорошо", "Details", "Tests", new { id = Model.Test.ID }, null)
+            }
+            else
+            {
+                if (Model.Value <= 0.7 && Model.Value > 0.4)
+                {
+                    @Html.ActionLink("Удовлетворительно", "Details", "Tests", new { id = Model.Test.ID }, null)
+                }
+                else
+                {
+                    @Html.ActionLink("Неудовлетворительно", "Details", "Tests", new { id = Model.Test.ID }, null)
+                }
+            }
+        }
+    </dd>
+</dl>
 <p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.ID }) |
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("Редактировать", "Edit", new { id = Model.ID }) |
+    @Html.ActionLink("Список оценок", "Index")
 </p>

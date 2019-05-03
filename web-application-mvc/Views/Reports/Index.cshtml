@@ -12,28 +12,47 @@
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.User.Name)
+            @Html.Label("Фамилия")
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Link)
+            @Html.Label("Имя")
         </th>
-        <th></th>
+        <th>
+            @Html.Label("Отчество")
+        </th>
+        <th>
+            @Html.Label("Группа")
+        </th>
+        <th>
+            @Html.Label("Ссылка")
+        </th>
+        <th>
+            @Html.Label("Действия")
+        </th>
     </tr>
 
 @foreach (var item in Model) {
     <tr>
         <td>
-            @Html.DisplayFor(modelItem => item.User.Name)
+            @Html.ActionLink(item.User.Surname, "Details", new { id = item.ID })
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Link)
+            @Html.ActionLink(item.User.Name, "Details", new { id = item.ID })
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.ID }) |
-            @Html.ActionLink("Details", "Details", new { id=item.ID }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.ID })
+            @Html.ActionLink(item.User.Midname, "Details", new { id = item.ID })
+        </td>
+        <td>
+            @Html.ActionLink(item.User.Group.Description, "Details", new { id = item.ID })
+        </td>
+        <td>
+            @Html.ActionLink(item.Link, "Details", new { id = item.ID })
+        </td>
+        <td>
+            @Html.ActionLink("Редактировать", "Edit", new { id = item.ID }) |
+            @Html.ActionLink("Подробнее", "Details", new { id = item.ID }) |
+            @Html.ActionLink("Удалить", "Delete", new { id = item.ID })
         </td>
     </tr>
 }
-
 </table>

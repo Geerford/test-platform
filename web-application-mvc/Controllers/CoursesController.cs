@@ -1,4 +1,6 @@
-﻿using System.Net;
+﻿using System.IO;
+using System.Net;
+using System.Web;
 using System.Web.Mvc;
 using Application.Interfaces;
 using Core;
@@ -47,10 +49,20 @@ namespace web_application_mvc.Controllers
         // POST: Courses/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ID,Description,Link,SectionID")] Course course)
+        public ActionResult Create([Bind(Include = "ID,Description,Link,SectionID")] Course course, 
+            HttpPostedFileBase filedata = null)
         {
             if (ModelState.IsValid)
             {
+                string fileName = "";
+                if (filedata != null)
+                {
+                    string path = System.Web.HttpContext.Current.Server.MapPath("~/Content/Uploads/"), 
+                        fileEx = Path.GetExtension(filedata.FileName);
+                    fileName = System.Guid.NewGuid().ToString() + fileEx;
+                    filedata.SaveAs(path + fileName);
+                }
+                course.Link = fileName;
                 courseService.Create(course);
                 return RedirectToAction("Index");
             }
@@ -78,10 +90,24 @@ namespace web_application_mvc.Controllers
         // POST: Courses/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ID,Description,Link,SectionID")] Course course)
+        public ActionResult Edit([Bind(Include = "ID,Description,Link,SectionID")] Course course,
+            HttpPostedFileBase filedata = null)
         {
             if (ModelState.IsValid)
             {
+                string fileName = "";
+                if (filedata != null)
+                {
+                    string path = System.Web.HttpContext.Current.Server.MapPath("~/Content/Uploads/"),
+                        fileEx = Path.GetExtension(filedata.FileName);
+                    if (System.IO.File.Exists(path + course.Link))
+                    {
+                        System.IO.File.Delete(path + course.Link);
+                    }
+                    fileName = System.Guid.NewGuid().ToString() + fileEx;
+                    filedata.SaveAs(path + fileName);
+                }
+                course.Link = fileName;
                 courseService.Edit(course);
                 return RedirectToAction("Index");
             }

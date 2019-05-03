@@ -2,12 +2,12 @@
 
 <h1>Профиль</h1>
 <div class="form-group">
-    @Html.Label("Имя", htmlAttributes: new { @class = "control-label col-md-2" })
-    @Html.DisplayFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
-</div>
-<div class="form-group">
     @Html.Label("Фамилия", htmlAttributes: new { @class = "control-label col-md-2" })
     @Html.DisplayFor(model => model.Surname, new { htmlAttributes = new { @class = "form-control" } })
+</div>
+<div class="form-group">
+    @Html.Label("Имя", htmlAttributes: new { @class = "control-label col-md-2" })
+    @Html.DisplayFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
 </div>
 <div class="form-group">
     @Html.Label("Отчество", htmlAttributes: new { @class = "control-label col-md-2" })
@@ -23,6 +23,5 @@
 </div>
 @Html.ActionLink("Редактировать", "Edit", routeValues: null, htmlAttributes: new { @class = "btn btn-light" })
 
-<hr />
-<h1>Панель администратора</h1>
+@Html.Action("Student")
 @Html.Action("Admin")

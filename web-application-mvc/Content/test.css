@@ -1,0 +1,23 @@
+﻿input[type="text"] {
+    margin-top: 10px;
+    padding: 5px;
+}
+
+.question {
+    border: 1px solid gray;
+    padding: 25px;
+    margin: 20px;
+}
+
+.description {
+    width: 300px;
+    height: 70px;
+}
+
+.btn-add-quest {
+    margin: 20px;
+}
+
+.variant {
+    margin: 15px 0;
+}

@@ -1,5 +1,6 @@
 ﻿using Application.Interfaces;
 using Microsoft.Owin.Security;
+using System;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -13,11 +14,13 @@ namespace web_application_mvc.Controllers
     {
         IUserService service;
         IRoleService roleService;
+        IActivityService activityService;
 
-        public AccountController(IUserService service, IRoleService roleService)
+        public AccountController(IUserService service, IRoleService roleService, IActivityService activityService)
         {
             this.service = service;
             this.roleService = roleService;
+            this.activityService = activityService;
         }
 
         private IAuthenticationManager AuthenticationManager
@@ -46,6 +49,16 @@ namespace web_application_mvc.Controllers
                 var authenticationResult = authService.SignIn(model);
                 if (authenticationResult.IsSuccess)
                 {
+                    Core.Activity firstActivity = activityService.GetAll().FirstOrDefault();
+                    Core.Activity lastActivity = activityService.GetAll().LastOrDefault();
+                    if(lastActivity.Date.Day != DateTime.Now.Day)
+                    {
+                        activityService.Create(new Core.Activity
+                        {
+                            Date = DateTime.Now,
+                            UserID = service.GetAll().FirstOrDefault(x => x.Email.Equals(model.Email)).ID
+                        });
+                    }                    
                     return RedirectToLocal(returnUrl);
                 }
                 ModelState.AddModelError("", authenticationResult.ErrorMessage);
@@ -87,6 +100,10 @@ namespace web_application_mvc.Controllers
         [ValidateAntiForgeryToken]
         public virtual ActionResult Register(RegisterViewModel model, string returnUrl)
         {
+            if (service.GetAll().FirstOrDefault(x => x.Email.Equals(model.Email)) != null)
+            {
+                ModelState.AddModelError("Email", "Данная электронная почта уже зарегистрирована");
+            }
             if (ModelState.IsValid)
             {
                 service.Create(new Core.User

@@ -1,22 +1,24 @@
 ﻿@model web_application_mvc.Models.TestVM
 
 <div class="container">
-    <div class="SelQuiz">
-
-        <div class="panel panel-default" style="width: 37%; margin: 20% 32%;">
-            <div class="panel-heading">Выберите тест</div>
-            <div class="panel-body">
-
-                @using (Html.BeginForm("Index", "Test", FormMethod.Post))
-                {
-                    @Html.DropDownListFor(model => model.ID, Model.Questions, new { @class = "form-control", @style = "margin-left:51px;" } )<br/>
-                    <button type="submit" id="Enter" class="btn btn-success btn-lg" style="width:100%;"><span class="glyphicon glyphicon-ok"></span>  Начать </button>
-                }
-
+    @if (Model.Questions.Count > 0)
+    {
+        <div class="SelQuiz">
+            <div class="panel panel-default" style="width: 37%; margin: 20% 32%;">
+                <div class="panel-heading">Выберите тест</div>
+                <div class="panel-body">
+                    @using (Html.BeginForm("Index", "Test", FormMethod.Post))
+                    {
+                        @Html.DropDownListFor(model => model.ID, Model.Questions, new { @class = "form-control", @style = "margin-left:51px;" })<br />
+                        <button type="submit" id="Enter" class="btn btn-success btn-lg" style="width:100%;"><span class="glyphicon glyphicon-ok"></span>  Начать </button>
+                    }
+                </div>
             </div>
         </div>
-
-    </div>
-
-</div>  <!-- END CONTAINER -->
-
+    }
+    else
+    {
+        @Html.Raw("У вас нет прав проходить тестирование. Свяжитесь с ")
+        @Html.ActionLink("администрацией", "Contacts", "Home", null, null)
+    }
+</div>

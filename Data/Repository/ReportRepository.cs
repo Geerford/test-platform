@@ -32,14 +32,12 @@ namespace Infrastructure.Data.Repository
         {
             return Database.Report.Where(x => x.ID == id)
                                   .Include(x => x.User)
-                                  .Include(x => x.Templates)
                                   .FirstOrDefault();
         }
 
         public IEnumerable<Report> GetAll()
         {
-            return Database.Report.Include(x => x.User)
-                                  .Include(x => x.Templates);
+            return Database.Report.Include(x => x.User);
         }
 
         public void Update(Report item)

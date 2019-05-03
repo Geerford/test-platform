@@ -1,104 +1,89 @@
 ﻿@model Core.User
 
-@{
-    ViewBag.Title = "Delete";
+<h3>Вы действительно хотите удалить данного пользователя?</h3>
+<dl class="dl-horizontal">
+    <dt>
+        @Html.Label("Фамилия")
+    </dt>
+    <dd>
+        @Html.DisplayFor(model => model.Surname)
+    </dd>
+    <dt>
+        @Html.Label("Имя")
+    </dt>
+    <dd>
+        @Html.DisplayFor(model => model.Name)
+    </dd>
+    <dt>
+        @Html.Label("Отчество")
+    </dt>
+    <dd>
+        @Html.DisplayFor(model => model.Midname)
+    </dd>
+    <dt>
+        @Html.Label("Группа")
+    </dt>
+    <dd>
+        @if (Model.Group != null)
+        {
+            @Html.ActionLink(Model.Group.Description, "Details", "Groups", new { id = Model.Group.ID }, null)
+        }
+    </dd>
+    <dt>
+        @Html.Label("Роль")
+    </dt>
+    <dd>
+        @if (Model.Role != null)
+        {
+            @Html.ActionLink(Model.Role.Value, "Details", "Roles", new { id = Model.Role.ID }, null)
+        }
+    </dd>
+    <dt>
+        @Html.Label("Электронная почта")
+    </dt>
+    <dd>
+        @Html.DisplayFor(model => model.Email)
+    </dd>
+    <dt>
+        @Html.Label("Пароль")
+    </dt>
+    <dd>
+        @Html.DisplayFor(model => model.Password)
+    </dd>
+    <dt>
+        @Html.Label("Телефон")
+    </dt>
+    <dd>
+        @Html.DisplayFor(model => model.Phone)
+    </dd>
+    <dt>
+        @Html.Label("Статус")
+    </dt>
+    <dd>
+        @if (Model.Status)
+        {
+            @Html.Raw("Активирован")
+        }
+        else
+        {
+            @Html.Raw("Деактивирован")
+        }
+    </dd>
+    <dt>
+        @Html.Label("Куратор")
+    </dt>
+    <dd>
+        @if (Model.CurrentCurator != null)
+        {
+            @Html.ActionLink(Model.CurrentCurator.User.Surname, "Details", "Users", new { id = Model.CurrentCurator.User.ID }, null)
+        }
+    </dd>
+</dl>
+
+@using (Html.BeginForm()) {
+    @Html.AntiForgeryToken()
+    <div class="form-actions no-color">
+        <input type="submit" value="Удалить" class="btn btn-default" /> |
+        @Html.ActionLink("Список пользователей", "Index")
+    </div>
 }
-
-<h2>Delete</h2>
-
-<h3>Are you sure you want to delete this?</h3>
-<div>
-    <h4>User</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.CurrentCurator.ID)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.CurrentCurator.ID)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Group.Description)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Group.Description)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Role.Description)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Role.Description)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Name)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Name)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Surname)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Surname)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Midname)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Midname)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Email)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Email)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Password)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Password)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Phone)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Phone)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Status)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Status)
-        </dd>
-
-    </dl>
-
-    @using (Html.BeginForm()) {
-        @Html.AntiForgeryToken()
-
-        <div class="form-actions no-color">
-            <input type="submit" value="Delete" class="btn btn-default" /> |
-            @Html.ActionLink("Back to List", "Index")
-        </div>
-    }
-</div>

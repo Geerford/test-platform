@@ -6,12 +6,12 @@ namespace Contracts
     {
         IEnumerable<T> GetAll();
 
-        T Get(int groupID, int sectionID);
+        T Get(int leftID, int rightID);
 
         void Create(T item);
 
         void Update(T item);
 
-        void Delete(int groupID, int sectionID);
+        void Delete(int leftID, int rightID);
     }
 }

@@ -1,0 +1,141 @@
+﻿@model web_application_mvc.Models.ReportViewModel
+
+<h2>Пользователь</h2>
+
+<dl class="dl-horizontal">
+    <dt>
+        @Html.Label("Имя")
+    </dt>
+    <dd>
+        @Html.ActionLink(Model.User.Name, "Details", "Users", new { id = Model.User.ID }, null)
+    </dd>
+    <dt>
+        @Html.Label("Фамилия")
+    </dt>
+    <dd>
+        @Html.ActionLink(Model.User.Surname, "Details", "Users", new { id = Model.User.ID }, null)
+    </dd>
+    <dt>
+        @Html.Label("Роль")
+    </dt>
+    <dd>
+        @Html.ActionLink(Model.User.Role.Value, "Details", "Users", new { id = Model.User.ID }, null)
+    </dd>
+    <dt>
+        @Html.Label("Статус")
+    </dt>
+    <dd>
+        @if (Model.User.Status)
+        {
+            @Html.ActionLink("Активен", "Details", "Users", new { id = Model.User.ID }, null)
+        }
+        else
+        {
+            @Html.ActionLink("Деактивирован", "Details", "Users", new { id = Model.User.ID }, null)
+        }
+    </dd>
+    <dt>
+        @Html.Label("Университет")
+    </dt>
+    <dd>
+        @Html.ActionLink(Model.User.Group.University, "Details", "Users", new { id = Model.User.Group.ID }, null)
+    </dd>
+    <dt>
+        @Html.Label("Факультет")
+    </dt>
+    <dd>
+        @Html.ActionLink(Model.User.Group.Department, "Details", "Group", new { id = Model.User.Group.ID }, null)
+    </dd>
+    <dt>
+        @Html.Label("Группа")
+    </dt>
+    <dd>
+        @Html.ActionLink(Model.User.Group.Description, "Details", "Group", new { id = Model.User.Group.ID }, null)
+    </dd>
+    <dt>
+        @Html.Label("Куратор")
+    </dt>
+    <dd>
+        @Html.ActionLink(Model.User.CurrentCurator.User.Name, "Details", "Users", new { id = Model.User.CurrentCurator.User.ID }, null)
+        @Html.ActionLink(Model.User.CurrentCurator.User.Surname, "Details", "Users", new { id = Model.User.CurrentCurator.User.ID }, null)
+    </dd>
+    <dt>
+        @Html.Label("Телефон")
+    </dt>
+    <dd>
+        @Html.ActionLink(Model.User.Phone, "Details", "Users", new { id = Model.User.Group.ID }, null)
+    </dd>
+    <dt>
+        @Html.Label("Электронная почта")
+    </dt>
+    <dd>
+        @Html.ActionLink(Model.User.Email, "Details", "Users", new { id = Model.User.Group.ID }, null)
+    </dd>
+</dl>
+<hr />
+<h2>Пройденные тесты</h2>
+<table class="table">
+    <tr>
+        <th>
+            @Html.Label("Название теста")
+        </th>
+        <th>
+            @Html.Label("Раздел")
+        </th>
+        <th>
+            @Html.Label("Оценка")
+        </th>
+    </tr>
+    @foreach (Core.Grade item in Model.Grades)
+    {
+        <tr>
+            <td>
+                @Html.ActionLink(item.Test.Title, "Details", "Tests", new { id = item.Test.ID }, null)
+            </td>
+            <td>
+                @Html.ActionLink(item.Test.Section.Description, "Details", "Sections", new { id = item.Test.Section.ID }, null)
+            </td>
+            <td>
+                @if (item.Value > 0.85)
+                {
+                    @Html.ActionLink("Отлично", "Details", "Tests", new { id = item.Test.ID }, null)
+                }
+                else
+                {
+                    if (item.Value <= 0.85 && item.Value > 0.7)
+                    {
+                        @Html.ActionLink("Хорошо", "Details", "Tests", new { id = item.Test.ID }, null)
+                    }
+                    else
+                    {
+                        if (item.Value <= 0.7 && item.Value > 0.4)
+                        {
+                            @Html.ActionLink("Удовлетворительно", "Details", "Tests", new { id = item.Test.ID }, null)
+                        }
+                        else
+                        {
+                            @Html.ActionLink("Неудовлетворительно", "Details", "Tests", new { id = item.Test.ID }, null)
+                        }
+                    }
+                }
+            </td>
+        </tr>
+    }
+</table>
+<hr />
+<h2>Посещения</h2>
+<table class="table">
+    <tr>
+        <th>
+            @Html.Label("Отметка")
+        </th>
+    </tr>
+    @foreach (Core.Activity item in Model.Activities)
+    {
+        <tr>
+            <td>
+                @Html.Raw(item.Date)
+            </td>
+        </tr>
+    }
+</table>

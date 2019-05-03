@@ -84,24 +84,45 @@ namespace Infrastructure.Data
                 User = student2
             });
             database.SaveChanges();
-            var report1 = new Report
-            {
-                Link = "Hyperlink#1",
-                User = student1
-            };
-            var report2 = new Report
-            {
-                Link = "Hyperlink#2",
-                User = student2
-            };
+            //var report1 = new Report
+            //{
+            //    Link = "Hyperlink#1",
+            //    User = student1
+            //};
+            //var report2 = new Report
+            //{
+            //    Link = "Hyperlink#2",
+            //    User = student2
+            //};
             database.Template.Add(new Template
             {
-                Description = "Description#1",
-                Reports = new List<Report>
-                {
-                    report1, report2
-                }
+                Description = "Description#1"
             });
+            database.Template.Add(new Template
+            {
+                Description = "Description#2"
+            });
+            //database.ReportQA.Add(new ReportQA
+            //{
+            //    Report = report1,
+            //    Template = template1
+            //});
+            //database.ReportQA.Add(new ReportQA
+            //{
+            //    Report = report1,
+            //    Template = template2
+            //});
+            //database.ReportQA.Add(new ReportQA
+            //{
+            //    Report = report2,
+            //    Template = template1
+            //});
+            //database.ReportQA.Add(new ReportQA
+            //{
+            //    Report = report2,
+            //    Template = template2
+            //});
+
 
             database.Curator.Add(new Curator
             {
@@ -115,12 +136,12 @@ namespace Infrastructure.Data
             database.SaveChanges();
             var type1 = new Core.Type
             {
-                Desription = "Данный тип предназначен для выбора одного из правильных ответов",
+                Description = "Данный тип предназначен для выбора одного из правильных ответов",
                 Status = "Выбор ответа"
             };
             var type2 = new Core.Type
             {
-                Desription = "Данный тип предназначен для ввода ответа",
+                Description = "Данный тип предназначен для ввода ответа",
                 Status = "Ввод ответа"
             };
 

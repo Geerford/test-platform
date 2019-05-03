@@ -1,4 +1,5 @@
 ﻿using Application.Interfaces;
+using Core;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
@@ -10,25 +11,63 @@ namespace web_application_mvc.Controllers
     [Authorize]
     public class TestController : Controller
     {
-
         ITestService testService;
         IQuestionService questionService;
         IGradeService gradeService;
         IUserService userService;
+        IGroupSectionService groupSectionService;
+        ISectionService sectionService;
 
-        public TestController(ITestService testService, IQuestionService questionService, IGradeService gradeService, IUserService userService)
+        public TestController(ITestService testService, IQuestionService questionService, IGradeService gradeService, 
+            IUserService userService, IGroupSectionService groupSectionService, ISectionService sectionService)
         {
             this.testService = testService;
             this.questionService = questionService;
             this.gradeService = gradeService;
             this.userService = userService;
+            this.groupSectionService = groupSectionService;
+            this.sectionService = sectionService;
         }
 
         [HttpGet]
         public ActionResult Index()
         {
             TestVM quiz = new TestVM();
-            quiz.Questions = testService.GetAll().Select(q => new SelectListItem
+            var identity = (ClaimsIdentity)User.Identity;
+            var id = identity.Claims.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier).Value;
+            var user = userService.Get(int.Parse(id));
+            List<GroupSection> groupSections = new List<GroupSection>();
+            if(user.GroupID != null)
+            {
+                groupSections.AddRange(groupSectionService.GetAll().Where(x => x.GroupID == user.GroupID));
+            }
+            //Section by group
+            List<Section> sections = new List<Section>();
+            foreach(var item in sectionService.GetAll())
+            {
+                for(int i = 0; i < groupSections.Count; i++)
+                {
+                    if(item.ID == groupSections[i].SectionID)
+                    {
+                        sections.Add(item);
+                        groupSections.Remove(groupSections[i]);
+                    }
+                }
+            }
+            List<Test> tests = new List<Test>();
+            foreach(var item in testService.GetAll())
+            {
+                for(int i = 0; i < sections.Count; i++)
+                {
+                    if(item.SectionID == sections[i].ID)
+                    {
+                        tests.Add(item);
+                        sections.Remove(sections[i]);
+                    }
+                }
+            }
+
+            quiz.Questions = tests.Select(q => new SelectListItem
             {
                 Text = q.Title,
                 Value = q.ID.ToString()
@@ -142,6 +181,18 @@ namespace web_application_mvc.Controllers
                 gradeService.Create(grade);
             }
             return Json(new { result = finalResultQuiz }, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpGet]
+        public ActionResult Create()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult Create(List<Question> questions)
+        {
+            return View();
         }
     }    
 }

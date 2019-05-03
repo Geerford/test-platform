@@ -1,42 +1,65 @@
-﻿@model Core.Test
+﻿@model web_application_mvc.Models.TestViewModel
 
-@{
-    ViewBag.Title = "Details";
+<h2>Тест</h2>
+<dl class="dl-horizontal">
+    <dt>
+        @Html.Label("Название")
+    </dt>
+    <dd>
+        @Html.DisplayFor(model => model.Test.Title)
+    </dd>
+    <dt>
+        @Html.Label("Описание")
+    </dt>
+    <dd>
+        @Html.DisplayFor(model => model.Test.Description)
+    </dd>
+    <dt>
+        @Html.Label("Раздел")
+    </dt>
+    <dd>
+        @Html.ActionLink(Model.Test.Section.Description, "Details", "Sections", new { id = Model.Test.Section.ID }, null)
+    </dd>
+</dl>
+@if (Model.Questions != null && Model.Questions.Count() > 0)
+{
+    <table class="table">
+        <tr>
+            <th>
+                @Html.Label("Вопрос")
+            </th>
+            <th>
+                @Html.Label("Тип вопроса")
+            </th>
+            <th>
+                @Html.Label("Ответ")
+            </th>
+        </tr>
+        @foreach (Core.Question item in Model.Questions)
+        {
+            <tr>
+                <td>
+                    @Html.Raw(item.Description)
+                </td>
+                <td>
+                    @Html.Raw(item.Type.Status)
+                </td>
+                <td>
+                    @foreach (Core.Answer answer in item.Answers)
+                    {
+                        if (answer.Correct)
+                        {
+                            @Html.Raw(answer.Desctiption)
+                        }
+                    }
+                </td>
+            </tr>
+        }
+    </table>
 }
 
-<h2>Details</h2>
-
-<div>
-    <h4>Test</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Section.Description)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Section.Description)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Title)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Title)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Description)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Description)
-        </dd>
-
-    </dl>
-</div>
+<hr />
 <p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.ID }) |
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("Редактировать тест", "Edit", new { id = Model.Test.ID }) |
+    @Html.ActionLink("Список тестов", "Index")
 </p>

@@ -1,7 +1,9 @@
-﻿using System.Net;
+﻿using System.Linq;
+using System.Net;
 using System.Web.Mvc;
 using Application.Interfaces;
 using Core;
+using web_application_mvc.Models;
 
 namespace web_application_mvc.Controllers
 {
@@ -9,11 +11,13 @@ namespace web_application_mvc.Controllers
     {
         ITestService testService;
         ISectionService sectionService;
+        IQuestionService questionService;
 
-        public TestsController(ITestService testService, ISectionService sectionService)
+        public TestsController(ITestService testService, ISectionService sectionService, IQuestionService questionService)
         {
             this.testService = testService;
             this.sectionService = sectionService;
+            this.questionService = questionService;
         }
 
         // GET: Tests
@@ -34,7 +38,12 @@ namespace web_application_mvc.Controllers
             {
                 return HttpNotFound();
             }
-            return View(test);
+            TestViewModel model = new TestViewModel
+            {
+                Test = test,
+                Questions = questionService.GetAll().Where(x => x.TestID == id)
+            };
+            return View(model);
         }
 
         // GET: Tests/Create
@@ -101,7 +110,12 @@ namespace web_application_mvc.Controllers
             {
                 return HttpNotFound();
             }
-            return View(test);
+            TestViewModel model = new TestViewModel
+            {
+                Test = test,
+                Questions = questionService.GetAll().Where(x => x.TestID == id)
+            };
+            return View(model);
         }
 
         // POST: Tests/Delete/5

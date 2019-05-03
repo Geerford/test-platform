@@ -1,4 +1,5 @@
-﻿using System.Net;
+﻿using System.Linq;
+using System.Net;
 using System.Web.Mvc;
 using Application.Interfaces;
 using Core;
@@ -40,7 +41,7 @@ namespace web_application_mvc.Controllers
         // GET: Activities/Create
         public ActionResult Create()
         {
-            ViewBag.UserID = new SelectList(userService.GetAll(), "ID", "Name");
+            ViewBag.UserID = new SelectList(userService.GetAll().Where(x => x.Role.Value.Equals("Студент")), "ID", "Name");
             return View();
         }
 
@@ -55,7 +56,7 @@ namespace web_application_mvc.Controllers
                 return RedirectToAction("Index");
             }
 
-            ViewBag.UserID = new SelectList(userService.GetAll(), "ID", "Name", activity.UserID);
+            ViewBag.UserID = new SelectList(userService.GetAll().Where(x => x.Role.Value.Equals("Студент")), "ID", "Name");
             return View(activity);
         }
 
@@ -85,7 +86,7 @@ namespace web_application_mvc.Controllers
                 activityService.Edit(activity);
                 return RedirectToAction("Index");
             }
-            ViewBag.UserID = new SelectList(userService.GetAll(), "ID", "Name", activity.UserID);
+            ViewBag.UserID = new SelectList(userService.GetAll().Where(x => x.Role.Value.Equals("Студент")), "ID", "Name");
             return View(activity);
         }
 

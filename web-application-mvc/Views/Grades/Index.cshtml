@@ -1,45 +1,64 @@
 ﻿@model IEnumerable<Core.Grade>
 
-@{
-    ViewBag.Title = "Index";
-}
-
-<h2>Index</h2>
-
+<h2>Оценки</h2>
 <p>
-    @Html.ActionLink("Create New", "Create")
+    @Html.ActionLink("Добавить", "Create")
 </p>
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.Test.Title)
+            @Html.Label("Название теста")
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.User.Name)
+            @Html.Label("ФИО студента")
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Value)
+            @Html.Label("Оценка за тест")
         </th>
-        <th></th>
+        <th>
+            @Html.Label("Действия")
+        </th>
     </tr>
-
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Test.Title)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.User.Name)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Value)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.ID }) |
-            @Html.ActionLink("Details", "Details", new { id=item.ID }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.ID })
-        </td>
-    </tr>
-}
-
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.ActionLink(item.Test.Title, "Details", new { id = item.ID })
+            </td>
+            <td>
+                @Html.ActionLink(item.User.Surname, "Details", new { id = item.ID })
+                @Html.ActionLink(item.User.Name, "Details", new { id = item.ID })
+                @Html.ActionLink(item.User.Midname, "Details", new { id = item.ID })
+            </td>
+            <td>
+                @if (item.Value > 0.85)
+                {
+                    @Html.ActionLink("Отлично", "Details", new { id = item.ID })
+                }
+                else
+                {
+                    if (item.Value <= 0.85 && item.Value > 0.7)
+                    {
+                        @Html.ActionLink("Хорошо", "Details", new { id = item.ID })
+                    }
+                    else
+                    {
+                        if (item.Value <= 0.7 && item.Value > 0.4)
+                        {
+                            @Html.ActionLink("Удовлетворительно", "Details", new { id = item.ID })
+                        }
+                        else
+                        {
+                            @Html.ActionLink("Неудовлетворительно", "Details", new { id = item.ID })
+                        }
+                    }
+                }
+            </td>
+            <td>
+                @Html.ActionLink("Редактировать", "Edit", new { id = item.ID }) |
+                @Html.ActionLink("Подробнее", "Details", new { id = item.ID }) |
+                @Html.ActionLink("Удалить", "Delete", new { id = item.ID })
+            </td>
+        </tr>
+    }
 </table>

@@ -1,0 +1,92 @@
+﻿@model List<Core.User>
+
+<div class="container">
+    @using (Ajax.BeginForm("Search", "Statistics", new AjaxOptions { }, new { @style = "width=100%" }))
+    {
+        <input class="form-control form-control-lg" type="text" name="query"
+               placeholder="Введите поисковый запрос..." autocomplete="off" />
+        <input class="btn btn-primary btn-lg" type="submit" value="Поиск" />
+    }
+    <h2 class="mt-5">Поиск по запросу : @ViewBag.Query</h2>
+</div>
+<hr />
+@if (Model == null)
+{
+    <p class="container">Ничего не найдено</p>
+}
+else
+{
+    <h3 class="container">Найдено студентов: <span> @Model.Count</span></h3>
+
+    <table class="table">
+        <tr>
+            <th>
+                @Html.Label("Имя")
+            </th>
+            <th>
+                @Html.Label("Фамилия")
+            </th>
+            <th>
+                @Html.Label("Роль")
+            </th>
+            <th>
+                @Html.Label("Статус")
+            </th>
+            <th>
+                @Html.Label("Университет")
+            </th>
+            <th>
+                @Html.Label("Факультет")
+            </th>
+            <th>
+                @Html.Label("Группа")
+            </th>
+            <th>
+                @Html.Label("Куратор")
+            </th>
+            <th>
+                @Html.Label("Действия")
+            </th>
+        </tr>
+        @foreach (Core.User item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.ActionLink(item.Name, "Details", "Users", new { id = item.ID }, null)
+                </td>
+                <td>
+                    @Html.ActionLink(item.Surname, "Details", "Users", new { id = item.ID }, null)
+                </td>
+                <td>
+                    @Html.ActionLink(item.Role.Value, "Details", "Users", new { id = item.ID }, null)
+                </td>
+                <td>
+                    @if (item.Status)
+                    {
+                        @Html.ActionLink("Активен", "Details", "Users", new { id = item.ID }, null)
+                    }
+                    else
+                    {
+                        @Html.ActionLink("Деактивирован", "Details", "Users", new { id = item.ID }, null)
+                    }
+                </td>
+                <td>
+                    @Html.ActionLink(item.Group.University, "Details", "Users", new { id = item.Group.ID }, null)
+                </td>
+                <td>
+                    @Html.ActionLink(item.Group.Department, "Details", "Groups", new { id = item.Group.ID }, null)
+                </td>
+                <td>
+                    @Html.ActionLink(item.Group.Description, "Details", "Groups", new { id = item.Group.ID }, null)
+                </td>
+                <td>
+                    @Html.ActionLink(item.CurrentCurator.User.Name, "Details", "Users", new { id = item.CurrentCurator.User.ID }, null)
+                    @Html.ActionLink(item.CurrentCurator.User.Surname, "Details", "Users", new { id = item.CurrentCurator.User.ID }, null)
+                </td>
+                <td>
+                    @Html.ActionLink("Получить отчет", "Report", "Statistics", new { id = item.ID }, null)
+                </td>
+            </tr>
+        }
+    </table>
+}

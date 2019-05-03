@@ -1,17 +1,23 @@
-﻿using System.Net;
+﻿using System.Linq;
+using System.Net;
 using System.Web.Mvc;
 using Application.Interfaces;
 using Core;
+using web_application_mvc.Models;
 
 namespace web_application_mvc.Controllers
 {
     public class SectionsController : Controller
     {
         ISectionService sectionService;
+        ICourseService courseService;
+        ITestService testService;
 
-        public SectionsController(ISectionService sectionService)
+        public SectionsController(ISectionService sectionService, ICourseService courseService, ITestService testService)
         {
             this.sectionService = sectionService;
+            this.courseService = courseService;
+            this.testService = testService;
         }
 
         // GET: Sections

@@ -42,6 +42,8 @@ namespace Infrastructure.Data
 
         private GroupSectionRepository GroupSectionRepository;
 
+        private ReportQARepository ReportQARepository;
+
         public UnitOfWork(string connectionString)
         {
             Database = new Context(connectionString);
@@ -224,6 +226,18 @@ namespace Infrastructure.Data
                     GroupSectionRepository = new GroupSectionRepository(Database);
                 }
                 return GroupSectionRepository;
+            }
+        }
+
+        public IMMRepository<ReportQA> ReportQA
+        {
+            get
+            {
+                if (ReportQARepository == null)
+                {
+                    ReportQARepository = new ReportQARepository(Database);
+                }
+                return ReportQARepository;
             }
         }
 

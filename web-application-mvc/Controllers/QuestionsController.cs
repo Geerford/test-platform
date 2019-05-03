@@ -43,7 +43,7 @@ namespace web_application_mvc.Controllers
         public ActionResult Create()
         {
             ViewBag.TestID = new SelectList(testService.GetAll(), "ID", "Title");
-            ViewBag.TypeID = new SelectList(typeService.GetAll(), "ID", "Desription");
+            ViewBag.TypeID = new SelectList(typeService.GetAll(), "ID", "Description");
             return View();
         }
 
@@ -58,7 +58,7 @@ namespace web_application_mvc.Controllers
                 return RedirectToAction("Index");
             }
             ViewBag.TestID = new SelectList(testService.GetAll(), "ID", "Title", question.TestID);
-            ViewBag.TypeID = new SelectList(typeService.GetAll(), "ID", "Desription", question.TypeID);
+            ViewBag.TypeID = new SelectList(typeService.GetAll(), "ID", "Description", question.TypeID);
             return View(question);
         }
 
@@ -75,7 +75,7 @@ namespace web_application_mvc.Controllers
                 return HttpNotFound();
             }
             ViewBag.TestID = new SelectList(testService.GetAll(), "ID", "Title", question.TestID);
-            ViewBag.TypeID = new SelectList(typeService.GetAll(), "ID", "Desription", question.TypeID);
+            ViewBag.TypeID = new SelectList(typeService.GetAll(), "ID", "Description", question.TypeID);
             return View(question);
         }
 
@@ -90,7 +90,7 @@ namespace web_application_mvc.Controllers
                 return RedirectToAction("Index");
             }
             ViewBag.TestID = new SelectList(testService.GetAll(), "ID", "Title", question.TestID);
-            ViewBag.TypeID = new SelectList(typeService.GetAll(), "ID", "Desription", question.TypeID);
+            ViewBag.TypeID = new SelectList(typeService.GetAll(), "ID", "Description", question.TypeID);
             return View(question);
         }
 

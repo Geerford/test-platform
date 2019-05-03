@@ -1,34 +1,54 @@
-﻿@model Core.Type
+﻿@model web_application_mvc.Models.TypeViewModel
 
-@{
-    ViewBag.Title = "Details";
+<h2>Тип вопроса</h2>
+<hr />
+<dl class="dl-horizontal">
+    <dt>
+        @Html.Label("Название")
+    </dt>
+    <dd>
+        @Html.DisplayFor(model => model.Type.Status)
+    </dd>
+    <dt>
+        @Html.Label("Описание")
+    </dt>
+    <dd>
+        @Html.DisplayFor(model => model.Type.Description)
+    </dd>
+</dl>
+@if (Model.Questions != null && Model.Questions.Count() > 0)
+{
+    <h2>Вопросы</h2>
+    <table class="table">
+        <tr>
+            <th>
+                @Html.Label("Вопрос")
+            </th>
+            <th>
+                @Html.Label("Ответ")
+            </th>
+        </tr>
+        @foreach (Core.Question item in Model.Questions)
+        {
+            <tr>
+                <td>
+                    @Html.Raw(item.Description)
+                </td>
+                <td>
+                    @foreach (Core.Answer answer in item.Answers)
+                    {
+                        if (answer.Correct)
+                        {
+                            @Html.Raw(answer.Desctiption)
+                        }
+                    }
+                </td>
+            </tr>
+        }
+    </table>
 }
-
-<h2>Details</h2>
-
-<div>
-    <h4>Type</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Desription)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Desription)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Status)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Status)
-        </dd>
-
-    </dl>
-</div>
+<hr />
 <p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.ID }) |
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("Редактировать", "Edit", new { id = Model.Type.ID }) |
+    @Html.ActionLink("Список типов вопроса", "Index")
 </p>

@@ -62,6 +62,7 @@
     <Compile Include="Repository\GroupRepository.cs" />
     <Compile Include="Repository\GroupSectionRepository.cs" />
     <Compile Include="Repository\QuestionRepository.cs" />
+    <Compile Include="Repository\ReportQARepository.cs" />
     <Compile Include="Repository\ReportRepository.cs" />
     <Compile Include="Repository\RoleRepository.cs" />
     <Compile Include="Repository\SectionRepository.cs" />

@@ -36,6 +36,8 @@ namespace Interfaces
 
         IMMRepository<GroupSection> GroupSection { get; }
 
+        IMMRepository<ReportQA> ReportQA { get; }
+
         void Save();
     }
 }

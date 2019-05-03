@@ -54,6 +54,7 @@
     <Compile Include="Service\GroupSectionService.cs" />
     <Compile Include="Service\GroupService.cs" />
     <Compile Include="Service\QuestionService.cs" />
+    <Compile Include="Service\ReportQAService.cs" />
     <Compile Include="Service\ReportService.cs" />
     <Compile Include="Service\RoleService.cs" />
     <Compile Include="Service\SectionService.cs" />

@@ -24,9 +24,9 @@ namespace Core
 
         public virtual Curator Curator { get; set; }
         
-        public int RoleID { get; set; }
+        public virtual int? RoleID { get; set; }
 
-        public Role Role { get; set; }
+        public virtual Role Role { get; set; }
 
         public virtual Report Report { get; set; }
 

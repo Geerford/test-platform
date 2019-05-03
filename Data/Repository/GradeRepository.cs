@@ -32,6 +32,7 @@ namespace Infrastructure.Data.Repository
         {
             return Database.Grade.Where(x => x.ID == id)
                                  .Include(x => x.Test)
+                                 .Include(x => x.Test.Section)
                                  .Include(x => x.User)
                                  .FirstOrDefault();
         }
@@ -39,6 +40,7 @@ namespace Infrastructure.Data.Repository
         public IEnumerable<Grade> GetAll()
         {
             return Database.Grade.Include(x => x.Test)
+                                 .Include(x => x.Test.Section)
                                  .Include(x => x.User);
         }
 

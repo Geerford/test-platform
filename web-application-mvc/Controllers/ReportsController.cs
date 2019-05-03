@@ -12,6 +12,7 @@ using web_application_mvc.Models;
 
 namespace web_application_mvc.Controllers
 {
+    [Authorize(Roles = "Администратор")]
     public class ReportsController : Controller
     {
         IReportService reportService;
@@ -78,19 +79,35 @@ namespace web_application_mvc.Controllers
         {
             if (ModelState.IsValid)
             {
+                string path = System.Web.HttpContext.Current.Server.MapPath("~/Content/Uploads/");
+                if (System.IO.File.Exists(path + report.ReportLink))
+                {
+                    System.IO.File.Delete(path + report.ReportLink);
+                }
                 List<Grade> grades = gradeService.GetAll().Where(x => x.UserID == report.ID).ToList();
                 double gradeAVG = grades.Select(y => y.Value).Sum() / grades.Count;
                 var student = userService.Get(report.ID);
                 double period = (student.Group.End - student.Group.Start).TotalDays;
                 int count = activityService.GetAll().Where(x => x.User.ID == report.ID).Count();
-                double percent = (count / period) * 100;
-
+                double percent = 0;
+                if (period > 0)
+                {
+                    percent = (count / period) * 100;
+                }
                 Report result = new Report
                 {
                     Link = CreatePDF(student, gradeAVG, percent, report.Templates)
                 };
                 student.Report = result;
                 userService.Edit(student);
+                if(report.ReportID != 0)
+                {
+                    reportService.Delete(reportService.Get(report.ReportID));
+                }
+                foreach (var item in reportQAService.GetAll().Where(x => x.ReportID == report.ReportID).ToList())
+                {
+                    reportQAService.Delete(item);
+                }
                 foreach (var item in report.Templates)
                 {
                     reportQAService.Create(new ReportQA
@@ -151,8 +168,11 @@ namespace web_application_mvc.Controllers
                 var student = userService.Get(report.ID);
                 double period = (student.Group.End - student.Group.Start).TotalDays;
                 int count = activityService.GetAll().Where(x => x.User.ID == report.ID).Count();
-                double percent = (count / period) * 100;
-
+                double percent = 0;
+                if (period > 0)
+                {
+                    percent = (count / period) * 100;
+                }
                 Report result = new Report
                 {
                     ID = report.ReportID,
@@ -229,7 +249,7 @@ namespace web_application_mvc.Controllers
             PdfWriter.GetInstance(document, new FileStream(path, FileMode.Create));
             document.Open();
             
-            document.Add(new Paragraph(new Phrase($"Отчет по практике с {student.Group.Start} по {student.Group.End}", fontBase))
+            document.Add(new Paragraph(new Phrase($"Отчет по практике с {student.Group.Start.ToShortDateString()} по {student.Group.End.ToShortDateString()}", fontBase))
             {
                 Alignment = Element.ALIGN_CENTER
             });
@@ -259,13 +279,6 @@ namespace web_application_mvc.Controllers
             };
             table.DefaultCell.BorderWidth = 0;
             table.DefaultCell.HasBorder(iTextSharp.text.Rectangle.NO_BORDER);
-            table.AddCell(new PdfPCell
-            {
-                Padding = 15,
-                Colspan = 2,
-                BorderColor = BaseColor.WHITE,
-                BorderWidth = 0
-            });
             PdfPCell cellHeader1 = new PdfPCell(new Phrase("Критерий", fontHeader))
             {
                 Padding = 2,
@@ -288,8 +301,8 @@ namespace web_application_mvc.Controllers
             {
                 PdfPCell cellTemplate = new PdfPCell(new Phrase(template.Key, fontBase))
                 {
-                    Padding = 2,
-                    HorizontalAlignment = Element.ALIGN_JUSTIFIED,
+                    Padding = 10,
+                    HorizontalAlignment = Element.ALIGN_LEFT,
                     VerticalAlignment = Element.ALIGN_MIDDLE,
                     BorderColor = BaseColor.WHITE,
                     BorderWidth = 0
@@ -297,7 +310,7 @@ namespace web_application_mvc.Controllers
                 table.AddCell(cellTemplate);
                 PdfPCell cellAnswer = new PdfPCell(new Phrase(template.Value, fontBase))
                 {
-                    Padding = 2,
+                    Padding = 10,
                     HorizontalAlignment = Element.ALIGN_JUSTIFIED,
                     VerticalAlignment = Element.ALIGN_MIDDLE,
                     BorderColor = BaseColor.WHITE,
@@ -305,6 +318,45 @@ namespace web_application_mvc.Controllers
                 };
                 table.AddCell(cellAnswer);
             }
+            //ACTIVITY PERCENT
+            PdfPCell cellActivity = new PdfPCell(new Phrase($"Посещаемость студента составила", fontBase))
+            {
+                Padding = 10,
+                HorizontalAlignment = Element.ALIGN_JUSTIFIED,
+                VerticalAlignment = Element.ALIGN_MIDDLE,
+                BorderColor = BaseColor.WHITE,
+                BorderWidth = 0
+            };
+            table.AddCell(cellActivity);
+            PdfPCell cellActivityBase = new PdfPCell(new Phrase($"{(int)percent}%", fontBase))
+            {
+                Padding = 10,
+                HorizontalAlignment = Element.ALIGN_JUSTIFIED,
+                VerticalAlignment = Element.ALIGN_MIDDLE,
+                BorderColor = BaseColor.WHITE,
+                BorderWidth = 0
+            };
+            table.AddCell(cellActivityBase);
+            //AVG GRADE
+            PdfPCell cellGrade = new PdfPCell(new Phrase("Средняя оценка по тестированию составяет", fontBase))
+            {
+                Padding = 10,
+                HorizontalAlignment = Element.ALIGN_JUSTIFIED,
+                VerticalAlignment = Element.ALIGN_MIDDLE,
+                BorderColor = BaseColor.WHITE,
+                BorderWidth = 0
+            };
+            table.AddCell(cellGrade);
+            int coef = 5;
+            PdfPCell cellGradeBase = new PdfPCell(new Phrase($"{grade * coef}", fontBase))
+            {
+                Padding = 10,
+                HorizontalAlignment = Element.ALIGN_JUSTIFIED,
+                VerticalAlignment = Element.ALIGN_MIDDLE,
+                BorderColor = BaseColor.WHITE,
+                BorderWidth = 0
+            };
+            table.AddCell(cellGradeBase);
             document.Add(new Paragraph(70, "\u00a0"));
             document.Add(table);
             document.Close();

@@ -10,10 +10,10 @@
             @Html.Label("Описание")
         </th>
         <th>
-            @Html.Label("Ссылка")
+            @Html.Label("Раздел")
         </th>
         <th>
-            @Html.Label("Раздел")
+            @Html.Label("Ссылка")
         </th>
         <th>
             @Html.Label("Действия")
@@ -24,10 +24,10 @@
     {
         <tr>
             <td>
-                @Html.ActionLink(item.Section.Description, "Details", new { id = item.ID })
+                @Html.ActionLink(item.Description, "Details", new { id = item.ID })
             </td>
             <td>
-                @Html.ActionLink(item.Description, "Details", new { id = item.ID })
+                @Html.ActionLink(item.Section.Description, "Details", new { id = item.ID })
             </td>
             <td>
                 @Html.ActionLink(item.Link, "Details", new { id = item.ID })

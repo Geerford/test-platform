@@ -1,11 +1,11 @@
-﻿using System.Linq;
-using System.Net;
+﻿using System.Net;
 using System.Web.Mvc;
 using Application.Interfaces;
 using Core;
 
 namespace web_application_mvc.Controllers
 {
+    [Authorize(Roles = "Администратор")]
     public class UsersController : Controller
     {
         IUserService userService;

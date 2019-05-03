@@ -4,9 +4,11 @@ using System.Web;
 using System.Web.Mvc;
 using Application.Interfaces;
 using Core;
+using web_application_mvc.App_Start;
 
 namespace web_application_mvc.Controllers
 {
+    [Authorize(Roles = "Администратор")]
     public class CoursesController : Controller
     {
         ICourseService courseService;

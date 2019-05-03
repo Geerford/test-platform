@@ -1,8 +1,9 @@
 ﻿<div class="container">
-    @using (Ajax.BeginForm("Search", "Statistics", new AjaxOptions { }, new { @style = "width=100%" }))
+    @using (Ajax.BeginForm("Search", "Statistics", new AjaxOptions { }, new { }))
     {
         <input class="form-control form-control-lg" type="text" name="query"
                placeholder="Введите поисковый запрос..." autocomplete="off" />
-        <input class="btn btn-primary btn-lg" type="submit" value="Поиск" />
+        <input class="btn btn-default" type="submit" value="Поиск" />
+        @Html.ActionLink("Сформировать отчет", "Index", "Reports", null, new { @class = "btn btn-default" })
     }
 </div>

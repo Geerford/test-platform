@@ -6,6 +6,7 @@ using web_application_mvc.Models;
 
 namespace web_application_mvc.Controllers
 {
+    [Authorize(Roles = "Администратор")]
     public class TypesController : Controller
     {
         ITypeService typeService;

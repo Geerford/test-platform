@@ -184,12 +184,14 @@ namespace web_application_mvc.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = "Администратор")]
         public ActionResult Create()
         {
             return View();
         }
 
         [HttpPost]
+        [Authorize(Roles = "Администратор")]
         public ActionResult Create(List<Question> questions)
         {
             return View();

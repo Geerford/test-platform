@@ -10,16 +10,16 @@
         @Html.DisplayFor(model => model.Description)
     </dd>
     <dt>
-        @Html.Label("Ссылка")
-    </dt>
-    <dd>
-        @Html.ActionLink(Model.Link, "Uploads/" + Model.Link, "Content")
-    </dd>
-    <dt>
         @Html.Label("Раздел")
     </dt>
     <dd>
         @Html.ActionLink(Model.Section.Description, "Details", "Sections", new { id = Model.Section.ID }, null)
+    </dd>
+    <dt>
+        @Html.Label("Ссылка")
+    </dt>
+    <dd>
+        @Html.ActionLink(Model.Link, "Uploads/" + Model.Link, "Content")
     </dd>
 </dl>
 <p>

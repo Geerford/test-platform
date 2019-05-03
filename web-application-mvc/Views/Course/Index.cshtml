@@ -1,0 +1,31 @@
+﻿@model IEnumerable<Core.Course>
+
+<h2>Лекции</h2>
+<table class="table">
+    <tr>
+        <th>
+            @Html.Label("Описание")
+        </th>
+        <th>
+            @Html.Label("Раздел")
+        </th>
+        <th>
+            @Html.Label("Ссылка")
+        </th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.Raw(item.Description)
+            </td>
+            <td>
+                @Html.Raw(item.Section.Description)
+            </td>
+            <td>
+                @Html.ActionLink(item.Link, "Uploads/" + item.Link, "Content")
+            </td>
+        </tr>
+    }
+</table>

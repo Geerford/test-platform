@@ -17,7 +17,7 @@
 else
 {
     <h3 class="container">Найдено студентов: <span> @Model.Count</span></h3>
-
+    @Html.ActionLink("Сформировать отчет", "Index", "Reports")
     <table class="table">
         <tr>
             <th>
@@ -84,7 +84,7 @@ else
                     @Html.ActionLink(item.CurrentCurator.User.Surname, "Details", "Users", new { id = item.CurrentCurator.User.ID }, null)
                 </td>
                 <td>
-                    @Html.ActionLink("Получить отчет", "Report", "Statistics", new { id = item.ID }, null)
+                    @Html.ActionLink("Статистика", "Report", "Statistics", new { id = item.ID }, null)
                 </td>
             </tr>
         }

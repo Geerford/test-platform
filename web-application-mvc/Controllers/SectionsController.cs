@@ -1,12 +1,11 @@
-﻿using System.Linq;
-using System.Net;
+﻿using System.Net;
 using System.Web.Mvc;
 using Application.Interfaces;
 using Core;
-using web_application_mvc.Models;
 
 namespace web_application_mvc.Controllers
 {
+    [Authorize(Roles = "Администратор")]
     public class SectionsController : Controller
     {
         ISectionService sectionService;

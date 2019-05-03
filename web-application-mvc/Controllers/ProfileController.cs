@@ -8,6 +8,7 @@ using web_application_mvc.Models;
 
 namespace web_application_mvc.Controllers
 {
+    [Authorize]
     public class ProfileController : Controller
     {
         IUserService userService;
@@ -22,7 +23,6 @@ namespace web_application_mvc.Controllers
         }
 
         // GET: Profile
-        [Authorize]
         public ActionResult Index()
         {
             var identity = (ClaimsIdentity)User.Identity;
@@ -35,7 +35,6 @@ namespace web_application_mvc.Controllers
             return View(user);
         }
 
-        [Authorize]
         public ActionResult Edit()
         {
             var identity = (ClaimsIdentity)User.Identity;
@@ -61,13 +60,13 @@ namespace web_application_mvc.Controllers
             return View(user);
         }
 
-        [Authorize]
+        [Authorize(Roles = "Администратор")]
         public ActionResult Admin()
         {
             return PartialView("_AdminPartial");
         }
 
-        [Authorize]
+        [Authorize(Roles = "Студент")]
         public ActionResult Student()
         {
             var identity = (ClaimsIdentity)User.Identity;

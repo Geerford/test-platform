@@ -6,6 +6,7 @@ using Core;
 
 namespace web_application_mvc.Controllers
 {
+    [Authorize(Roles = "Администратор")]
     public class ActivitiesController : Controller
     {
         IActivityService activityService;

@@ -22,7 +22,7 @@ namespace Infrastructure.Data
             var roleAdmin = new Role
             {
                 Description = "Администратор системы",
-                Value = "Admin"
+                Value = "Администратор"
             };
             var group1 = new Group
             {
@@ -30,7 +30,7 @@ namespace Infrastructure.Data
                 Department = "ИнПИТ",
                 University = "СГТУ",
                 Start = DateTime.Now,
-                End = DateTime.Now
+                End = DateTime.Now.AddDays(30)
             };
             var student1 = new User
             {
@@ -67,9 +67,21 @@ namespace Infrastructure.Data
                 Status = true,
                 Surname = "Иванов"
             };
+            var admin = new User
+            {
+                Email = "email@gmail.com",
+                Midname = "Сергеевич",
+                Name = "Денис",
+                Password = "pass",
+                Phone = "+79022402402",
+                Role = roleAdmin,
+                Status = true,
+                Surname = "Еременко"
+            };
             database.User.Add(student1);
             database.User.Add(student2);
             database.User.Add(curator1);
+            database.User.Add(admin);
 
             database.SaveChanges();
 
@@ -84,45 +96,22 @@ namespace Infrastructure.Data
                 User = student2
             });
             database.SaveChanges();
-            //var report1 = new Report
-            //{
-            //    Link = "Hyperlink#1",
-            //    User = student1
-            //};
-            //var report2 = new Report
-            //{
-            //    Link = "Hyperlink#2",
-            //    User = student2
-            //};
             database.Template.Add(new Template
             {
-                Description = "Description#1"
+                Description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor " +
+                "incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation " +
+                "ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit " +
+                "in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat " +
+                "non proident, sunt in culpa qui officia deserunt mollit anim id est laborum#1"
             });
             database.Template.Add(new Template
             {
-                Description = "Description#2"
+                Description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor " +
+                "incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation " +
+                "ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit " +
+                "in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat " +
+                "non proident, sunt in culpa qui officia deserunt mollit anim id est laborum#2"
             });
-            //database.ReportQA.Add(new ReportQA
-            //{
-            //    Report = report1,
-            //    Template = template1
-            //});
-            //database.ReportQA.Add(new ReportQA
-            //{
-            //    Report = report1,
-            //    Template = template2
-            //});
-            //database.ReportQA.Add(new ReportQA
-            //{
-            //    Report = report2,
-            //    Template = template1
-            //});
-            //database.ReportQA.Add(new ReportQA
-            //{
-            //    Report = report2,
-            //    Template = template2
-            //});
-
 
             database.Curator.Add(new Curator
             {

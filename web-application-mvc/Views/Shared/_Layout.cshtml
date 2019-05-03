@@ -20,10 +20,19 @@
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Тесты", "Index", "Test")</li>
-                    <li>@Html.ActionLink("Лекции", "Index", "Course")</li>
-                    <li>@Html.ActionLink("Отчеты", "Index", "Statistics")</li>
-                    <li>@Html.ActionLink("Профиль", "Index", "Profile")</li>
+                    @if (User.Identity.IsAuthenticated && (User.IsInRole("Студент")))
+                    {
+                        <li>@Html.ActionLink("Тесты", "Index", "Test")</li>
+                        <li>@Html.ActionLink("Лекции", "Index", "Course")</li>
+                    }
+                    @if (User.Identity.IsAuthenticated && (User.IsInRole("Администратор")))
+                    {
+                        <li>@Html.ActionLink("Отчеты", "Index", "Statistics")</li>
+                    }
+                    @if (User.Identity.IsAuthenticated)
+                    {
+                        <li>@Html.ActionLink("Профиль", "Index", "Profile")</li>
+                    }
                 </ul>
                 @Html.Partial("_LoginPartial")
             </div>
@@ -34,7 +43,7 @@
         <hr />
         <footer>
             <div class="footer-text">
-                &copy; @DateTime.Now.Year - <a href="mailto:geerkus@gmail.com">nevdev</a>
+                &copy; @DateTime.Now.Year
             </div>
         </footer>
     </div>

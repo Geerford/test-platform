@@ -23,5 +23,11 @@
 </div>
 @Html.ActionLink("Редактировать", "Edit", routeValues: null, htmlAttributes: new { @class = "btn btn-light" })
 
-@Html.Action("Student")
-@Html.Action("Admin")
+@if (User.Identity.IsAuthenticated && (User.IsInRole("Студент")))
+{
+    @Html.Action("Student")
+}
+@if (User.Identity.IsAuthenticated && (User.IsInRole("Администратор")))
+{
+    @Html.Action("Admin")
+}

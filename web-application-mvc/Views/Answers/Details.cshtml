@@ -1,42 +1,32 @@
 ﻿@model Core.Answer
 
-@{
-    ViewBag.Title = "Details";
-}
+<dl class="dl-horizontal">
+    <dt>
+        @Html.Label("Вопрос")
+    </dt>
 
-<h2>Details</h2>
+    <dd>
+        @Html.DisplayFor(model => model.Question.Description)
+    </dd>
 
-<div>
-    <h4>Answer</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Question.Description)
-        </dt>
+    <dt>
+        @Html.Label("Название")
+    </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.Question.Description)
-        </dd>
+    <dd>
+        @Html.DisplayFor(model => model.Desctiption)
+    </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Desctiption)
-        </dt>
+    <dt>
+        @Html.Label("Правильный ответ")
+    </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.Desctiption)
-        </dd>
+    <dd>
+        @Html.DisplayFor(model => model.Correct)
+    </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Correct)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Correct)
-        </dd>
-
-    </dl>
-</div>
+</dl>
 <p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.ID }) |
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("Редактировать", "Edit", new { id = Model.ID }) |
+    @Html.ActionLink("Список ответов", "Index")
 </p>

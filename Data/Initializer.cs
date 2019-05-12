@@ -98,19 +98,11 @@ namespace Infrastructure.Data
             database.SaveChanges();
             database.Template.Add(new Template
             {
-                Description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor " +
-                "incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation " +
-                "ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit " +
-                "in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat " +
-                "non proident, sunt in culpa qui officia deserunt mollit anim id est laborum#1"
+                Description = "Уровень владения профессиональными навыками"
             });
             database.Template.Add(new Template
             {
-                Description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor " +
-                "incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation " +
-                "ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit " +
-                "in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat " +
-                "non proident, sunt in culpa qui officia deserunt mollit anim id est laborum#2"
+                Description = "Способность студента обучаться и применять знания на практике"
             });
 
             database.Curator.Add(new Curator
@@ -136,150 +128,210 @@ namespace Infrastructure.Data
 
             var question1 = new Question
             {
-                Description = "Сколько океанов на нашей планете?",
+                Description = "Понятие преступления определяется действующим УК РФ как:",
                 Type = type1,
                 Answers = new List<Answer>
                 {
                     new Answer
                     {
-                        Desctiption = "4",
+                        Desctiption = "Умышленное деяние, запрещенное нормативно- правовыми актами РФ под угрозой наказания",
                         Correct = false
                     },
                     new Answer
                     {
-                        Desctiption = "5",
+                        Desctiption = "Уголовно-наказуемое, умышленное, противоправное действие субъекта, запрещенное УК РФ",
+                        Correct = false
+                    },
+                    new Answer
+                    {
+                        Desctiption = "Виновно совершенное общественно- опасное деяние, запрещенное УК РФ под угрозой наказания",
                         Correct = true
                     },
                     new Answer
                     {
-                        Desctiption = "6",
+                        Desctiption = "Противоправное общественно- опасное действие субъекта уголовной ответственности",
                         Correct = false
                     }
                 }
             };
             var question2 = new Question
             {
-                Description = "Единица изменения силы тока - это:",
+                Description = "Категории преступлений, установленные в Уголовном кодексе:",
                 Type = type1,
                 Answers = new List<Answer>
                 {
                     new Answer
                     {
-                        Desctiption = "Ампер",
-                        Correct = true
-                    },
-                    new Answer
-                    {
-                        Desctiption = "Ватт",
+                        Desctiption = "Легкие, средние, тяжкие и особо тяжкие",
                         Correct = false
                     },
                     new Answer
                     {
-                        Desctiption = "Вольт",
+                        Desctiption = "Небольшой тяжести, средней тяжести, тяжкие и особо тяжкие",
+                        Correct = true
+                    },
+                    new Answer
+                    {
+                        Desctiption = "Легкие, средние, тяжкие",
+                        Correct = false
+                    },
+                    new Answer
+                    {
+                        Desctiption = "Небольшой тяжести, и тяжкие",
                         Correct = false
                     }
                 }
             };
             var question3 = new Question
             {
-                Description = "Сатурн - это какая по счету планета от Солнца?",
-                Type = type2,
-                Answers = new List<Answer>
-                {
-                    new Answer
-                    {
-                        Desctiption = "6",
-                        Correct = true
-                    }
-                }
-            };
-            var question4 = new Question
-            {
-                Description = "Какой элемент периодической системы химических элементов обозначается как Ag?",
+                Description = "Что понимается под временем совершения преступления?",
                 Type = type1,
                 Answers = new List<Answer>
                 {
                     new Answer
                     {
-                        Desctiption = "Золото",
+                        Desctiption = "Это промежуток времени, в течение которого совершается преступление",
                         Correct = false
                     },
                     new Answer
                     {
-                        Desctiption = "Серебро",
+                        Desctiption = "это время совершения общественно опасного деяния и время наступления последствий",
                         Correct = true
                     },
                     new Answer
                     {
-                        Desctiption = "Аргон",
+                        Desctiption = "Это время, когда о совершенном преступлении стало известно правоохранительным органам",
+                        Correct = false
+                    },
+                    new Answer
+                    {
+                        Desctiption = "То время совершения общественно опасного действия (бездействия) независимо от наступления последствий",
+                        Correct = false
+                    }
+                }
+            };
+            var question4 = new Question
+            {
+                Description = "Какой уголовный закон имеет обратную силу (укажите наиболее полный ответ)?",
+                Type = type1,
+                Answers = new List<Answer>
+                {
+                    new Answer
+                    {
+                        Desctiption = "Который отменяет или изменяет действующий уголовный закон",
+                        Correct = false
+                    },
+                    new Answer
+                    {
+                        Desctiption = "Который устраняет преступность деяния, смягчает наказание или иным способом улучшает положение лица, совершившего преступление",
+                        Correct = true
+                    },
+                    new Answer
+                    {
+                        Desctiption = "Который устраняет преступность деяния, усиливает наказание или иным образом ухудшает положение лица, совершившего преступление",
+                        Correct = false
+                    },
+                    new Answer
+                    {
+                        Desctiption = "Который сокращает сроки наказания, предусмотренные за совершение этого преступления",
                         Correct = false
                     }
                 }
             };
             var question5 = new Question
             {
-                Description = "Сколько будет 0,2 км в дециметрах?",
+                Description = "В чем заключается территориальный принцип действия уголовного закона?",
                 Type = type1,
                 Answers = new List<Answer>
                 {
                     new Answer
                     {
-                        Desctiption = "20000 дм",
-                        Correct = false
-                    },
-                    new Answer
-                    {
-                        Desctiption = "2000 дм",
+                        Desctiption = "Применяется уголовный закон места совершения преступления",
                         Correct = true
                     },
                     new Answer
                     {
-                        Desctiption = "200 дм",
+                        Desctiption = "Граждане РФ подчиняются российским законам, где бы они ни находились",
+                        Correct = true
+                    },
+                    new Answer
+                    {
+                        Desctiption = "Применяется закон места пресечения преступной деятельности",
                         Correct = false
                     }
                 }
             };
             var question6 = new Question
             {
-                Description = "Самая длинная в мире река - это:",
-                Type = type2,
-                Answers = new List<Answer>
-                {
-                    new Answer
-                    {
-                        Desctiption = "Амазонка",
-                        Correct = true
-                    }
-                }
-            };
-            var question7 = new Question
-            {
-                Description = "Какое число обозначается римскими цифрами LXXVII?",
-                Type = type2,
-                Answers = new List<Answer>
-                {
-                    new Answer
-                    {
-                        Desctiption = "77",
-                        Correct = true
-                    }
-                }
-            };
-            var question8 = new Question
-            {
-                Description = "В каком предложении не допущена ошибка?",
+                Description = "Подлежат ли выдаче иностранному государству граждане РФ, совершившие преступление на территории этого государства?",
                 Type = type1,
                 Answers = new List<Answer>
                 {
                     new Answer
                     {
-                        Desctiption = "На ней не было чулок",
+                        Desctiption = "Подлежат",
                         Correct = false
                     },
                     new Answer
                     {
-                        Desctiption = "На полке лежала пачка макаронов",
+                        Desctiption = "Могут быть выданы для привлечения к уголовной ответственности или отбытия наказания в соответствии с международным договором",
+                        Correct = false
+                    },
+                    new Answer
+                    {
+                        Desctiption = "Не подлежат",
                         Correct = true
+                    },
+                    new Answer
+                    {
+                        Desctiption = "Могут быть объявлены персонами «нон грата» и высланы из страны",
+                        Correct = false
+                    }
+                }
+            };
+            var question7 = new Question
+            {
+                Description = "В основу классификации преступлений положено:",
+                Type = type1,
+                Answers = new List<Answer>
+                {
+                    new Answer
+                    {
+                        Desctiption = "Степень вины",
+                        Correct = false
+                    },
+                    new Answer
+                    {
+                        Desctiption = "Размер причиненного ущерба",
+                        Correct = false
+                    },
+                    new Answer
+                    {
+                        Desctiption = "Характер и степень общественной опасности",
+                        Correct = true
+                    },
+                    new Answer
+                    {
+                        Desctiption = "Размер наказания",
+                        Correct = false
+                    }
+                }
+            };
+            var question8 = new Question
+            {
+                Description = "Какого вида преступления не существует?",
+                Type = type1,
+                Answers = new List<Answer>
+                {
+                    new Answer
+                    {
+                        Desctiption = "Легкого",
+                        Correct = true
+                    },
+                    new Answer
+                    {
+                        Desctiption = "Небольшой тяжести",
+                        Correct = false
                     },
                     new Answer
                     {
@@ -290,126 +342,151 @@ namespace Infrastructure.Data
             };
             var question9 = new Question
             {
-                Description = "Зеленый пигмент, окрашивающий листья растений, называется:",
+                Description = "Уголовное наказание не может быть целью:",
                 Type = type1,
                 Answers = new List<Answer>
                 {
                     new Answer
                     {
-                        Desctiption = "Хлорофиллипт",
+                        Desctiption = "Исправления осужденного",
                         Correct = false
                     },
                     new Answer
                     {
-                        Desctiption = "Хлоропласт",
+                        Desctiption = "Восстановления справедливости",
                         Correct = false
                     },
                     new Answer
                     {
-                        Desctiption = "Хлорофилл",
+                        Desctiption = "Устрашения",
                         Correct = true
                     }
                 }
             };
             var question10 = new Question
             {
-                Description = "Все знают приставку <кило->. А как насчет <гекто->? Это сколько?",
+                Description = "Какие из перечисленных ниже пунктов являются признаками преступления:",
                 Type = type1,
                 Answers = new List<Answer>
                 {
                     new Answer
                     {
-                        Desctiption = "100",
+                        Desctiption = "Общественная опасность деяния",
+                        Correct = false
+                    },
+                    new Answer
+                    {
+                        Desctiption = "Наличие вины",
+                        Correct = false
+                    },
+                    new Answer
+                    {
+                        Desctiption = "Запрещенность деяния законом",
+                        Correct = false
+                    },
+                    new Answer
+                    {
+                        Desctiption = "Наказуемость деяния",
+                        Correct = false
+                    },
+                    new Answer
+                    {
+                        Desctiption = "Все перечисленные",
                         Correct = true
-                    },
-                    new Answer
-                    {
-                        Desctiption = "1000",
-                        Correct = false
-                    },
-                    new Answer
-                    {
-                        Desctiption = "10000",
-                        Correct = false
-                    },
-                    new Answer
-                    {
-                        Desctiption = "100000",
-                        Correct = false
                     }
                 }
             };
             var question11 = new Question
             {
-                Description = "Почему времена года сменяют друг друга?",
+                Description = "Без кого из указанных ниже лиц преступление не может быть осуществлено?",
                 Type = type1,
                 Answers = new List<Answer>
                 {
                     new Answer
                     {
-                        Desctiption = "Из-за удаления и приближения Земли к Солнцу",
-                        Correct = false
-                    },
-                    new Answer
-                    {
-                        Desctiption = "Из-за наклона земной оси",
+                        Desctiption = "Исполнитель",
                         Correct = true
                     },
                     new Answer
                     {
-                        Desctiption = "Из-за вращения Земли вокруг своей оси",
+                        Desctiption = "Организатор",
+                        Correct = false
+                    },
+                    new Answer
+                    {
+                        Desctiption = "Подстрекатель",
+                        Correct = false
+                    },
+                    new Answer
+                    {
+                        Desctiption = "Пособник",
                         Correct = false
                     }
                 }
             };
             var question12 = new Question
             {
-                Description = "В какой строке все слова написаны правильно?",
+                Description = "Смертная казнь в РФ:",
                 Type = type1,
                 Answers = new List<Answer>
                 {
                     new Answer
                     {
-                        Desctiption = "Серебряный подстаканник, ветренный день, румяный юноша",
+                        Desctiption = "Существует в УК РФ, применяется судами и приводится в исполнение",
                         Correct = false
                     },
                     new Answer
                     {
-                        Desctiption = "Кожаный ремень, соленый суп, избалованный ребенок",
+                        Desctiption = "Существует в УК РФ, применяется судами, но не приводится в исполнение",
+                        Correct = false
+                    },
+                    new Answer
+                    {
+                        Desctiption = "Существует в УК РФ, не применяется судами и не приводится в исполнение",
                         Correct = true
-                    },
-                    new Answer
-                    {
-                        Desctiption = "Истинный джентльмен, лебединая песня, песчанный пляж",
-                        Correct = false
                     }
                 }
             };
             var question13 = new Question
             {
-                Description = "Сколько хромосом в геноме человека?",
-                Type = type2,
+                Description = "Умышленные и неосторожные деяния, за совершение которых максимальное наказание, предусмотренное УК РФ, не превышает 10 лет лишения свободы, являются:",
+                Type = type1,
                 Answers = new List<Answer>
                 {
                     new Answer
                     {
-                        Desctiption = "46",
+                        Desctiption = "Особо тяжкими преступлениями",
+                        Correct = false
+                    },
+                    new Answer
+                    {
+                        Desctiption = "Тяжкими преступлениями",
                         Correct = true
+                    },
+                    new Answer
+                    {
+                        Desctiption = "Преступлениями средней тяжести",
+                        Correct = false
+                    },
+                    new Answer
+                    {
+                        Desctiption = "Легкими преступлениями",
+                        Correct = false
                     }
                 }
             };
 
             var section1 = new Section
             {
-                Description = "Школьная программа"
+                Description = "Судебная экспертиза"
             };
             var section2 = new Section
             {
-                Description = "Математический анализ"
+                Description = "Уголовное право"
             };
             var test1 = new Test
             {
-                Description = "Тест первый о ...",
+                Description = "Тест по уголовному праву",
                 Questions = new List<Question>
                 {
                     question1,
@@ -421,11 +498,11 @@ namespace Infrastructure.Data
                     question7
                 },
                 Section = section1,
-                Title = "Тест обо всем"
+                Title = "Уголовное право"
             };
             var test2 = new Test
             {
-                Description = "Тест первый о ...",
+                Description = "Тест по судебной экспертизе",
                 Questions = new List<Question>
                 {
                     question8,
@@ -436,20 +513,26 @@ namespace Infrastructure.Data
                     question13
                 },
                 Section = section2,
-                Title = "Тест почти всем"
+                Title = "Судебное экспертиза"
             };
             database.Test.Add(test1);
             database.Test.Add(test2);
             database.Course.Add(new Course
             {
-                Description = "Лекционные материалы для ...",
-                Link = "Ссылка на материал",
+                Description = "Лекционные материалы по уголовному праву",
+                Link = "6a6f40db-981a-41f9-8c76-473f95351791.pdf",
                 Section = section1
             });
             database.Course.Add(new Course
             {
-                Description = "Лекционные материалы для ...",
-                Link = "Ссылка на материал",
+                Description = "Лекционные материалы по уголовному праву",
+                Link = "d1682315-c188-4c98-a44f-4af8ba239c1c.pdf",
+                Section = section1
+            });
+            database.Course.Add(new Course
+            {
+                Description = "Лекционные материалы по судебной экспертизе",
+                Link = "b953c69d-b793-46f4-8886-33cc45047cf8.pdf",
                 Section = section2
             });
             database.SaveChanges();

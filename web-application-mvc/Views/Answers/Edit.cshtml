@@ -1,11 +1,5 @@
 ﻿@model Core.Answer
-
-@{
-    ViewBag.Title = "Edit";
-}
-
-<h2>Edit</h2>
-
+<h2>Редактировать</h2>
 
 @using (Html.BeginForm())
 {
@@ -18,7 +12,7 @@
         @Html.HiddenFor(model => model.ID)
 
         <div class="form-group">
-            @Html.LabelFor(model => model.Desctiption, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.Label("Название")
             <div class="col-md-10">
                 @Html.EditorFor(model => model.Desctiption, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.Desctiption, "", new { @class = "text-danger" })
@@ -26,7 +20,7 @@
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.Correct, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.Label("Правильный ответ")
             <div class="col-md-10">
                 <div class="checkbox">
                     @Html.EditorFor(model => model.Correct)
@@ -36,7 +30,7 @@
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.QuestionID, "QuestionID", htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.Label("Вопрос")
             <div class="col-md-10">
                 @Html.DropDownList("QuestionID", null, htmlAttributes: new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.QuestionID, "", new { @class = "text-danger" })
@@ -45,14 +39,14 @@
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Save" class="btn btn-default" />
+                <input type="submit" value="Сохранить" class="btn btn-default" />
             </div>
         </div>
     </div>
 }
 
 <div>
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("Список ответов", "Index")
 </div>
 
 @section Scripts {

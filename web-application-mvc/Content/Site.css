@@ -44,3 +44,40 @@ textarea {
 .template {
     text-align: center !important;
 }
+
+#laptop {
+    padding: 0px;
+    margin: 0px;
+    height: 310px;
+}
+
+.green-spark {
+    box-sizing: border-box;
+    background-color: #18bc9c !important;
+}
+
+.layout-padding {
+    padding-top: 1.5rem;
+    padding-bottom: 1.5rem;
+    background-color: darkslategrey;
+}
+
+.login-color {
+    background-color: darkslategrey !important;
+}
+
+.login-color :hover{
+    background-color: darkslategrey !important;
+}
+
+.body-margin {
+    margin-top: 3rem;
+}
+
+.layout-font {
+    color: #fff !important;
+}
+
+.layout-font-menu * {
+    color: #fff !important;
+}

@@ -37,6 +37,7 @@ namespace web_application_mvc.Controllers
             }
             //Section by group
             List<Section> sections = new List<Section>();
+            List<Course> courses = new List<Course>();
             foreach (var item in sectionService.GetAll())
             {
                 for (int i = 0; i < groupSections.Count; i++)
@@ -48,18 +49,21 @@ namespace web_application_mvc.Controllers
                     }
                 }
             }
-            List<Course> courses = new List<Course>();
-            foreach (var item in courseService.GetAll())
+            foreach(var item in sections)
             {
-                for (int i = 0; i < sections.Count; i++)
-                {
-                    if (item.SectionID == sections[i].ID)
-                    {
-                        courses.Add(item);
-                        sections.Remove(sections[i]);
-                    }
-                }
+                courses.AddRange(item.Courses);
             }
+            //foreach (var item in courseService.GetAll())
+            //{
+            //    for (int i = 0; i < sections.Count; i++)
+            //    {
+            //        if (item.SectionID == sections[i].ID)
+            //        {
+            //            courses.Add(item);
+            //            sections.Remove(sections[i]);
+            //        }
+            //    }
+            //}
             return View(courses);
         }
     }

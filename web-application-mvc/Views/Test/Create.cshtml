@@ -1,4 +1,6 @@
-﻿<h1>Все о каштанах</h1>
+﻿@model List<web_application_mvc.Models.QuestionViewModel>
+
+<h1>Все о каштанах</h1>
 <link rel="stylesheet" type="text/css" href="~/Content/test.css">
 <script defer type="text/javascript" src="~/Scripts/test.js"></script>
 <form name="test" action="#">
@@ -16,13 +18,17 @@
                 <input type="text">
                 <input type="checkbox" name="is-correct" value="false">
             </div>
-            <span class="btn-add-answer" onclick="addVariant()">Добавить вариант</span>
+            <div class="variant">
+                <input type="text">
+                <input type="checkbox" name="is-correct" value="false">
+            </div>
+            <span class="btn-add-answer" onclick="addVariant.call(this)">Добавить вариант</span>
         </div>
         <div hidden class="enter-answer">
             <input type="text">
         </div>
     </div>
-    <span class="btn-add-quest" onclick="addQuestion();">Добавить вопрос</span>
+    <span class="btn-add-quest" onclick="addQuestion.call(this);">Добавить вопрос</span>
 </form>
 <button type="button" id="SaveTest" class="btn btn-default"><span class="glyphicon glyphicon-ok"></span> Сохранить </button>
 
@@ -31,51 +37,60 @@
     <script type="text/javascript">
         $(document).ready(function () {
             $('#SaveTest').on('click', function () {
-                var questionsTitle = document.getElementsByClassName("description");
-                var result = [], countQuestion = questionsTitle.length, question = {};
-                for (var i = 1; i < countQuestion; i++) {
+                let questionsTitle = document.getElementsByClassName('question');
+                let result = [];
+                let question = {};
+
+                for (let i = 0; i < questionsTitle.length; i++) {
+                    let typeSelect = document.getElementsByName('types')[i];
+                    let selectedOption = typeSelect.options[typeSelect.selectedIndex].value;
+                    let answers = [];
+                    let answer;
+                    if (selectedOption === "enter") {
+                        answer = {
+                            Answer: questionsTitle[i].lastElementChild.firstElementChild.value,
+                            IsCorrect: false
+                        };
+                        answers.push(answer);
+                    }
+                    else {
+                        if (i === 0) {
+                            answer = questionsTitle[i].children[4];
+                        }
+                        else {
+                            answer = questionsTitle[i].children[5];
+                        }
+                        let variant = answer.children;                        
+                        for (let i = 0; i < variant.length - 1; i++) {
+                            if (variant[i] !== variant.lastElementChild) {
+                                let variantValue = {
+                                    Answer: variant[i].firstElementChild.value,
+                                    IsCorrect: false
+                                }
+                                answers.push(variantValue);
+                            }
+                        }
+                    }
                     question = {
-                        Description: questionsTitle[i].value
-                        //List ANSWERS
+                        Description: document.getElementsByClassName('description')[i].value,
+                        Type: selectedOption,
+                        Answers: answers
                     };
                     result.push(question);
                 }
 
-
                 $.ajax({
                     type: 'POST',
-                    url: '@Url.Action("Work", "Test")',
-                    data: { resultQuiz },
+                    url: '@Url.Action("Create", "Test")',
+                    data: { result },
                     success: function (response) {
-                        if (response.result.length > 0)
-                        {
-                            for(var i = 0; i <response.result.length; i++ )
-                            {
-                                if(response.result[i].IsCorrect == true)
-                                {
-                                    $('#AnsQ' + j).html('<div class="alert alert-success alert-test" role="alert"><span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span> Верный ответ</div>');
-                                }
-                                else
-                                {
-                                    $('#AnsQ' + j).html('<div class="alert alert-danger alert-test" role="alert"> <span class="glyphicon glyphicon-thumbs-down" aria-hidden="true"></span> Неверный ответ - Правильный ответ: <b>' + response.result[i].Answer + '</b></div>');
-                                }
-                                j++;
-                            }
-                        }
-                        else
-                        {
-                            alert("Something Wrong");
-                        }
-
-                        document.getElementById('SubmitQuiz').style.visibility = 'hidden';
-                        setTimeout(function () {
-                            window.location = "@Url.Action("Index")";
-                        }, 15000);
+                        console.log("Success");
                     },
                     error: function (response) {
+                        console.log("Error");
                     }
                 });
-                console.log(resultQuiz);
+                console.log(result);
             });
         });
     </script>

@@ -4,6 +4,7 @@
 <p>
     @Html.ActionLink("Добавить", "Create")
 </p>
+<h3>Данный раздел предназначен для создания характеристических шаблонов, по которым будут формироваться отчеты </h3>
 <table class="table">
     <tr>
         <th>
@@ -13,16 +14,17 @@
             @Html.Label("Действия")
         </th>
     </tr>
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Description)
-        </td>
-        <td>
-            @Html.ActionLink("Редактировать", "Edit", new { id = item.ID }) |
-            @Html.ActionLink("Подробнее", "Details", new { id = item.ID }) |
-            @Html.ActionLink("Удалить", "Delete", new { id = item.ID })
-        </td>
-    </tr>
-}
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Description)
+            </td>
+            <td>
+                @Html.ActionLink("Редактировать", "Edit", new { id = item.ID }) |
+                @Html.ActionLink("Подробнее", "Details", new { id = item.ID }) |
+                @Html.ActionLink("Удалить", "Delete", new { id = item.ID })
+            </td>
+        </tr>
+    }
 </table>

@@ -11,7 +11,7 @@ namespace web_application_mvc.Models
 
         [AllowHtml]
         [DataType(DataType.Password)]
-        [Required(ErrorMessage = "Логин должен быть заполнен")]
+        [Required(ErrorMessage = "Пароль должен быть заполнен")]
         public string Password { get; set; }
     }
 }

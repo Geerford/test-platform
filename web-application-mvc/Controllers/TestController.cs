@@ -55,17 +55,32 @@ namespace web_application_mvc.Controllers
                 }
             }
             List<Test> tests = new List<Test>();
-            foreach(var item in testService.GetAll())
+            foreach (var item in sections)
             {
-                for(int i = 0; i < sections.Count; i++)
+                foreach(var grade in user.Grades)
                 {
-                    if(item.SectionID == sections[i].ID)
+                    foreach(var test in item.Tests)
                     {
-                        tests.Add(item);
-                        sections.Remove(sections[i]);
+                        if (grade.TestID != test.ID )
+                        {
+                            tests.Add(test);
+                        }
                     }
                 }
+                //tests.AddRange(item.Tests);
             }
+            //List<Test> tests = new List<Test>();
+            //foreach(var item in testService.GetAll())
+            //{
+            //    for(int i = 0; i < sections.Count; i++)
+            //    {
+            //        if(item.SectionID == sections[i].ID)
+            //        {
+            //            tests.Add(item);
+            //            sections.Remove(sections[i]);
+            //        }
+            //    }
+            //}
 
             quiz.Questions = tests.Select(q => new SelectListItem
             {
@@ -137,7 +152,7 @@ namespace web_application_mvc.Controllers
                     {
                         QuestionID = a.ID,
                         Answer = a.Desctiption,
-                        IsCorrect = a.Desctiption.Equals(answser.Answer)
+                        IsCorrect = a.Desctiption.Equals(answser.Answer.ToLower())
                     }).FirstOrDefault();
 
                     finalResultQuiz.Add(result);
@@ -191,10 +206,10 @@ namespace web_application_mvc.Controllers
         }
 
         [HttpPost]
-        [Authorize(Roles = "Администратор")]
-        public ActionResult Create(List<Question> questions)
+        //[Authorize(Roles = "Администратор")]
+        public ActionResult Create(List<QuestionViewModel> result)
         {
-            return View();
+                return View();
         }
     }    
 }

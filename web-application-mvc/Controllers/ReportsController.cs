@@ -268,7 +268,7 @@ namespace web_application_mvc.Controllers
             {
                 Alignment = Element.ALIGN_RIGHT,
             });
-            document.Add(new Paragraph(new Phrase($"группы {student.Group.Description} {student.Name} {student.Midname}",
+            document.Add(new Paragraph(new Phrase($"группы {student.Group.Description}",
                 fontBase))
             {
                 Alignment = Element.ALIGN_RIGHT,

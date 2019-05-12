@@ -12,15 +12,17 @@
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.Question.Description)
+            @Html.Label("Вопрос")
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Desctiption)
+            @Html.Label("Название")
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Correct)
+            @Html.Label("Правильный ответ")
         </th>
-        <th></th>
+        <th>
+            @Html.Label("Действия")
+        </th>
     </tr>
 
 @foreach (var item in Model) {
@@ -35,9 +37,9 @@
             @Html.DisplayFor(modelItem => item.Correct)
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.ID }) |
-            @Html.ActionLink("Details", "Details", new { id=item.ID }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.ID })
+            @Html.ActionLink("Редактировать", "Edit", new { id=item.ID }) |
+            @Html.ActionLink("Подробнее", "Details", new { id=item.ID }) |
+            @Html.ActionLink("Удалить", "Delete", new { id=item.ID })
         </td>
     </tr>
 }

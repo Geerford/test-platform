@@ -8,7 +8,7 @@
     @Scripts.Render("~/bundles/modernizr")
 </head>
 <body>
-    <div class="navbar navbar-inverse navbar-fixed-top">
+    <div class="navbar navbar-fixed-top navbar-inverse">
         <div class="container">
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
@@ -16,7 +16,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                @Html.ActionLink("Призма", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+                @Html.ActionLink("Призма", "Index", "Home", new { area = "" }, new { @class = "navbar-brand layout-font" })
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
@@ -27,7 +27,15 @@
                     }
                     @if (User.Identity.IsAuthenticated && (User.IsInRole("Администратор")))
                     {
-                        <li>@Html.ActionLink("Отчеты", "Index", "Statistics")</li>
+                        <li>@Html.ActionLink("Статистика", "Index", "Statistics")</li>
+                        <li>@Html.ActionLink("Отчеты", "Index", "Reports")</li>
+                        <li>@Html.ActionLink("Тесты", "Index", "Tests")</li>
+                        <li>@Html.ActionLink("Группы", "Index", "Groups")</li>
+                        <li>@Html.ActionLink("Кураторы", "Index", "Curators")</li>
+                        <li>@Html.ActionLink("Пользователи", "Index", "Users")</li>
+                        <li>@Html.ActionLink("Оценки", "Index", "Grades")</li>
+                        <li>@Html.ActionLink("Посещения", "Index", "Activities")</li>
+                        <li>@Html.ActionLink("Лекции", "Index", "Courses")</li>
                     }
                     @if (User.Identity.IsAuthenticated)
                     {
@@ -38,7 +46,7 @@
             </div>
         </div>
     </div>
-    <div class="container body-content">
+    <div class="container body-content body-margin">
         @RenderBody()
         <hr />
         <footer>

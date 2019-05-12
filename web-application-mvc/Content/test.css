@@ -21,3 +21,10 @@
 .variant {
     margin: 15px 0;
 }
+
+.btn-remove-question {
+    display: block;
+    padding: 5px 8px;
+    float: right;
+    border: 1px solid;
+}

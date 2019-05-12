@@ -1,24 +1,18 @@
 ﻿@model IEnumerable<Core.Question>
 
-@{
-    ViewBag.Title = "Index";
-}
-
-<h2>Index</h2>
-
 <p>
-    @Html.ActionLink("Create New", "Create")
+    @Html.ActionLink("Добавить", "Create")
 </p>
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.Test.Title)
+            @Html.Label("Тест")
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Type.Desription)
+            @Html.Label("Тип")
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Description)
+            @Html.Label("Вопрос")
         </th>
         <th></th>
     </tr>
@@ -29,15 +23,15 @@
             @Html.DisplayFor(modelItem => item.Test.Title)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Type.Desription)
+            @Html.DisplayFor(modelItem => item.Type.Description)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.Description)
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.ID }) |
-            @Html.ActionLink("Details", "Details", new { id=item.ID }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.ID })
+            @Html.ActionLink("Редактировать", "Edit", new { id=item.ID }) |
+            @Html.ActionLink("Подробнее", "Details", new { id=item.ID }) |
+            @Html.ActionLink("Удалить", "Delete", new { id=item.ID })
         </td>
     </tr>
 }

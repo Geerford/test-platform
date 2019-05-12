@@ -1,10 +1,5 @@
 ﻿@model Core.Question
-
-@{
-    ViewBag.Title = "Edit";
-}
-
-<h2>Edit</h2>
+<h2>Редактировать</h2>
 
 
 @using (Html.BeginForm())
@@ -12,13 +7,13 @@
     @Html.AntiForgeryToken()
     
     <div class="form-horizontal">
-        <h4>Question</h4>
+        <h4>Вопрос</h4>
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         @Html.HiddenFor(model => model.ID)
 
         <div class="form-group">
-            @Html.LabelFor(model => model.Description, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.Label("Название")
             <div class="col-md-10">
                 @Html.EditorFor(model => model.Description, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
@@ -26,7 +21,7 @@
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.TestID, "TestID", htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.Label("Тест")
             <div class="col-md-10">
                 @Html.DropDownList("TestID", null, htmlAttributes: new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.TestID, "", new { @class = "text-danger" })
@@ -34,7 +29,7 @@
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.TypeID, "TypeID", htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.Label("Тип")
             <div class="col-md-10">
                 @Html.DropDownList("TypeID", null, htmlAttributes: new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.TypeID, "", new { @class = "text-danger" })
@@ -43,14 +38,14 @@
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Save" class="btn btn-default" />
+                <input type="submit" value="Сохранить" class="btn btn-default" />
             </div>
         </div>
     </div>
 }
 
 <div>
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("Список вопросов", "Index")
 </div>
 
 @section Scripts {

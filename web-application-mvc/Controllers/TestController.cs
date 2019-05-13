@@ -2,6 +2,7 @@
 using Core;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Security.Claims;
 using System.Web.Mvc;
 using web_application_mvc.Models;
@@ -17,9 +18,11 @@ namespace web_application_mvc.Controllers
         IUserService userService;
         IGroupSectionService groupSectionService;
         ISectionService sectionService;
+        ITypeService typeService;
 
         public TestController(ITestService testService, IQuestionService questionService, IGradeService gradeService, 
-            IUserService userService, IGroupSectionService groupSectionService, ISectionService sectionService)
+            IUserService userService, IGroupSectionService groupSectionService, ISectionService sectionService,
+            ITypeService typeService)
         {
             this.testService = testService;
             this.questionService = questionService;
@@ -27,9 +30,9 @@ namespace web_application_mvc.Controllers
             this.userService = userService;
             this.groupSectionService = groupSectionService;
             this.sectionService = sectionService;
+            this.typeService = typeService;
         }
 
-        [HttpGet]
         public ActionResult Index()
         {
             TestVM quiz = new TestVM();
@@ -67,20 +70,7 @@ namespace web_application_mvc.Controllers
                         }
                     }
                 }
-                //tests.AddRange(item.Tests);
             }
-            //List<Test> tests = new List<Test>();
-            //foreach(var item in testService.GetAll())
-            //{
-            //    for(int i = 0; i < sections.Count; i++)
-            //    {
-            //        if(item.SectionID == sections[i].ID)
-            //        {
-            //            tests.Add(item);
-            //            sections.Remove(sections[i]);
-            //        }
-            //    }
-            //}
 
             quiz.Questions = tests.Select(q => new SelectListItem
             {
@@ -112,7 +102,6 @@ namespace web_application_mvc.Controllers
             return View();
         }
 
-        [HttpGet] 
         public ActionResult Work()
         {
             TestVM quizSelected = Session["SelectedQuiz"] as TestVM;
@@ -152,7 +141,7 @@ namespace web_application_mvc.Controllers
                     {
                         QuestionID = a.ID,
                         Answer = a.Desctiption,
-                        IsCorrect = a.Desctiption.Equals(answser.Answer.ToLower())
+                        IsCorrect = a.Desctiption.ToLower().Equals(answser.Answer.ToLower())
                     }).FirstOrDefault();
 
                     finalResultQuiz.Add(result);
@@ -186,7 +175,7 @@ namespace web_application_mvc.Controllers
                 var id = identity.Claims.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier).Value;
                 var user = userService.Get(int.Parse(id));
                 double mark = (double)correct / count;
-                var grade = new Core.Grade
+                var grade = new Grade
                 {
                     TestID = question.TestID,
                     UserID = user.ID,
@@ -198,18 +187,140 @@ namespace web_application_mvc.Controllers
             return Json(new { result = finalResultQuiz }, JsonRequestBehavior.AllowGet);
         }
 
-        [HttpGet]
         [Authorize(Roles = "Администратор")]
         public ActionResult Create()
         {
+            ViewBag.SectionID = new SelectList(sectionService.GetAll(), "ID", "Description");
             return View();
         }
 
         [HttpPost]
-        //[Authorize(Roles = "Администратор")]
-        public ActionResult Create(List<QuestionViewModel> result)
+        [Authorize(Roles = "Администратор")]
+        public ActionResult Create(TestModel test)
         {
-                return View();
+            List<Question> questions = new List<Question>();
+            foreach(var question in test.Questions)
+            {
+                Type type;
+                if (question.Type.Equals("enter"))
+                {
+                    type = typeService.GetAll().Where(x => x.Status.Equals("Ввод ответа")).FirstOrDefault();
+                }
+                else
+                {
+                    type = typeService.GetAll().Where(x => x.Status.Equals("Выбор ответа")).FirstOrDefault();
+                }
+                List<Answer> answers = new List<Answer>();
+                foreach(var answer in question.Answers)
+                {
+                    answers.Add(new Answer
+                    {
+                        Desctiption = answer.Answer,
+                        Correct = answer.IsCorrect
+                    });
+                }
+                questions.Add(new Question
+                {
+                    Description = question.Description,
+                    TypeID = type.ID,
+                    Answers = answers
+                });
+            }
+            testService.Create(new Test
+            {
+                Description = test.Description,
+                Questions = questions,
+                SectionID = int.Parse(test.Section),
+                Title = test.Title
+            });
+            ViewBag.SectionID = new SelectList(sectionService.GetAll(), "ID", "Description");
+            return View();
+        }
+
+        [Authorize(Roles = "Администратор")]
+        public ActionResult Edit(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Test test = testService.Get(id);
+            if (test == null)
+            {
+                return HttpNotFound();
+            }
+            ViewBag.SectionID = new SelectList(sectionService.GetAll(), "ID", "Description", test.SectionID);
+            TestModel model = new TestModel
+            {
+                ID = test.ID,
+                Description = test.Description,
+                Section = test.Section.Description,
+                Title = test.Title,
+                Questions = test.Questions.Select(x => new QuestionViewModel()
+                {
+                    Description = x.Description,
+                    Answers = x.Answers.Select(y => new AnswerViewModel()
+                    {
+                        Answer = y.Desctiption,
+                        IsCorrect = y.Correct
+                    }).ToList(),
+                    Type = x.Type.Status
+                }).ToList()
+            };
+            return View(model);
+        }
+
+        [HttpPost]
+        [Authorize(Roles = "Администратор")]
+        public ActionResult Edit(TestModel test)
+        {
+            if (test.ID == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Test item = testService.Get(test.ID);
+            if (item == null)
+            {
+                return HttpNotFound();
+            }
+            testService.Delete(item);
+            List<Question> questions = new List<Question>();
+            foreach (var question in test.Questions)
+            {
+                Type type;
+                if (question.Type.Equals("enter"))
+                {
+                    type = typeService.GetAll().Where(x => x.Status.Equals("Ввод ответа")).FirstOrDefault();
+                }
+                else
+                {
+                    type = typeService.GetAll().Where(x => x.Status.Equals("Выбор ответа")).FirstOrDefault();
+                }
+                List<Answer> answers = new List<Answer>();
+                foreach (var answer in question.Answers)
+                {
+                    answers.Add(new Answer
+                    {
+                        Desctiption = answer.Answer,
+                        Correct = answer.IsCorrect
+                    });
+                }
+                questions.Add(new Question
+                {
+                    Description = question.Description,
+                    TypeID = type.ID,
+                    Answers = answers
+                });
+            }
+            testService.Create(new Test
+            {
+                Description = test.Description,
+                Questions = questions,
+                SectionID = int.Parse(test.Section),
+                Title = test.Title
+            });
+            ViewBag.SectionID = new SelectList(sectionService.GetAll(), "ID", "Description");
+            return View(test);
         }
     }    
 }

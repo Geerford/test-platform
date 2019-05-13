@@ -123,7 +123,8 @@ namespace web_application_mvc.Controllers
                     Email = model.Email,
                     Password = model.Password
                 });
-                return RedirectToLocal(returnUrl);
+                //return RedirectToLocal(returnUrl);
+                return RedirectToAction("Safety", "Home");
             }
             return View(model);
         }

@@ -8,6 +8,6 @@ namespace web_application_mvc.Models
 
         public string Type { get; set; }
 
-        public List<AnswerViewModel> Answers { get; set; }        
+        public List<AnswerViewModel> Answers { get; set; }
     }
 }

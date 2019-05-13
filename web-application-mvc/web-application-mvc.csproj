@@ -225,7 +225,9 @@
     <Compile Include="Models\QuestionViewModel.cs" />
     <Compile Include="Models\ReportTemplateViewModel.cs" />
     <Compile Include="Models\ReportViewModel.cs" />
+    <Compile Include="Models\SafetyViewModel.cs" />
     <Compile Include="Models\SectionViewModel.cs" />
+    <Compile Include="Models\TestModel.cs" />
     <Compile Include="Models\TestQuestionViewModel.cs" />
     <Compile Include="Models\TestViewModel.cs" />
     <Compile Include="Models\TypeViewModel.cs" />
@@ -358,6 +360,9 @@
     <Content Include="Views\Statistics\Report.cshtml" />
     <Content Include="Views\Test\Create.cshtml" />
     <Content Include="Views\Course\Index.cshtml" />
+    <Content Include="Views\Test\Edit.cshtml" />
+    <Content Include="Views\Home\Contacts.cshtml" />
+    <Content Include="Views\Home\Safety.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

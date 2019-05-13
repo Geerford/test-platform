@@ -555,6 +555,8 @@ namespace Infrastructure.Data
                 Value = 0.85
             });
             database.SaveChanges();
+            database.Type.Add(type2);
+            database.SaveChanges();
         }
     }
 }

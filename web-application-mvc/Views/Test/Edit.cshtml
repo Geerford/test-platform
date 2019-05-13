@@ -16,50 +16,95 @@
     @Html.DropDownList("SectionID", null, htmlAttributes: new { @class = "form-control test-section" })
 </div>
 @Html.Label("Вопросы", htmlAttributes: new { @class = "control-label col-md-12" })
-
+@Html.HiddenFor(model => model.ID)
 <form name="test" action="#">
-    <div class="question">
-        <p>Описание</p>
-        <textarea class="description"></textarea>
-        <p>Тип</p>
-        <select name="types" onchange="toggleDisplay.call(this)">
-            <option disabled selected>Выберите тип</option>
-            <option value="enter">Ввод ответа</option>
-            <option value="choose">Выбор ответа</option>
-        </select>
-        <div hidden class="choose-answer">
-            <div class="variant">
-                <input type="text">
-                <input type="checkbox" name="is-correct" value="false">
+    @foreach (var item in Model.Questions)
+    {
+        <div class="question">
+            <p>Описание</p>
+            <textarea class="description">@item.Description</textarea>
+            <p>Тип</p>
+            <select name="types" onchange="toggleDisplay.call(this)">
+                @if (item.Type == null)
+                {
+                    <option disabled selected>Выберите тип</option>
+                    <option value="enter">Ввод ответа</option>
+                    <option value="choose">Выбор ответа</option>
+                }
+                @if (item.Type.Equals("enter"))
+                {
+                    <option disabled>Выберите тип</option>
+                    <option selected value="enter">Ввод ответа</option>
+                    <option value="choose">Выбор ответа</option>
+                }
+                else
+                {
+                    <option disabled>Выберите тип</option>
+                    <option value="enter">Ввод ответа</option>
+                    <option selected value="choose">Выбор ответа</option>
+                }
+            </select>
+            <div class="choose-answer">
+                @if (item.Answers.Count > 1)
+                {
+                    foreach (var a in item.Answers)
+                    {
+                        <div class="variant">
+                            <input type="text" value="@a.Answer">
+                            @if (a.IsCorrect)
+                            {
+                                <input type="checkbox" name="is-correct" value="true" checked>
+                            }
+                            else
+                            {
+                                <input type="checkbox" name="is-correct" value="false">
+                            }
+                        </div>
+                    }
+                    <span class="btn-add-answer" onclick="addVariant.call(this)">Добавить вариант</span>
+                }
+                else
+                {
+                    <div class="variant">
+                        <input type="text" value="@item.Answers.First().Answer">
+                    </div>
+                }
             </div>
-            <div class="variant">
-                <input type="text">
-                <input type="checkbox" name="is-correct" value="false">
-            </div>
-            <span class="btn-add-answer" onclick="addVariant.call(this)">Добавить вариант</span>
+            @*<div hidden class="choose-answer">
+                    <div class="variant">
+                        <input type="text">
+                        <input type="checkbox" name="is-correct" value="false">
+                    </div>
+                    <div class="variant">
+                        <input type="text">
+                        <input type="checkbox" name="is-correct" value="false">
+                    </div>
+                    <span class="btn-add-answer" onclick="addVariant.call(this)">Добавить вариант</span>
+                </div>
+                <div hidden class="enter-answer">
+                    <input type="text">
+                </div>*@
         </div>
-        <div hidden class="enter-answer">
-            <input type="text">
-        </div>
-    </div>
+    }
+
     <span class="btn-add-quest" onclick="addQuestion.call(this);">Добавить вопрос</span>
 </form>
 <button type="button" id="SaveTest" class="btn btn-default"><span class="glyphicon glyphicon-ok"></span> Сохранить </button>
 
 @section MyScritps
 {
-<script type="text/javascript">
+    <script type="text/javascript">
         $(document).ready(function () {
             $('#SaveTest').on('click', function () {
                 let questionsTitle = document.getElementsByClassName('question');
-                let result = [];                
+                let result = [];
 
                 for (let i = 0; i < questionsTitle.length; i++) {
                     let typeSelect = document.getElementsByName('types')[i];
                     let selectedOption = typeSelect.options[typeSelect.selectedIndex].value;
                     let question = {};
                     let answers = [];
-                    let answer;                    
+                    let answer;
                     if (selectedOption === "enter") {
                         answer = {
                             Answer: questionsTitle[i].lastElementChild.firstElementChild.value,
@@ -75,7 +120,7 @@
                         }
                         else {
                             answer = {
-                                Answer: questionsTitle[i].children[5]
+                                Answer: questionsTitle[i].children[4]
                             }
                         }
                         let variant = answer.Answer.children;
@@ -103,12 +148,13 @@
                     Questions: result,
                     Description: document.getElementById('Description').value,
                     Section: document.getElementById('SectionID').value,
-                    Title: document.getElementById('Title').value
+                    Title: document.getElementById('Title').value,
+                    ID: document.getElementById('ID').value
                 };
 
                 $.ajax({
                     type: 'POST',
-                    url: '@Url.Action("Create", "Test")',
+                    url: '@Url.Action("Edit", "Test")',
                     data: { test },
                     success: function (response) {
                         console.log("Success");
@@ -121,5 +167,5 @@
                 console.log(test);
             });
         });
-</script>
+    </script>
 }

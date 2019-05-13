@@ -22,6 +22,8 @@ namespace Core
 
         public bool Status { get; set; } // IsActive
 
+        public bool Safety { get; set; } //IsRead
+
         public virtual Curator Curator { get; set; }
         
         public virtual int? RoleID { get; set; }

@@ -10,5 +10,7 @@ namespace web_application_mvc.Models
         public IEnumerable<Grade> Grades { get; set; }
 
         public IEnumerable<Activity> Activities { get; set; }
+        
+        public IEnumerable<ExtentionTaskViewModel> Tasks { get; set; }
     }
 }

@@ -1,0 +1,103 @@
+﻿@model web_application_mvc.Models.CuratorProfileViewModel
+
+@if (Model.Unchecked != null && Model.Unchecked.Count() > 0)
+{
+    <hr />
+    <h2>Непроверенные задания</h2>
+    <table class="table">
+        <tr>
+            <th>
+                @Html.Label("Фамилия")
+            </th>
+            <th>
+                @Html.Label("Имя")
+            </th>
+            <th>
+                @Html.Label("Отчество")
+            </th>
+            <th>
+                @Html.Label("Группа")
+            </th>
+            <th>
+                @Html.Label("Раздел")
+            </th>
+            <th>
+                @Html.Label("Действия")
+            </th>
+        </tr>
+        @foreach (var item in Model.Unchecked)
+        {
+            <tr>
+                <td>
+                    @Html.Raw(item.User.Surname)
+                </td>
+                <td>
+                    @Html.Raw(item.User.Name)
+                </td>
+                <td>
+                    @Html.Raw(item.User.Midname)
+                </td>
+                <td>
+                    @Html.Raw(item.User.Group.Description)
+                </td>
+                <td>
+                    @Html.Raw(item.Task.Section.Description)
+                </td>
+                <td>
+                    @Html.ActionLink("Проверить", "Create", "Feedback", new { id = item.ID }, new { })
+                </td>
+            </tr>
+        }
+    </table>
+}
+@if (Model.Checked != null && Model.Checked.Count() > 0)
+{
+    <hr />
+    <h2>Проверенные задания</h2>
+    <table class="table">
+        <tr>
+            <th>
+                @Html.Label("Фамилия")
+            </th>
+            <th>
+                @Html.Label("Имя")
+            </th>
+            <th>
+                @Html.Label("Отчество")
+            </th>
+            <th>
+                @Html.Label("Группа")
+            </th>
+            <th>
+                @Html.Label("Раздел")
+            </th>
+            <th>
+                @Html.Label("Действия")
+            </th>
+        </tr>
+        @foreach (var item in Model.Checked)
+        {
+            <tr>
+                <td>
+                    @Html.ActionLink(item.User.Surname, "Details", "Users", new { id = item.User.ID }, new { })
+                </td>
+                <td>
+                    @Html.ActionLink(item.User.Name, "Details", "Users", new { id = item.User.ID }, new { })
+                </td>
+                <td>
+                    @Html.ActionLink(item.User.Midname, "Details", "Users", new { id = item.User.ID }, new { })
+                </td>
+                <td>
+                    @Html.ActionLink(item.User.Group.Description, "Details", "Groups", new { id = item.User.Group.ID }, new { })
+                </td>
+                <td>
+                    @Html.ActionLink(item.Task.Section.Description, "Details", "Users", new { id = item.Task.Section.ID }, new { })
+                </td>
+                <td>
+                    @Html.ActionLink("Изменить", "Edit", "Feedback", new { id = item.ID }, new { })
+                    @Html.ActionLink("Удалить", "Delete", "Feedback", new { id = item.ID }, new { })
+                </td>
+            </tr>
+        }
+    </table>
+}

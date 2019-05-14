@@ -58,10 +58,12 @@
     <Compile Include="Service\ReportService.cs" />
     <Compile Include="Service\RoleService.cs" />
     <Compile Include="Service\SectionService.cs" />
+    <Compile Include="Service\TaskService.cs" />
     <Compile Include="Service\TemplateService.cs" />
     <Compile Include="Service\TestService.cs" />
     <Compile Include="Service\TypeService.cs" />
     <Compile Include="Service\UserService.cs" />
+    <Compile Include="Service\UserTaskService.cs" />
     <Compile Include="ValidationException.cs" />
   </ItemGroup>
   <ItemGroup>

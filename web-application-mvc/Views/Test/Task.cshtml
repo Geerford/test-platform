@@ -1,0 +1,24 @@
+﻿@model web_application_mvc.Models.ChooseTaskViewModel
+
+<div class="container">
+    @if (Model.DropList.Count > 0)
+    {
+        <div class="SelQuiz">
+            <div class="panel panel-default" style="width: 37%; margin: 20% 32%;">
+                <div class="panel-heading">Выберите задание</div>
+                <div class="panel-body">
+                    @using (Html.BeginForm("Task", "Test", FormMethod.Post))
+                    {
+                        @Html.DropDownListFor(model => model.ID, Model.DropList, new { @class = "form-control", @style = "margin-left:51px;" })<br />
+                        <button type="submit" id="Enter" class="btn btn-success btn-lg" style="width:100%;"><span class="glyphicon glyphicon-ok"></span>  Начать </button>
+                    }
+                </div>
+            </div>
+        </div>
+    }
+    else
+    {
+        @Html.Raw("У вас нет прав проходить тестирование. Свяжитесь с ")
+        @Html.ActionLink("администрацией", "Contacts", "Home", null, null)
+    }
+</div>

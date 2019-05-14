@@ -53,10 +53,12 @@
     <Compile Include="IReportService.cs" />
     <Compile Include="IRoleService.cs" />
     <Compile Include="ISectionService.cs" />
+    <Compile Include="ITaskService.cs" />
     <Compile Include="ITemplateService.cs" />
     <Compile Include="ITestService.cs" />
     <Compile Include="ITypeService.cs" />
     <Compile Include="IUserService.cs" />
+    <Compile Include="IUserTaskService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

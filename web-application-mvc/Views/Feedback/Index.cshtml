@@ -1,0 +1,78 @@
+﻿@model IEnumerable<web_application_mvc.Models.ExtentionTaskViewModel>
+
+<h2>Список решенных заданий</h2>
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.Label("Фамилия")
+        </th>
+        <th>
+            @Html.Label("Имя")
+        </th>
+        <th>
+            @Html.Label("Отчество")
+        </th>
+        <th>
+            @Html.Label("Задание")
+        </th>
+        <th>
+            @Html.Label("Ответ студента")
+        </th>
+        <th>
+            @Html.Label("Оценка")
+        </th>
+        <th>
+            @Html.Label("Комментарий")
+        </th>
+        <th>
+            @Html.Label("Действия")
+        </th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.ActionLink(item.User.Surname, "Details", "Users", new { id = item.User.ID }, null)
+        </td>
+        <td>
+            @Html.ActionLink(item.User.Name, "Details", "Users", new { id = item.User.ID }, null)
+        </td>
+        <td>
+            @Html.ActionLink(item.User.Midname, "Details", "Users", new { id = item.User.ID }, null)
+        </td>
+        <td>
+            @Html.ActionLink(item.Task.Description, "Details", "Tasks", new { id = item.Task.ID }, null)
+        </td>
+        <td>
+            @if (!string.IsNullOrEmpty(item.Answer))
+            {
+                @Html.DisplayFor(modelItem => item.Answer)
+            }
+        </td>
+        <td>
+            @if (!string.IsNullOrEmpty(item.Grade))
+            {
+                @Html.DisplayFor(modelItem => item.Grade)
+            }
+        </td>
+        <td>
+            @if (!string.IsNullOrEmpty(item.Comment))
+            {
+                @Html.DisplayFor(modelItem => item.Comment)
+            }
+        </td>
+        <td>
+            @if(string.IsNullOrEmpty(item.Grade) || string.IsNullOrEmpty(item.Comment))
+            {
+                @Html.ActionLink("Проверить", "Create", new { id = item.ID })
+            }
+            else
+            {
+                @Html.ActionLink("Редактировать", "Edit", new { id = item.ID })
+            }
+            @Html.ActionLink("Удалить", "Delete", new { id = item.ID })
+        </td>
+    </tr>
+}
+</table>

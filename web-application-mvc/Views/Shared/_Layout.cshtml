@@ -23,7 +23,8 @@
                     @if (User.Identity.IsAuthenticated && (User.IsInRole("Студент")))
                     {
                         <li>@Html.ActionLink("Тесты", "Index", "Test")</li>
-                        <li>@Html.ActionLink("Лекции", "Index", "Course")</li>
+                        <li>@Html.ActionLink("Задания", "Task", "Test")</li>
+                        <li>@Html.ActionLink("Материалы", "Index", "Course")</li>
                     }
                     @if (User.Identity.IsAuthenticated && (User.IsInRole("Администратор")))
                     {
@@ -35,12 +36,13 @@
                         <li>@Html.ActionLink("Пользователи", "Index", "Users")</li>
                         <li>@Html.ActionLink("Оценки", "Index", "Grades")</li>
                         <li>@Html.ActionLink("Посещения", "Index", "Activities")</li>
-                        <li>@Html.ActionLink("Лекции", "Index", "Courses")</li>
+                        <li>@Html.ActionLink("Материалы", "Index", "Courses")</li>
                     }
                     @if (User.Identity.IsAuthenticated)
                     {
                         <li>@Html.ActionLink("Профиль", "Index", "Profile")</li>
                     }
+                    <li>@Html.ActionLink("Контакты", "Contacts", "Home")</li>
                 </ul>
                 @Html.Partial("_LoginPartial")
             </div>
@@ -51,7 +53,7 @@
         <hr />
         <footer>
             <div class="footer-text">
-                &copy; @DateTime.Now. 
+                &copy; @DateTime.Now.Year
                 @Html.ActionLink("Техника безопасности", "Safety", "Home")
             </div>
         </footer>

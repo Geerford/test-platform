@@ -13,5 +13,7 @@ namespace Core
         public ICollection<Course> Courses { get; set; }
 
         public ICollection<Test> Tests { get; set; }
+
+        public ICollection<Task> Tasks { get; set; }
     }
 }

@@ -33,7 +33,7 @@
             @Html.ActionLink(item.Section.Description, "Details", "Tests", new { id = item.Section.ID }, null)
         </td>
         <td>
-            @Html.ActionLink("Редактировать", "Edit", new { id = item.ID }) |
+            @Html.ActionLink("Редактировать", "Edit", "Test", new { id = item.ID }, null) |
             @Html.ActionLink("Подробнее", "Details", new { id = item.ID }) |
             @Html.ActionLink("Удалить", "Delete", new { id = item.ID })
         </td>

@@ -1,7 +1,71 @@
 ﻿
-@{
-    ViewBag.Title = "Contacts";
-}
-
-<h2>Contacts</h2>
-
+<div class="contact-banner row">
+    <div class="contact-banner__row container">
+        <h1>Призма. Прокуратура Энгельса.</h1>
+        <h2>Веб-портал для прохождения практики</h2>
+    </div>
+</div>
+<div class="row-location row">
+    <div class="row-location__address col-md-6">
+        <div class="logo flex">
+            <img src="~/Content/assets/icons/loc.svg">
+        </div>
+        <h3>Мы здесь</h3>
+        <p>Россия, Энгельс<br>Пушкина, 15</p>
+    </div>
+    <div class="row-location__map col-md-6">
+        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2483.6994250834573!2d46.1280624157697!3d51.5003830796339!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x4114b82c77ef054b%3A0x28424f29f960906a!2z0YPQuy4g0J_Rg9GI0LrQuNC90LAsIDE1LCDQrdC90LPQtdC70YzRgSwg0KHQsNGA0LDRgtC-0LLRgdC60LDRjyDQvtCx0LsuLCA0MTMxMDA!5e0!3m2!1sru!2sru!4v1557848616335!5m2!1sru!2sru" width="100%" height="100%" frameborder="0" style="border:0" allowfullscreen></iframe>
+    </div>
+</div>
+<div class="row-social row">
+    <div class="container">
+        <h2><strong>Мы в соцсетях</strong></h2>
+        <p>Здесь Вы сможете связаться с нами.</p>
+        <div class="row-social__icons row">
+            <a href="#" class="icon">
+                <img src="~/Content/assets/icons/fl.svg">
+            </a>
+            <a href="#" class="icon">
+                <img src="~/Content/assets/icons/vl.svg">
+            </a>
+            <a href="#" class="icon">
+                <img src="~/Content/assets/icons/twl.svg">
+            </a>
+            <a href="#" class="icon">
+                <img src="~/Content/assets/icons/tl.svg">
+            </a>
+        </div>
+    </div>
+</div>
+<div class="row-message row">
+    <div class="row-message__info col-md-6">
+        <h2>Режим работы &#128338;</h2>
+        <p>Понедельник-пятница: с 09:00 до 18:00</p>
+        <p>Перерыв: с 13:00 до 13:45</p>
+        <h2>Телефон &#9742;</h2>
+        <p>+7 (8453) 51-40-72 (приемная)</p>
+        <p>+7 (8453) 51-40-69 (канцелярия)</p>
+    </div>
+    <div class="row-message__form col-md-6">
+        @using (Ajax.BeginForm("Mail_Send", null, new AjaxOptions { UpdateTargetId = "results" }, new { id = "results" }))
+        {
+            <div class="form-group">
+                <label for="inputName">Ваше имя <small>*</small></label>
+                <input type="text" class="form-control" id="inputName" placeholder="Введите имя" name="name" size="40" required>
+            </div>
+            <div class="form-group">
+                <label for="inputEmail">Ваш E-Mail <small>*</small></label>
+                <input type="email" class="form-control" id="inputEmail" placeholder="Введите E-Mail" name="email" size="40" required>
+            </div>
+            <div class="form-group">
+                <label for="inputTopic">Тема <small>*</small></label>
+                <input type="text" class="form-control" id="inputTopic" placeholder="Введите тему сообщения" name="topic" size="40" required>
+            </div>
+            <div class="form-group">
+                <label for="inputMessage" data-toggle="form_tooltip">Сообщение <small>*</small></label>
+                <textarea class="form-control" id="inputMessage" rows="10" cols="45" name="desc" style="resize:vertical" placeholder="Ваше сообщение" required></textarea>
+            </div>
+            <input type="submit" name="your-send" class="btn btn-primary mt-4" value="Отправить">
+        }
+    </div>
+</div>

@@ -1,0 +1,66 @@
+﻿@model web_application_mvc.Models.ExtentionTaskViewModel
+
+<h3>Вы действительно хотите удалить это решенное задание?</h3>
+<dl class="dl-horizontal">
+    <dt>
+        @Html.Label("Фамилия")
+    </dt>
+    <dd>
+        @Html.ActionLink(Model.User.Surname, "Details", "Users", new { id = Model.User.ID }, null)
+    </dd>
+    <dt>
+        @Html.Label("Имя")
+    </dt>
+    <dd>
+        @Html.ActionLink(Model.User.Name, "Details", "Users", new { id = Model.User.ID }, null)
+    </dd>
+    <dt>
+        @Html.Label("Отчество")
+    </dt>
+    <dd>
+        @Html.ActionLink(Model.User.Midname, "Details", "Users", new { id = Model.User.ID }, null)
+    </dd>
+    <dt>
+        @Html.Label("Задание")
+    </dt>
+    <dd>
+        @Html.ActionLink(Model.Task.Description, "Details", "Tasks", new { id = Model.Task.ID }, null)
+    </dd>
+    <dt>
+        @Html.Label("Ответ студента")
+    </dt>
+    <dd>
+        @if (!string.IsNullOrEmpty(Model.Answer))
+        {
+            @Html.DisplayFor(modelModel => Model.Answer)
+        }
+    </dd>
+    <dt>
+        @Html.Label("Оценка")
+    </dt>
+    <dd>
+        @if (!string.IsNullOrEmpty(Model.Grade))
+        {
+            @Html.DisplayFor(modelModel => Model.Grade)
+        }
+    </dd>
+    <dt>
+        @Html.Label("Комментарий")
+    </dt>
+    <dd>
+        @if (!string.IsNullOrEmpty(Model.Comment))
+        {
+            @Html.DisplayFor(modelModel => Model.Comment)
+        }
+    </dd>
+</dl>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-actions no-color">
+        <input type="submit" value="Удалить" class="btn btn-default" /> |
+        @Html.ActionLink("Вернуться", "Index")
+    </div>
+}

@@ -3,11 +3,11 @@
 @if (Model.Grades != null && Model.Grades.Count() > 0)
 {
     <hr />
-    <h2>Оценки</h2>
+    <h2>Оценки по тестам</h2>
     <table class="table">
         <tr>
             <th>
-                @Html.Label("Название теста")
+                @Html.Label("Тест")
             </th>
             <th>
                 @Html.Label("Раздел")
@@ -68,6 +68,50 @@
             <tr>
                 <td>
                     @Html.Raw(item.Date)
+                </td>
+            </tr>
+        }
+    </table>
+}
+@if (Model.Tasks != null && Model.Tasks.Count() > 0)
+{
+    <hr />
+    <h2>Оценки по заданиям</h2>
+    <table class="table">
+        <tr>
+            <th>
+                @Html.Label("Задание")
+            </th>
+            <th>
+                @Html.Label("Ответ")
+            </th>
+            <th>
+                @Html.Label("Оценка")
+            </th>
+            <th>
+                @Html.Label("Комментарий от куратора")
+            </th>
+        </tr>
+        @foreach (var item in Model.Tasks)
+        {
+            <tr>
+                <td>
+                    @Html.Raw(item.Task)
+                </td>
+                <td>
+                    @Html.Raw(item.Answer)
+                </td>
+                <td>
+                    @if (!string.IsNullOrEmpty(item.Grade))
+                    {
+                        @Html.Raw(item.Grade)
+                    }
+                </td>
+                <td>
+                    @if (!string.IsNullOrEmpty(item.Comment))
+                    {
+                        @Html.Raw(item.Comment)
+                    }
                 </td>
             </tr>
         }

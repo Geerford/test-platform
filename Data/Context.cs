@@ -37,6 +37,10 @@ namespace Infrastructure.Data
 
         public DbSet<ReportQA> ReportQA { get; set; }
 
+        public DbSet<Task> Task { get; set; }
+
+        public DbSet<UserTask> UserTask { get; set; }
+
         static Context() => Database.SetInitializer(new Initializer());
 
         public Context() { }
@@ -119,6 +123,11 @@ namespace Infrastructure.Data
                         .HasRequired(q => q.Type)
                         .WithMany(t => t.Questions)
                         .HasForeignKey(q => q.TypeID);
+
+            modelBuilder.Entity<Task>()
+                        .HasRequired(t => t.Section)
+                        .WithMany(s => s.Tasks)
+                        .HasForeignKey(t => t.SectionID);
             #endregion
         }
     }

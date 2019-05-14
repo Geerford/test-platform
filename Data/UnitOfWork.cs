@@ -44,6 +44,10 @@ namespace Infrastructure.Data
 
         private ReportQARepository ReportQARepository;
 
+        private UserTaskRepository UserTaskRepository;
+
+        private TaskRepository TaskRepository;
+
         public UnitOfWork(string connectionString)
         {
             Database = new Context(connectionString);
@@ -238,6 +242,30 @@ namespace Infrastructure.Data
                     ReportQARepository = new ReportQARepository(Database);
                 }
                 return ReportQARepository;
+            }
+        }
+
+        public IMMRepository<UserTask> UserTask
+        {
+            get
+            {
+                if (UserTaskRepository == null)
+                {
+                    UserTaskRepository = new UserTaskRepository(Database);
+                }
+                return UserTaskRepository;
+            }
+        }
+
+        public IRepository<Task> Task
+        {
+            get
+            {
+                if (TaskRepository == null)
+                {
+                    TaskRepository = new TaskRepository(Database);
+                }
+                return TaskRepository;
             }
         }
 

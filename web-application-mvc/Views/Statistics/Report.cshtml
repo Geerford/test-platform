@@ -74,68 +74,134 @@
 </dl>
 <hr />
 <h2>Пройденные тесты</h2>
-<table class="table">
-    <tr>
-        <th>
-            @Html.Label("Название теста")
-        </th>
-        <th>
-            @Html.Label("Раздел")
-        </th>
-        <th>
-            @Html.Label("Оценка")
-        </th>
-    </tr>
-    @foreach (Core.Grade item in Model.Grades)
-    {
+@if (Model.Grades.ToList().Count > 0)
+{
+    <table class="table">
         <tr>
-            <td>
-                @Html.ActionLink(item.Test.Title, "Details", "Tests", new { id = item.Test.ID }, null)
-            </td>
-            <td>
-                @Html.ActionLink(item.Test.Section.Description, "Details", "Sections", new { id = item.Test.Section.ID }, null)
-            </td>
-            <td>
-                @if (item.Value > 0.85)
-                {
-                    @Html.ActionLink("Отлично", "Details", "Tests", new { id = item.Test.ID }, null)
-                }
-                else
-                {
-                    if (item.Value <= 0.85 && item.Value > 0.7)
+            <th>
+                @Html.Label("Название теста")
+            </th>
+            <th>
+                @Html.Label("Раздел")
+            </th>
+            <th>
+                @Html.Label("Оценка")
+            </th>
+        </tr>
+        @foreach (Core.Grade item in Model.Grades)
+        {
+            <tr>
+                <td>
+                    @Html.ActionLink(item.Test.Title, "Details", "Tests", new { id = item.Test.ID }, null)
+                </td>
+                <td>
+                    @Html.ActionLink(item.Test.Section.Description, "Details", "Sections", new { id = item.Test.Section.ID }, null)
+                </td>
+                <td>
+                    @if (item.Value > 0.85)
                     {
-                        @Html.ActionLink("Хорошо", "Details", "Tests", new { id = item.Test.ID }, null)
+                        @Html.ActionLink("Отлично", "Details", "Tests", new { id = item.Test.ID }, null)
                     }
                     else
                     {
-                        if (item.Value <= 0.7 && item.Value > 0.4)
+                        if (item.Value <= 0.85 && item.Value > 0.7)
                         {
-                            @Html.ActionLink("Удовлетворительно", "Details", "Tests", new { id = item.Test.ID }, null)
+                            @Html.ActionLink("Хорошо", "Details", "Tests", new { id = item.Test.ID }, null)
                         }
                         else
                         {
-                            @Html.ActionLink("Неудовлетворительно", "Details", "Tests", new { id = item.Test.ID }, null)
+                            if (item.Value <= 0.7 && item.Value > 0.4)
+                            {
+                                @Html.ActionLink("Удовлетворительно", "Details", "Tests", new { id = item.Test.ID }, null)
+                            }
+                            else
+                            {
+                                @Html.ActionLink("Неудовлетворительно", "Details", "Tests", new { id = item.Test.ID }, null)
+                            }
                         }
                     }
-                }
-            </td>
-        </tr>
-    }
-</table>
+                </td>
+            </tr>
+        }
+    </table>
+}
+else
+{
+    @Html.Raw("Студент еще не прошел ни один тест")
+}
 <hr />
 <h2>Посещения</h2>
-<table class="table">
-    <tr>
-        <th>
-            @Html.Label("Отметка")
-        </th>
-    </tr>
-    @foreach (Core.Activity item in Model.Activities)
-    {
+@if (Model.Activities.ToList().Count > 0)
+{
+    <table class="table">
         <tr>
-            <td>
-                @Html.Raw(item.Date)
-            </td>
+            <th>
+                @Html.Label("Отметка")
+            </th>
         </tr>
-    }
-</table>
+        @foreach (Core.Activity item in Model.Activities)
+        {
+            <tr>
+                <td>
+                    @Html.Raw(item.Date)
+                </td>
+            </tr>
+        }
+    </table>
+}
+else
+{
+    @Html.Raw("Студент еще не заходил на сайт")
+}
+<hr />
+<h2>Пройденные задания</h2>
+@if (Model.Tasks.ToList().Count > 0)
+{
+    <table class="table">
+        <tr>
+            <th>
+                @Html.Label("Задание")
+            </th>
+            <th>
+                @Html.Label("Ответ")
+            </th>
+            <th>
+                @Html.Label("Оценка")
+            </th>
+            <th>
+                @Html.Label("Комментарий")
+            </th>
+        </tr>
+
+        @foreach (var item in Model.Tasks)
+        {
+            <tr>
+                <td>
+                    @Html.ActionLink(item.Task.Description, "Details", "Tasks", new { id = item.Task.ID }, null)
+                </td>
+                <td>
+                    @if (!string.IsNullOrEmpty(item.Answer))
+                    {
+                        @Html.DisplayFor(modelItem => item.Answer)
+                    }
+                </td>
+                <td>
+                    @if (!string.IsNullOrEmpty(item.Grade))
+                    {
+                        @Html.DisplayFor(modelItem => item.Grade)
+                    }
+                </td>
+                <td>
+                    @if (!string.IsNullOrEmpty(item.Comment))
+                    {
+                        @Html.DisplayFor(modelItem => item.Comment)
+                    }
+                </td>
+            </tr>
+        }
+    </table>
+}
+else
+{
+    @Html.Raw("Студент еще не прошел ни одного задания")
+}

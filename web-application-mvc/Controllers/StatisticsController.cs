@@ -16,12 +16,17 @@ namespace web_application_mvc.Controllers
         IUserService userService;
         IActivityService activityService;
         IGradeService gradeService;
+        IUserTaskService userTaskService;
+        ITaskService taskService;
 
-        public StatisticsController(IUserService userService, IActivityService activityService, IGradeService gradeService)
+        public StatisticsController(IUserService userService, IActivityService activityService, IGradeService gradeService,
+            IUserTaskService userTaskService, ITaskService taskService)
         {
             this.userService = userService;
             this.activityService = activityService;
             this.gradeService = gradeService;
+            this.userTaskService = userTaskService;
+            this.taskService = taskService;
         }
 
         // GET: Statistics
@@ -45,7 +50,17 @@ namespace web_application_mvc.Controllers
             {
                 User = user,
                 Activities = activityService.GetAll().Where(x => x.UserID == id),
-                Grades = gradeService.GetAll().Where(x => x.UserID == id)
+                Grades = gradeService.GetAll().Where(x => x.UserID == id),
+                Tasks = userTaskService.GetAll().Where(x => x.UserID == id)
+                    .Select(x => new ExtentionTaskViewModel
+                    {
+                        ID = x.ID,
+                        Answer = x.Answer,
+                        Comment = x.Comment,
+                        Grade = x.Grade,
+                        Task = taskService.Get(x.TaskID),
+                        User = userService.Get(x.UserID)
+                    })
             };
             return View(model);
         }

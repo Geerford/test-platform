@@ -2,6 +2,7 @@
 using Core;
 using System.Linq;
 using System.Net;
+using System.Net.Mail;
 using System.Security.Claims;
 using System.Web.Mvc;
 using web_application_mvc.Models;
@@ -43,6 +44,26 @@ namespace web_application_mvc.Controllers
         public ActionResult Contacts()
         {
             return View();
+        }
+
+        [HttpPost]
+        public ActionResult Mail_Send(string name, string email, string topic, string desc)
+        {
+            string address = "feedback@prisma.ru";
+            MailAddress from = new MailAddress(address, email);
+            MailAddress to = new MailAddress(address);
+            MailMessage m = new MailMessage(from, to)
+            {
+                Subject = topic,
+                Body = name + "<br>" + desc,
+                IsBodyHtml = true
+            };
+            // адрес smtp-сервера и порт, с которого будем отправлять письмо
+            SmtpClient smtp = new SmtpClient("webmail.prisma.ru", 25);
+            smtp.Credentials = new NetworkCredential("feedback@prisma.ru", "password");
+            smtp.EnableSsl = true;
+            smtp.Send(m);
+            return PartialView();
         }
 
         public ActionResult Safety()

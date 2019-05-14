@@ -1,33 +1,33 @@
 ﻿@model Core.Report
 
-<h2>Отчет</h2>
+<h2 class="red">Отчет</h2>
 <hr />
 <dl class="dl-horizontal">
-    <dt>
+    <dt class="dark-blue">
         @Html.Label("Фамилия")
     </dt>
     <dd>
         @Html.ActionLink(Model.User.Surname, "Details", "Users", new { id = Model.User.ID }, new { })
     </dd>
-    <dt>
+    <dt class="dark-blue">
         @Html.Label("Имя")
     </dt>
     <dd>
         @Html.ActionLink(Model.User.Name, "Details", "Users", new { id = Model.User.ID }, new { })
     </dd>
-    <dt>
+    <dt class="dark-blue">
         @Html.Label("Отчество")
     </dt>
     <dd>
         @Html.ActionLink(Model.User.Midname, "Details", "Users", new { id = Model.User.ID }, new { })
     </dd>
-    <dt>
+    <dt class="dark-blue">
         @Html.Label("Группа")
     </dt>
     <dd>
         @Html.ActionLink(Model.User.Group.Description, "Details", "Groups", new { id = Model.User.Group.ID }, new { })
     </dd>
-    <dt>
+    <dt class="dark-blue">
         @Html.Label("Ссылка")
     </dt>
     <dd>
@@ -35,6 +35,6 @@
     </dd>
 </dl>
 <p>
-    @Html.ActionLink("Редактировать", "Edit", new { id = Model.ID }) |
+    @Html.ActionLink("Редактировать", "Edit", new { id = Model.ID }, new { @class = "btn btn-default"}) |
     @Html.ActionLink("Список отчетов", "Index")
 </p>

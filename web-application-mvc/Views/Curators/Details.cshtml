@@ -1,6 +1,6 @@
 ﻿@model Core.Curator
 
-<h2>Куратор</h2>
+<h2 class="red">Куратор</h2>
 <hr />
 <dl class="dl-horizontal">
     <dt>
@@ -14,9 +14,9 @@
 </dl>
 @if (Model.Students != null && Model.Students.Count > 0)
 {
-    <h2>Студенты</h2>
+    <h2 class="dark-blue roboto">Студенты</h2>
     <table class="table">
-        <tr>
+        <tr class="light-blue">
             <th>
                 @Html.Label("ФИО")
             </th>
@@ -40,6 +40,6 @@
     </table>
 }
 <p>
-    @Html.ActionLink("Редактировать", "Edit", new { id = Model.ID }) |
+    @Html.ActionLink("Редактировать", "Edit", new { id = Model.ID }, new { @class = "btn btn-default"}) |
     @Html.ActionLink("Список кураторов", "Index")
 </p>

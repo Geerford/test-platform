@@ -3,28 +3,64 @@
     padding: 5px;
 }
 
+.test {
+    margin-top: 200px;
+}
+
 .question {
-    border: 1px solid gray;
+    margin-bottom: 20px;
     padding: 25px;
-    margin: 20px;
+    background-color: rgba(236,78,6,0.09);
 }
 
 .description {
+    min-width: 70%;
     width: 300px;
     height: 70px;
+    border: 1px solid #ccc;
 }
 
 .btn-add-quest {
+    font-size: 20px;
     margin: 20px;
+}
+.href:hover {
+    cursor: pointer;
+    color: #ff8e74;
+}
+.href:active {
+    color: #ce0c0c;
 }
 
 .variant {
     margin: 15px 0;
 }
-
+.btn-remove-answer {
+    color: #fff;
+    background-color: #ff7575;
+    padding: 2px 7px;
+    font-family: cursive;
+}
 .btn-remove-question {
     display: block;
-    padding: 5px 8px;
+    padding: 5px 10px;
     float: right;
-    border: 1px solid;
+    color: #fff;
+    background-color: #FF4500;
+    font-family: cursive;
+}
+.btn-remove-question:hover {
+    cursor: pointer;
+    background-color: #ff8e74;
+}
+.btn-remove-question:active {
+    background-color: #ce0c0c;
+}
+.btn-add-quest {
+    display: block;
+    margin: 20px 0;
+}
+.quest-header {
+    padding: 25px 0;
+    font-size: 25px;
 }

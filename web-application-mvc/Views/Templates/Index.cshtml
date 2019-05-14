@@ -1,12 +1,10 @@
 ﻿@model IEnumerable<Core.Template>
 
-<h2>Шаблоны</h2>
-<p>
-    @Html.ActionLink("Добавить", "Create")
-</p>
-<h3>Данный раздел предназначен для создания характеристических шаблонов, по которым будут формироваться отчеты </h3>
+<h2 class="red">Шаблоны</h2>
+
+<h4 class="dark-blue roboto">Данный раздел предназначен для создания характеристических шаблонов, по которым будут формироваться отчеты </h4>
 <table class="table">
-    <tr>
+    <tr class="light-blue">
         <th>
             @Html.Label("Описание")
         </th>
@@ -28,3 +26,4 @@
         </tr>
     }
 </table>
+@Html.ActionLink("Добавить", "Create", null, new { @class = "btn btn-default" })

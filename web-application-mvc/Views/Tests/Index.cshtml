@@ -1,10 +1,7 @@
 ﻿@model IEnumerable<Core.Test>
 
-<h2>Тесты</h2>
+<h2 class="red" style="margin-bottom: 30px">Тесты</h2>
 
-<p>
-    @Html.ActionLink("Добавить", "Create", "Test")
-</p>
 <table class="table">
     <tr>
         <th>
@@ -21,22 +18,24 @@
         </th>
     </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.ActionLink(item.Title, "Details", new { id = item.ID })
-        </td>
-        <td>
-            @Html.ActionLink(item.Description, "Details", new { id = item.ID })
-        </td>
-        <td>
-            @Html.ActionLink(item.Section.Description, "Details", "Tests", new { id = item.Section.ID }, null)
-        </td>
-        <td>
-            @Html.ActionLink("Редактировать", "Edit", new { id = item.ID }) |
-            @Html.ActionLink("Подробнее", "Details", new { id = item.ID }) |
-            @Html.ActionLink("Удалить", "Delete", new { id = item.ID })
-        </td>
-    </tr>
-}
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.ActionLink(item.Title, "Details", new { id = item.ID })
+            </td>
+            <td>
+                @Html.ActionLink(item.Description, "Details", new { id = item.ID })
+            </td>
+            <td>
+                @Html.ActionLink(item.Section.Description, "Details", "Tests", new { id = item.Section.ID }, null)
+            </td>
+            <td>
+                @Html.ActionLink("Редактировать", "Edit", "Test", new { id = item.ID }, null) |
+                @Html.ActionLink("Подробнее", "Details", new { id = item.ID }) |
+                @Html.ActionLink("Удалить", "Delete", new { id = item.ID })
+            </td>
+        </tr>
+    }
 </table>
+@Html.ActionLink("Добавить", "Create", "Test", null, new { @class = "btn btn-default" })

@@ -259,3 +259,8 @@ paket-files/
 # Python Tools for Visual Studio (PTVS)
 __pycache__/
 *.pyc
+/web-application-mvc/Content/Uploads/d6755c58-abf7-4750-b568-24beb6a8cc6c.pdf
+/web-application-mvc/Content/Uploads/d01af8e5-b2bb-4065-9db8-82f43a524db3.pdf
+/web-application-mvc/Content/Uploads/c65cf502-9980-4813-b47a-03119455eed7.pdf
+/web-application-mvc/Content/Uploads/6df8dcfe-5536-477f-9b8f-f9cb5f740933.pdf
+/web-application-mvc/Content/Uploads/42afd10c-871e-420e-a0d7-89adff200318.pdf

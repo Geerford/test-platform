@@ -1,6 +1,6 @@
 ﻿@model Core.Curator
 
-<h2>Добавить</h2>
+<h2 class="red">Добавить</h2>
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
@@ -8,7 +8,7 @@
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         <div class="form-group">
-            @Html.Label("Куратор", htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.Label("Куратор", htmlAttributes: new { @class = "dark-blue control-label col-md-2" })
             <div class="col-md-10">
                 @Html.DropDownList("ID", null, htmlAttributes: new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.ID, "", new { @class = "text-danger" })
@@ -17,7 +17,7 @@
         @if (ViewBag.Students != null)
         {
             <div class="form-group">
-                @Html.Label("Студенты", htmlAttributes: new { @class = "control-label col-md-2" })
+                @Html.Label("Студенты", htmlAttributes: new { @class = "dark-blue control-label col-md-2" })
                 <div class="col-md-10">
                     @foreach (Core.User item in ViewBag.Students)
                     {
@@ -35,13 +35,11 @@
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
                 <input type="submit" value="Добавить" class="btn btn-default" />
+                @Html.ActionLink("Список кураторов", "Index")
             </div>
         </div>
     </div>
 }
-<div>
-    @Html.ActionLink("Список кураторов", "Index")
-</div>
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
 }

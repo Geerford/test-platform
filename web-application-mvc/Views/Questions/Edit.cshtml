@@ -1,5 +1,5 @@
 ﻿@model Core.Question
-<h2>Редактировать</h2>
+<h2 class="red">Редактировать</h2>
 
 
 @using (Html.BeginForm())
@@ -7,46 +7,49 @@
     @Html.AntiForgeryToken()
     
     <div class="form-horizontal">
-        <h4>Вопрос</h4>
+        <h4 class="red">Вопрос</h4>
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         @Html.HiddenFor(model => model.ID)
 
         <div class="form-group">
-            @Html.Label("Название")
+            <div class="dark-blue col-md-1">
+                @Html.Label("Название")
+            </div>
             <div class="col-md-10">
-                @Html.EditorFor(model => model.Description, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.EditorFor(model => model.Description, new { htmlAttributes = new { @class = "dark-blue form-control" } })
                 @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
             </div>
         </div>
 
         <div class="form-group">
-            @Html.Label("Тест")
+            <div class="dark-blue col-md-1">
+                @Html.Label("Тест")
+            </div>
             <div class="col-md-10">
-                @Html.DropDownList("TestID", null, htmlAttributes: new { @class = "form-control" })
+                @Html.DropDownList("TestID", null, htmlAttributes: new { @class = "dark-blue form-control" })
                 @Html.ValidationMessageFor(model => model.TestID, "", new { @class = "text-danger" })
             </div>
         </div>
 
         <div class="form-group">
-            @Html.Label("Тип")
+            <div class="dark-blue col-md-1">
+                @Html.Label("Тип")
+            </div>
             <div class="col-md-10">
-                @Html.DropDownList("TypeID", null, htmlAttributes: new { @class = "form-control" })
+                @Html.DropDownList("TypeID", null, htmlAttributes: new { @class = "dark-blue form-control" })
                 @Html.ValidationMessageFor(model => model.TypeID, "", new { @class = "text-danger" })
             </div>
         </div>
 
         <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
+            <div class="col-md-offset-1 col-md-10">
                 <input type="submit" value="Сохранить" class="btn btn-default" />
+                @Html.ActionLink("Список вопросов", "Index")
             </div>
         </div>
     </div>
 }
-
-<div>
-    @Html.ActionLink("Список вопросов", "Index")
-</div>
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")

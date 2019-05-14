@@ -1,11 +1,9 @@
 ﻿@model IEnumerable<Core.Grade>
 
-<h2>Оценки</h2>
-<p>
-    @Html.ActionLink("Добавить", "Create")
-</p>
+<h2 class="red">Оценки</h2>
+
 <table class="table">
-    <tr>
+    <tr class="light-blue">
         <th>
             @Html.Label("Название теста")
         </th>
@@ -62,3 +60,4 @@
         </tr>
     }
 </table>
+@Html.ActionLink("Добавить", "Create", null, new { @class = "btn btn-default" })

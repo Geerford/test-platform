@@ -1,23 +1,22 @@
 ﻿@model web_application_mvc.Models.LoginViewModel
-<h2>Вход в систему</h2>
 <div class="row">
-    <div class="col-md-8">
+    <div class="col-md-7">
         <section id="loginForm">
-            @using (Html.BeginForm("Login", "Account", new { ReturnUrl = Request.QueryString["ReturnUrl"] }, 
+            @using (Html.BeginForm("Login", "Account", new { ReturnUrl = Request.QueryString["ReturnUrl"] },
                 FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
             {
+                <h3 class="section-header sign-in-head">Вход</h3>
                 @Html.AntiForgeryToken()
-                <hr />
                 @Html.ValidationSummary(true, "", new { @class = "text-danger" })
                 <div class="form-group">
-                    @Html.Label("Электронная почта", htmlAttributes: new { @class = "control-label col-md-2" })
+                    @Html.Label("Электронная почта", htmlAttributes: new { @class = "dark-blue control-label col-md-2" })
                     <div class="col-md-10">
                         @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
                         @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
                     </div>
                 </div>
                 <div class="form-group">
-                    @Html.Label("Пароль", htmlAttributes: new { @class = "control-label col-md-2" })
+                    @Html.Label("Пароль", htmlAttributes: new { @class = "dark-blue control-label col-md-2" })
                     <div class="col-md-10">
                         @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
                         @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
@@ -31,5 +30,10 @@
                 </div>
             }
         </section>
+    </div>
+    <div class="col-md-5 text-center">
+        <h3 class="section-header">Вы в первый раз на нашем сайте?</h3>
+        <p>Cоздайте учетную запись, заполнив форму и нажав кнопку ниже</p>
+        @Html.ActionLink("Зарегистрироваться", "Register", "Account", null, new { id = "loginLink" })
     </div>
 </div>

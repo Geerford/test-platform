@@ -3,21 +3,21 @@
 <link rel="stylesheet" type="text/css" href="~/Content/test.css">
 <script defer type="text/javascript" src="~/Scripts/test.js"></script>
 
-@Html.Label("Название", htmlAttributes: new { @class = "control-label col-md-2" })
+@Html.Label("Название", htmlAttributes: new { @class = "light-blue control-label col-md-2" })
 <div class="col-md-10">
     @Html.EditorFor(model => model.Title, new { htmlAttributes = new { @class = "form-control test-title" } })
 </div>
-@Html.Label("Описание", htmlAttributes: new { @class = "control-label col-md-2" })
+@Html.Label("Описание", htmlAttributes: new { @class = "light-blue control-label col-md-2" })
 <div class="col-md-10">
     @Html.EditorFor(model => model.Description, new { htmlAttributes = new { @class = "form-control test-description" } })
 </div>
-@Html.Label("Раздел", htmlAttributes: new { @class = "control-label col-md-2" })
+@Html.Label("Раздел", htmlAttributes: new { @class = "light-blue control-label col-md-2" })
 <div class="col-md-10">
     @Html.DropDownList("SectionID", null, htmlAttributes: new { @class = "form-control test-section" })
 </div>
-@Html.Label("Вопросы", htmlAttributes: new { @class = "control-label col-md-12" })
+@Html.Label("Вопросы", htmlAttributes: new { @class = "red quest-header control-label col-md-12" })
 
-<form name="test" action="#">
+<form name="test" class="test" action="#">
     <div class="question">
         <p>Описание</p>
         <textarea class="description"></textarea>
@@ -36,30 +36,30 @@
                 <input type="text">
                 <input type="checkbox" name="is-correct" value="false">
             </div>
-            <span class="btn-add-answer" onclick="addVariant.call(this)">Добавить вариант</span>
+            <span class="red btn-add-answer href" onclick="addVariant.call(this)">Добавить вариант</span>
         </div>
         <div hidden class="enter-answer">
             <input type="text">
         </div>
     </div>
-    <span class="btn-add-quest" onclick="addQuestion.call(this);">Добавить вопрос</span>
+    <span class="red btn-add-quest href" onclick="addQuestion.call(this);">Добавить вопрос</span>
 </form>
 <button type="button" id="SaveTest" class="btn btn-default"><span class="glyphicon glyphicon-ok"></span> Сохранить </button>
 
 @section MyScritps
 {
-<script type="text/javascript">
+    <script type="text/javascript">
         $(document).ready(function () {
             $('#SaveTest').on('click', function () {
                 let questionsTitle = document.getElementsByClassName('question');
-                let result = [];                
+                let result = [];
 
                 for (let i = 0; i < questionsTitle.length; i++) {
                     let typeSelect = document.getElementsByName('types')[i];
                     let selectedOption = typeSelect.options[typeSelect.selectedIndex].value;
                     let question = {};
                     let answers = [];
-                    let answer;                    
+                    let answer;
                     if (selectedOption === "enter") {
                         answer = {
                             Answer: questionsTitle[i].lastElementChild.firstElementChild.value,
@@ -121,5 +121,5 @@
                 console.log(test);
             });
         });
-</script>
+    </script>
 }

@@ -1,33 +1,33 @@
 ﻿@model Core.Group
 
-<h2>Вы действительно хотите удалить данную группу?</h2>
+<h2 class="red">Вы действительно хотите удалить данную группу?</h2>
 <hr />
 <dl class="dl-horizontal">
-    <dt>
+    <dt class="dark-blue">
         @Html.Label("Университет")
     </dt>
     <dd>
         @Html.DisplayFor(model => model.University)
     </dd>
-    <dt>
+    <dt class="dark-blue">
         @Html.Label("Факультет")
     </dt>
     <dd>
         @Html.DisplayFor(model => model.Department)
     </dd>
-    <dt>
+    <dt class="dark-blue">
         @Html.Label("Группа")
     </dt>
     <dd>
         @Html.DisplayFor(model => model.Description)
     </dd>
-    <dt>
+    <dt class="dark-blue">
         @Html.Label("Начало практики")
     </dt>
     <dd>
         @Html.DisplayFor(model => model.Start)
     </dd>
-    <dt>
+    <dt class="dark-blue">
         @Html.Label("Окончание практики")
     </dt>
     <dd>

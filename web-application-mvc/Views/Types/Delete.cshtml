@@ -1,14 +1,14 @@
 ﻿@model web_application_mvc.Models.TypeViewModel
 
-<h2>Вы действительно хотите удалить данный тип вопроса?</h2>
+<h2 class="red">Вы действительно хотите удалить данный тип вопроса?</h2>
 <dl class="dl-horizontal">
-    <dt>
+    <dt class="dark-blue">
         @Html.Label("Название")
     </dt>
     <dd>
         @Html.DisplayFor(model => model.Type.Description)
     </dd>
-    <dt>
+    <dt class="dark-blue">
         @Html.Label("Описание")
     </dt>
     <dd>
@@ -16,7 +16,7 @@
     </dd>
 </dl>
 <table class="table">
-    <tr>
+    <tr class="light-blue">
         <th>
             @Html.Label("Вопрос")
         </th>

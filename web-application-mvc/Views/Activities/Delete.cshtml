@@ -1,9 +1,9 @@
 ﻿@model Core.Activity
 
-<h3>Вы действительно хотите удалить данное посещение?</h3>
+<h3 class="red" style="margin-bottom: 20px">Вы действительно хотите удалить данное посещение?</h3>
 <div>
     <dl class="dl-horizontal">
-        <dt>
+        <dt class="dark-blue">
             @Html.Label("ФИО студента")
         </dt>
         <dd>
@@ -11,7 +11,7 @@
             @Html.ActionLink(Model.User.Name, "Details", "Users", new { id = Model.User.ID }, null)
             @Html.ActionLink(Model.User.Midname, "Details", "Users", new { id = Model.User.ID }, null)
         </dd>
-        <dt>
+        <dt class="dark-blue">
             @Html.Label("Дата")
         </dt>
         <dd>

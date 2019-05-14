@@ -1,6 +1,6 @@
 ﻿@model Core.Group
 
-<h2>Редактировать</h2>
+<h2 class="red">Редактировать</h2>
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
@@ -11,7 +11,7 @@
         @Html.HiddenFor(model => model.ID)
 
         <div class="form-group">
-            @Html.Label("Университет", htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.Label("Университет", htmlAttributes: new { @class = "light-blue control-label col-md-2" })
             <div class="col-md-10">
                 @Html.EditorFor(model => model.University, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.University, "", new { @class = "text-danger" })
@@ -19,7 +19,7 @@
         </div>
 
         <div class="form-group">
-            @Html.Label("Факультет", htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.Label("Факультет", htmlAttributes: new { @class = "light-blue control-label col-md-2" })
             <div class="col-md-10">
                 @Html.EditorFor(model => model.Department, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.Department, "", new { @class = "text-danger" })
@@ -27,7 +27,7 @@
         </div>
 
         <div class="form-group">
-            @Html.Label("Группа", htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.Label("Группа", htmlAttributes: new { @class = "light-blue control-label col-md-2" })
             <div class="col-md-10">
                 @Html.EditorFor(model => model.Description, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
@@ -35,7 +35,7 @@
         </div>
 
         <div class="form-group">
-            @Html.Label("Начало практики", htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.Label("Начало практики", htmlAttributes: new { @class = "light-blue control-label col-md-2" })
             <div class="col-md-10">
                 @Html.EditorFor(model => model.Start, new { htmlAttributes = new { @class = "form-control", @type = "date" } })
                 @Html.ValidationMessageFor(model => model.Start, "", new { @class = "text-danger" })
@@ -43,7 +43,7 @@
         </div>
 
         <div class="form-group">
-            @Html.Label("Окончание практики", htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.Label("Окончание практики", htmlAttributes: new { @class = "light-blue control-label col-md-2" })
             <div class="col-md-10">
                 @Html.EditorFor(model => model.End, new { htmlAttributes = new { @class = "form-control", @type = "date" } })
                 @Html.ValidationMessageFor(model => model.End, "", new { @class = "text-danger" })
@@ -52,13 +52,13 @@
         @if (ViewBag.Students != null || ViewBag.Users != null)
         {
             <div class="form-group">
-            @Html.Label("Студенты", htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.Label("Студенты", htmlAttributes: new { @class = "light-blue control-label col-md-2" })
             <div class="col-md-10">
                 @if (ViewBag.Students != null)
                 {
                     foreach (Core.User item in ViewBag.Students)
                     {
-                        <div style="padding-right:15px;margin-left:200px">
+                        <div>
                             <input id="@item.ID" type="checkbox" name="students" value="@item.ID" checked />
                             <label for="@item.ID">
                                 @Html.ActionLink(item.Surname + " " + item.Name, "Details", "Users", new { id = item.ID }, new { })
@@ -70,7 +70,7 @@
                 {
                     foreach (Core.User item in ViewBag.Users)
                     {
-                        <div style="padding-right:15px;margin-left:200px">
+                        <div>
                             <input id="@item.ID" type="checkbox" name="users" value="@item.ID" />
                             <label for="@item.ID">
                                 @Html.ActionLink(item.Surname + " " + item.Name, "Details", "Users", new { id = item.ID }, new { })
@@ -85,13 +85,13 @@
         @if (ViewBag.Students != null || ViewBag.Users != null)
         {
             <div class="form-group">
-            @Html.Label("Доступ к разделам", htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.Label("Доступ к разделам", htmlAttributes: new { @class = "light-blue control-label col-md-2" })
             <div class="col-md-10">
                 @if (ViewBag.Sections != null)
                 {
                     foreach (Core.Section item in ViewBag.Sections)
                     {
-                        <div style="padding-right:15px;margin-left:200px">
+                        <div>
                             <input id="@item.ID" type="checkbox" name="sections" value="@item.ID" checked />
                             <label for="@item.ID">
                                 @Html.ActionLink(item.Description, "Details", "Sections", new { id = item.ID }, new { })
@@ -103,7 +103,7 @@
                 {
                     foreach (Core.Section item in ViewBag.SectionsNew)
                     {
-                        <div style="padding-right:15px;margin-left:200px">
+                        <div>
                             <input id="@item.ID" type="checkbox" name="sectionsnew" value="@item.ID" />
                             <label for="@item.ID">
                                 @Html.ActionLink(item.Description, "Details", "Sections", new { id = item.ID }, new { })
@@ -118,14 +118,11 @@
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
                 <input type="submit" value="Сохранить" class="btn btn-default" />
+                @Html.ActionLink("Список групп", "Index")
             </div>
         </div>
     </div>
 }
-
-<div>
-    @Html.ActionLink("Список групп", "Index")
-</div>
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")

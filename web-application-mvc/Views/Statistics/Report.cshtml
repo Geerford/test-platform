@@ -1,27 +1,27 @@
 ﻿@model web_application_mvc.Models.ReportViewModel
 
-<h2>Пользователь</h2>
+<h2 class="red">Пользователь</h2>
 
 <dl class="dl-horizontal">
-    <dt>
+    <dt class="dark-blue">
         @Html.Label("Имя")
     </dt>
     <dd>
         @Html.ActionLink(Model.User.Name, "Details", "Users", new { id = Model.User.ID }, null)
     </dd>
-    <dt>
+    <dt class="dark-blue">
         @Html.Label("Фамилия")
     </dt>
     <dd>
         @Html.ActionLink(Model.User.Surname, "Details", "Users", new { id = Model.User.ID }, null)
     </dd>
-    <dt>
+    <dt class="dark-blue">
         @Html.Label("Роль")
     </dt>
     <dd>
         @Html.ActionLink(Model.User.Role.Value, "Details", "Users", new { id = Model.User.ID }, null)
     </dd>
-    <dt>
+    <dt class="dark-blue">
         @Html.Label("Статус")
     </dt>
     <dd>
@@ -34,38 +34,38 @@
             @Html.ActionLink("Деактивирован", "Details", "Users", new { id = Model.User.ID }, null)
         }
     </dd>
-    <dt>
+    <dt class="dark-blue">
         @Html.Label("Университет")
     </dt>
     <dd>
         @Html.ActionLink(Model.User.Group.University, "Details", "Users", new { id = Model.User.Group.ID }, null)
     </dd>
-    <dt>
+    <dt class="dark-blue">
         @Html.Label("Факультет")
     </dt>
     <dd>
         @Html.ActionLink(Model.User.Group.Department, "Details", "Group", new { id = Model.User.Group.ID }, null)
     </dd>
-    <dt>
+    <dt class="dark-blue">
         @Html.Label("Группа")
     </dt>
     <dd>
         @Html.ActionLink(Model.User.Group.Description, "Details", "Group", new { id = Model.User.Group.ID }, null)
     </dd>
-    <dt>
+    <dt class="dark-blue">
         @Html.Label("Куратор")
     </dt>
     <dd>
         @Html.ActionLink(Model.User.CurrentCurator.User.Name, "Details", "Users", new { id = Model.User.CurrentCurator.User.ID }, null)
         @Html.ActionLink(Model.User.CurrentCurator.User.Surname, "Details", "Users", new { id = Model.User.CurrentCurator.User.ID }, null)
     </dd>
-    <dt>
+    <dt class="dark-blue">
         @Html.Label("Телефон")
     </dt>
     <dd>
         @Html.ActionLink(Model.User.Phone, "Details", "Users", new { id = Model.User.Group.ID }, null)
     </dd>
-    <dt>
+    <dt class="dark-blue">
         @Html.Label("Электронная почта")
     </dt>
     <dd>
@@ -73,9 +73,9 @@
     </dd>
 </dl>
 <hr />
-<h2>Пройденные тесты</h2>
+<h2 class="red">Пройденные тесты</h2>
 <table class="table">
-    <tr>
+    <tr class="light-blue">
         <th>
             @Html.Label("Название теста")
         </th>
@@ -123,9 +123,9 @@
     }
 </table>
 <hr />
-<h2>Посещения</h2>
+<h2 class="red">Посещения</h2>
 <table class="table">
-    <tr>
+    <tr class="light-blue">
         <th>
             @Html.Label("Отметка")
         </th>

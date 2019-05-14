@@ -1,11 +1,11 @@
 ﻿@model IEnumerable<Core.Group>
 
-<h2>Группы</h2>
+<h2 class="red">Группы</h2>
 <p>
-    @Html.ActionLink("Добавить", "Create")
+
 </p>
 <table class="table">
-    <tr>
+    <tr class="light-blue">
         <th>
             @Html.Label("Университет")
         </th>
@@ -25,28 +25,30 @@
             @Html.Label("Действия")
         </th>
     </tr>
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.ActionLink(item.University, "Details", new { id = item.ID })
-        </td>
-        <td>
-            @Html.ActionLink(item.Department, "Details", new { id = item.ID })
-        </td>
-        <td>
-            @Html.ActionLink(item.Description, "Details", new { id = item.ID })
-        </td>
-        <td>
-            @Html.ActionLink(item.Start.ToShortDateString(), "Details", new { id = item.ID })
-        </td>
-        <td>
-            @Html.ActionLink(item.End.ToShortDateString(), "Details", new { id = item.ID })
-        </td>
-        <td>
-            @Html.ActionLink("Редактировать", "Edit", new { id = item.ID }) |
-            @Html.ActionLink("Подробнее", "Details", new { id = item.ID }) |
-            @Html.ActionLink("Удалить", "Delete", new { id = item.ID })
-        </td>
-    </tr>
-}
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.ActionLink(item.University, "Details", new { id = item.ID })
+            </td>
+            <td>
+                @Html.ActionLink(item.Department, "Details", new { id = item.ID })
+            </td>
+            <td>
+                @Html.ActionLink(item.Description, "Details", new { id = item.ID })
+            </td>
+            <td>
+                @Html.ActionLink(item.Start.ToShortDateString(), "Details", new { id = item.ID })
+            </td>
+            <td>
+                @Html.ActionLink(item.End.ToShortDateString(), "Details", new { id = item.ID })
+            </td>
+            <td>
+                @Html.ActionLink("Редактировать", "Edit", new { id = item.ID }) |
+                @Html.ActionLink("Подробнее", "Details", new { id = item.ID }) |
+                @Html.ActionLink("Удалить", "Delete", new { id = item.ID })
+            </td>
+        </tr>
+    }
 </table>
+@Html.ActionLink("Добавить", "Create", null, new { @class = "btn btn-default"})

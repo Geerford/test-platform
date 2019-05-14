@@ -1,10 +1,11 @@
 ﻿@model IEnumerable<Core.Question>
 
+<h1 class="red" style="margin-bottom: 20px">Вопросы</h1>
 <p>
-    @Html.ActionLink("Добавить", "Create")
+    @Html.ActionLink("Добавить", "Create", null, new { @class = "btn btn-default" })
 </p>
 <table class="table">
-    <tr>
+    <tr class="light-blue">
         <th>
             @Html.Label("Тест")
         </th>
@@ -17,23 +18,24 @@
         <th></th>
     </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Test.Title)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Type.Description)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Description)
-        </td>
-        <td>
-            @Html.ActionLink("Редактировать", "Edit", new { id=item.ID }) |
-            @Html.ActionLink("Подробнее", "Details", new { id=item.ID }) |
-            @Html.ActionLink("Удалить", "Delete", new { id=item.ID })
-        </td>
-    </tr>
-}
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Test.Title)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Type.Description)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Description)
+            </td>
+            <td>
+                @Html.ActionLink("Редактировать", "Edit", new { id = item.ID }) |
+                @Html.ActionLink("Подробнее", "Details", new { id = item.ID }) |
+                @Html.ActionLink("Удалить", "Delete", new { id = item.ID })
+            </td>
+        </tr>
+    }
 
 </table>

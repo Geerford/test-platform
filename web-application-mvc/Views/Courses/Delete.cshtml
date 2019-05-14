@@ -1,21 +1,21 @@
 ﻿@model Core.Course
 
-<h3>Вы действительно хотитет удалить данный материал?</h3>
+<h3 class="red">Вы действительно хотите удалить данный материал?</h3>
 <hr />
 <dl class="dl-horizontal">
-    <dt>
+    <dt class="dark-blue">
         @Html.Label("Описание")
     </dt>
     <dd>
         @Html.DisplayFor(model => model.Description)
     </dd>
-    <dt>
+    <dt class="dark-blue">
         @Html.Label("Раздел")
     </dt>
     <dd>
         @Html.DisplayFor(model => model.Section.Description)
     </dd>
-    <dt>
+    <dt class="dark-blue">
         @Html.Label("Ссылка")
     </dt>
     <dd>

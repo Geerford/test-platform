@@ -3,9 +3,9 @@
 @if (Model.Grades != null && Model.Grades.Count() > 0)
 {
     <hr />
-    <h2>Оценки</h2>
+    <h2 class="red">Оценки</h2>
     <table class="table">
-        <tr>
+        <tr class="light-blue">
             <th>
                 @Html.Label("Название теста")
             </th>
@@ -56,9 +56,9 @@
 @if (Model.Activities != null && Model.Activities.Count() > 0)
 {
     <hr />
-    <h2>Посещения</h2>
+    <h2 class="red">Посещения</h2>
     <table class="table">
-        <tr>
+        <tr class="light-blue">
             <th>
                 @Html.Label("Отметка")
             </th>

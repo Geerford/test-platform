@@ -1,11 +1,9 @@
 ﻿@model IEnumerable<Core.Curator>
 
-<h2>Кураторы</h2>
-<p>
-    @Html.ActionLink("Добавить", "Create")
-</p>
+<h2 class="red" style="margin-bottom: 20px">Кураторы</h2>
+
 <table class="table">
-    <tr>
+    <tr class="light-blue">
         <th>
             @Html.Label("ФИО куратора")
         </th>
@@ -13,19 +11,20 @@
             @Html.Label("Действия")
         </th>
     </tr>
-@foreach (var item in Model)
-{
-    <tr>
-        <td>
-            @Html.ActionLink(item.User.Surname, "Details", new { id = item.ID })
-            @Html.ActionLink(item.User.Name, "Details", new { id = item.ID })
-            @Html.ActionLink(item.User.Midname, "Details", new { id = item.ID })
-        </td>
-        <td>
-            @Html.ActionLink("Редактировать", "Edit", new { id = item.ID }) |
-            @Html.ActionLink("Подробнее", "Details", new { id = item.ID }) |
-            @Html.ActionLink("Удалить", "Delete", new { id = item.ID })
-        </td>
-    </tr>
-}
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.ActionLink(item.User.Surname, "Details", new { id = item.ID })
+                @Html.ActionLink(item.User.Name, "Details", new { id = item.ID })
+                @Html.ActionLink(item.User.Midname, "Details", new { id = item.ID })
+            </td>
+            <td>
+                @Html.ActionLink("Редактировать", "Edit", new { id = item.ID }) |
+                @Html.ActionLink("Подробнее", "Details", new { id = item.ID }) |
+                @Html.ActionLink("Удалить", "Delete", new { id = item.ID })
+            </td>
+        </tr>
+    }
 </table>
+@Html.ActionLink("Добавить", "Create", null, new { @class = "btn btn-default"})

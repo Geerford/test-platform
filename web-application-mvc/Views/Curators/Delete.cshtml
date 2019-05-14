@@ -1,8 +1,8 @@
 ﻿@model Core.Curator
 
-<h3>Вы действительно хотите удалить данного куратора?</h3>
+<h3 class="red" style="margin-bottom: 20px">Вы действительно хотите удалить данного куратора?</h3>
 <dl class="dl-horizontal">
-    <dt>
+    <dt class="dark-blue">
         @Html.Label("ФИО куратора")
     </dt>
     <dd>
@@ -13,9 +13,9 @@
 </dl>
 @if (Model.Students != null && Model.Students.Count > 0)
 {
-    <h2>Студенты</h2>
+    <h2 class="dark-blue roboto">Студенты</h2>
     <table class="table">
-        <tr>
+        <tr class="light-blue">
             <th>
                 @Html.Label("ФИО")
             </th>

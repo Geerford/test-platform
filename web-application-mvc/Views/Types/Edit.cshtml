@@ -1,6 +1,6 @@
 ﻿@model Core.Type
 
-<h2>Редактировать</h2>
+<h2 class="red">Редактировать</h2>
 
 @using (Html.BeginForm())
 {
@@ -12,7 +12,7 @@
         @Html.HiddenFor(model => model.ID)
 
         <div class="form-group">
-            @Html.Label("Название", htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.Label("Название", htmlAttributes: new { @class = "dark-blue control-label col-md-2" })
             <div class="col-md-10">
                 @Html.EditorFor(model => model.Status, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.Status, "", new { @class = "text-danger" })
@@ -20,7 +20,7 @@
         </div>
 
         <div class="form-group">
-            @Html.Label("Описание", htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.Label("Описание", htmlAttributes: new { @class = "dark-blue control-label col-md-2" })
             <div class="col-md-10">
                 @Html.EditorFor(model => model.Description, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
@@ -30,13 +30,11 @@
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
                 <input type="submit" value="Сохранить" class="btn btn-default" />
+                @Html.ActionLink("Список типов вопроса", "Index")
             </div>
         </div>
     </div>
 }
-<div>
-    @Html.ActionLink("Список типов вопроса", "Index")
-</div>
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")

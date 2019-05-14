@@ -1,12 +1,17 @@
-﻿body {
+﻿@import url('https://fonts.googleapis.com/css?family=Roboto|Roboto+Condensed');
+@import url('https://fonts.googleapis.com/css?family=Alegreya');
+@import url('https://fonts.googleapis.com/css?family=Exo+2');
+@import url('https://fonts.googleapis.com/css?family=Open+Sans');
+
+body {
+    font-family: 'Open Sans', sans-serif;
     padding-top: 50px;
     padding-bottom: 20px;
 }
 
 /* Set padding to keep content from hitting the edges */
 .body-content {
-    padding-left: 15px;
-    padding-right: 15px;
+    padding: 30px;
 }
 
 /* Override the default bootstrap behavior where horizontal description lists 
@@ -28,12 +33,8 @@ textarea {
     margin-bottom: 0 !important;
 }
 
-.test{
-    margin: 0 auto;
-}
 
 .question-test {
-    border: 1px solid #bdbdbd;
     width: 100%;
     border-radius: 4px;
     margin-top: 40px;
@@ -75,9 +76,88 @@ textarea {
 }
 
 .layout-font {
+    line-height: 1.2em;
+    padding: 20px;
+    text-transform: uppercase;
+    font-family: 'Alegreya', serif;
+    font-size: 33px;
+    font-weight: bold;
+    letter-spacing: 0.13em;
     color: #fff !important;
 }
 
 .layout-font-menu * {
     color: #fff !important;
+}   
+
+/**********************************************************************/
+
+.center-text {
+    text-align: center;
+    background-color: #fff;
+}
+.header {
+    box-shadow: 0 5px 10px rgba(12, 95, 154, 0.82);
+    height: 80px;
+    background-color: #0b75bf;
+}
+.user {
+    font-weight: bold;
+    line-height: 3.5em !important;
+    color: #fff !important;
+}
+.menu li a {
+    line-height: 3.5em;
+    text-transform: uppercase;
+    color: #fff !important;
+    font-family: 'Roboto Condensed', sans-serif;
+}
+.section-header {
+    color: #FF4500;
+    padding-bottom: 20px;
+    font-family: 'Roboto Condensed', serif;
+}
+.sign-in-head {
+    padding: 0 0 20px 30%;
+    font-family: 'Roboto Condensed', serif;
+}
+.banner {
+    position: relative;
+    height: 600px;
+    background-image: url('assets/business.jpeg');
+    background-size: cover;
+}
+.background {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-color: rgba(0,0,0,0.5);
+}
+.banner-text {
+    font-family: 'Roboto Condensed', sans-serif;
+    margin-top: 15%;
+    position: relative;
+    z-index: 3;
+}
+.banner-text h1 {
+    letter-spacing: 0.15em;
+    font-size: 60px;
+}
+.light-blue {
+    color: #04a1e1;
+}
+.red {
+    font-family: 'Roboto Condensed', sans-serif;
+    color: #FF4500;
+}
+.dark-blue {
+    color: #0e6daf;
+}
+.search-input {
+    margin: 30px 0;
+}
+.roboto {
+    font-family: 'Roboto Condensed', sans-serif;
 }

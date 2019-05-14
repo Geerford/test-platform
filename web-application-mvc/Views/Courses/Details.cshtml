@@ -1,21 +1,21 @@
 ﻿@model Core.Course
 
-<h2>Лекция</h2>
+<h2 class="red">Лекция</h2>
 <hr />
 <dl class="dl-horizontal">
-    <dt>
+    <dt class="dark-blue">
         @Html.Label("Описание")
     </dt>
     <dd>
         @Html.DisplayFor(model => model.Description)
     </dd>
-    <dt>
+    <dt class="dark-blue">
         @Html.Label("Раздел")
     </dt>
     <dd>
         @Html.ActionLink(Model.Section.Description, "Details", "Sections", new { id = Model.Section.ID }, null)
     </dd>
-    <dt>
+    <dt class="dark-blue">
         @Html.Label("Ссылка")
     </dt>
     <dd>
@@ -23,6 +23,6 @@
     </dd>
 </dl>
 <p>
-    @Html.ActionLink("Редактировать", "Edit", new { id = Model.ID }) |
+    @Html.ActionLink("Редактировать", "Edit", new { id = Model.ID }, new { @class = "btn btn-default"}) |
     @Html.ActionLink("Список лекций", "Index")
 </p>

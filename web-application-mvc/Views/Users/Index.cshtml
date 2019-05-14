@@ -1,11 +1,8 @@
 ﻿@model IEnumerable<Core.User>
 
-<h2>Пользователи</h2>
-<p>
-    @Html.ActionLink("Добавить", "Create")
-</p>
+<h2 class="red">Пользователи</h2>
 <table class="table">
-    <tr>
+    <tr class="light-blue">
         <th>
             @Html.Label("Фамилия")
         </th>
@@ -96,3 +93,4 @@
     </tr>
 }
 </table>
+@Html.ActionLink("Добавить", "Create", null, new { @class = "btn btn-default"})

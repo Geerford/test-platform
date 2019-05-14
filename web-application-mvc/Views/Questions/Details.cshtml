@@ -1,8 +1,8 @@
 ﻿@model Core.Question
-    <h4>Вопрос</h4>
+    <h2 class="red">Вопрос</h2>
     <hr />
     <dl class="dl-horizontal">
-        <dt>
+        <dt class="dark-blue">
             @Html.Label("Название")
         </dt>
 
@@ -10,14 +10,14 @@
             @Html.DisplayFor(model => model.Type.Description)
         </dd>
 
-        <dt>
+        <dt class="dark-blue">
             @Html.Label("Тест")
         </dt>
 
         <dd>
             @Html.DisplayFor(model => model.Test.Title)
         </dd>
-        <dt>
+        <dt class="dark-blue">
             @Html.DisplayNameFor(model => model.Description)
             @Html.Label("Тип")
         </dt>
@@ -28,6 +28,6 @@
 
     </dl>
 <p>
-    @Html.ActionLink("Редактировать", "Edit", new { id = Model.ID }) |
+    @Html.ActionLink("Редактировать", "Edit", new { id = Model.ID }, new { @class = "btn btn-default"}) |
     @Html.ActionLink("Список вопросов", "Index")
 </p>

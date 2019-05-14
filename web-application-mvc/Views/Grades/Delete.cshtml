@@ -1,15 +1,15 @@
 ﻿@model Core.Grade
 
-<h3>Вы действительно хотите удалить данную оценку?</h3>
+<h3 class="red" style="margin-bottom: 20px">Вы действительно хотите удалить данную оценку?</h3>
 
 <dl class="dl-horizontal">
-    <dt>
+    <dt class="dark-blue">
         @Html.Label("Название теста")
     </dt>
     <dd>
         @Html.ActionLink(Model.Test.Title, "Details", "Tests", new { id = Model.Test.ID }, null)
     </dd>
-    <dt>
+    <dt class="dark-blue">
         @Html.Label("ФИО студента")
     </dt>
     <dd>
@@ -17,13 +17,13 @@
         @Html.ActionLink(Model.User.Name, "Details", "Users", new { id = Model.User.ID }, null)
         @Html.ActionLink(Model.User.Midname, "Details", "Users", new { id = Model.User.ID }, null)
     </dd>
-    <dt>
+    <dt class="dark-blue">
         @Html.Label("Группа студента")
     </dt>
     <dd>
         @Html.ActionLink(Model.User.Group.Description, "Details", "Groups", new { id = Model.User.Group.ID }, null)
     </dd>
-    <dt>
+    <dt class="dark-blue">
         @Html.Label("Оценка за тест")
     </dt>
     <dd>

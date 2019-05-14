@@ -1,7 +1,7 @@
 ﻿@model Core.Answer
 
 <dl class="dl-horizontal">
-    <dt>
+    <dt class="dark-blue">
         @Html.Label("Вопрос")
     </dt>
 
@@ -9,7 +9,7 @@
         @Html.DisplayFor(model => model.Question.Description)
     </dd>
 
-    <dt>
+    <dt class="dark-blue">
         @Html.Label("Название")
     </dt>
 
@@ -17,7 +17,7 @@
         @Html.DisplayFor(model => model.Desctiption)
     </dd>
 
-    <dt>
+    <dt class="dark-blue">
         @Html.Label("Правильный ответ")
     </dt>
 
@@ -27,6 +27,6 @@
 
 </dl>
 <p>
-    @Html.ActionLink("Редактировать", "Edit", new { id = Model.ID }) |
+    @Html.ActionLink("Редактировать", "Edit", new { id = Model.ID }, new { @class = "btn btn-default"}) |
     @Html.ActionLink("Список ответов", "Index")
 </p>

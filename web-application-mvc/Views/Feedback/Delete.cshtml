@@ -21,6 +21,12 @@
         @Html.ActionLink(Model.User.Midname, "Details", "Users", new { id = Model.User.ID }, null)
     </dd>
     <dt>
+        @Html.Label("Название задания")
+    </dt>
+    <dd>
+        @Html.ActionLink(Model.Task.Title, "Details", "Tasks", new { id = Model.Task.ID }, null)
+    </dd>
+    <dt>
         @Html.Label("Задание")
     </dt>
     <dd>

@@ -23,6 +23,13 @@
         </div>
 
         <div class="form-group">
+            @Html.Label("Название задания", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DisplayTextFor(model => model.Task.Title)
+            </div>
+        </div>
+
+        <div class="form-group">
             @Html.Label("Задание", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.DisplayTextFor(model => model.Task.Description)

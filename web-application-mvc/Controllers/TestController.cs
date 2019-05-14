@@ -356,7 +356,7 @@ namespace web_application_mvc.Controllers
             {
                 foreach (var task in item.Tasks)
                 {
-                    var past = userTaskService.GetAll().Where(x => x.TaskID == item.ID && x.UserID == user.ID)
+                    var past = userTaskService.GetAll().Where(x => x.TaskID == task.ID && x.UserID == user.ID)
                         .FirstOrDefault();
                     if (past == null && task.SectionID == item.ID)
                     {
@@ -369,7 +369,7 @@ namespace web_application_mvc.Controllers
             {
                 DropList = tasks.Select(q => new SelectListItem
                 {
-                    Text = q.Description,
+                    Text = q.Title,
                     Value = q.ID.ToString()
 
                 }).ToList()

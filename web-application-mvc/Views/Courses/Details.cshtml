@@ -16,10 +16,10 @@
         @Html.ActionLink(Model.Section.Description, "Details", "Sections", new { id = Model.Section.ID }, null)
     </dd>
     <dt>
-        @Html.Label("Ссылка")
+        @Html.Label("Ссылка на материал")
     </dt>
     <dd>
-        @Html.ActionLink(Model.Link, "Uploads/" + Model.Link, "Content")
+        @Html.ActionLink("Ссылка", "Uploads/" + Model.Link, "Content")
     </dd>
 </dl>
 <p>

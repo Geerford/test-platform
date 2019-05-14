@@ -13,7 +13,7 @@
             @Html.Label("Раздел")
         </th>
         <th>
-            @Html.Label("Ссылка")
+            @Html.Label("Ссылка на материал")
         </th>
         <th>
             @Html.Label("Действия")
@@ -30,7 +30,7 @@
                 @Html.ActionLink(item.Section.Description, "Details", new { id = item.ID })
             </td>
             <td>
-                @Html.ActionLink(item.Link, "Details", new { id = item.ID })
+                @Html.ActionLink("Ссылка", "Details", new { id = item.ID })
             </td>
             <td>
                 @Html.ActionLink("Редактировать", "Edit", new { id = item.ID }) |

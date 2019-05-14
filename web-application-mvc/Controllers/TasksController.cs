@@ -72,7 +72,7 @@ namespace web_application_mvc.Controllers
         // POST: Tasks/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ID,Description,SectionID")] Task task)
+        public ActionResult Create([Bind(Include = "ID,Title,Description,SectionID")] Task task)
         {
             if (ModelState.IsValid)
             {
@@ -102,7 +102,7 @@ namespace web_application_mvc.Controllers
         // POST: Tasks/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ID,Description,SectionID")] Task task)
+        public ActionResult Edit([Bind(Include = "ID,Title,Description,SectionID")] Task task)
         {
             if (ModelState.IsValid)
             {
@@ -130,6 +130,7 @@ namespace web_application_mvc.Controllers
             AdminTaskViewModel model = new AdminTaskViewModel
             {
                 ID = task.ID,
+                Title = task.Title,
                 Description = task.Description,
                 Section = task.Section,
                 Students = userTaskService.GetAll().Where(x => x.TaskID == task.ID)

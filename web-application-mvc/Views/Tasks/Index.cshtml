@@ -8,6 +8,9 @@
 <table class="table">
     <tr>
         <th>
+            @Html.Label("Название")
+        </th>
+        <th>
             @Html.Label("Раздел")
         </th>
         <th>
@@ -21,15 +24,18 @@
 @foreach (var item in Model) {
     <tr>
         <td>
+            @Html.DisplayFor(modelItem => item.Title)
+        </td>
+        <td>
             @Html.DisplayFor(modelItem => item.Section.Description)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.Description)
         </td>
         <td>
-            @Html.ActionLink("Редактировать", "Edit", new { id=item.ID }) |
-            @Html.ActionLink("Подробнее", "Details", new { id=item.ID }) |
-            @Html.ActionLink("Удалить", "Delete", new { id=item.ID })
+            @Html.ActionLink("Редактировать", "Edit", new { id = item.ID }) |
+            @Html.ActionLink("Подробнее", "Details", new { id = item.ID }) |
+            @Html.ActionLink("Удалить", "Delete", new { id = item.ID })
         </td>
     </tr>
 }

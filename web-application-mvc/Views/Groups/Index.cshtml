@@ -28,13 +28,22 @@
 @foreach (var item in Model) {
     <tr>
         <td>
-            @Html.ActionLink(item.University, "Details", new { id = item.ID })
+            @if (!string.IsNullOrEmpty(item.University))
+            {
+                @Html.ActionLink(item.University, "Details", new { id = item.ID })
+            }
         </td>
         <td>
-            @Html.ActionLink(item.Department, "Details", new { id = item.ID })
+            @if (!string.IsNullOrEmpty(item.Department))
+            {
+                @Html.ActionLink(item.Department, "Details", new { id = item.ID })
+            }
         </td>
         <td>
-            @Html.ActionLink(item.Description, "Details", new { id = item.ID })
+            @if (!string.IsNullOrEmpty(item.Description))
+            {
+                @Html.ActionLink(item.Description, "Details", new { id = item.ID })
+            }
         </td>
         <td>
             @Html.ActionLink(item.Start.ToShortDateString(), "Details", new { id = item.ID })

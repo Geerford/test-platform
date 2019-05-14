@@ -14,6 +14,9 @@
             @Html.Label("Отчество")
         </th>
         <th>
+            @Html.Label("Название задания")
+        </th>
+        <th>
             @Html.Label("Задание")
         </th>
         <th>
@@ -42,6 +45,9 @@
             @Html.ActionLink(item.User.Midname, "Details", "Users", new { id = item.User.ID }, null)
         </td>
         <td>
+            @Html.ActionLink(item.Task.Title, "Details", "Tasks", new { id = item.Task.ID }, null)
+        </td>
+        <td>
             @Html.ActionLink(item.Task.Description, "Details", "Tasks", new { id = item.Task.ID }, null)
         </td>
         <td>
@@ -63,7 +69,7 @@
             }
         </td>
         <td>
-            @if(string.IsNullOrEmpty(item.Grade) || string.IsNullOrEmpty(item.Comment))
+            @if (string.IsNullOrEmpty(item.Grade) || string.IsNullOrEmpty(item.Comment))
             {
                 @Html.ActionLink("Проверить", "Create", new { id = item.ID })
             }

@@ -238,6 +238,14 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\assets\1.jpg" />
+    <Content Include="Content\assets\2.jpg" />
+    <Content Include="Content\assets\icons\fl.svg" />
+    <Content Include="Content\assets\icons\loc.svg" />
+    <Content Include="Content\assets\icons\plus.svg" />
+    <Content Include="Content\assets\icons\tl.svg" />
+    <Content Include="Content\assets\icons\twl.svg" />
+    <Content Include="Content\assets\icons\vl.svg" />
     <Content Include="Content\assets\index.png" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
@@ -254,6 +262,43 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="fonts\times-new-roman.ttf" />
+    <Content Include="Content\Uploads\6a6f40db-981a-41f9-8c76-473f95351791.pdf" />
+    <Content Include="Content\Uploads\b113c69d-b793-46f4-8886-33cc45047cf8.pdf" />
+    <Content Include="Content\Uploads\b123c69d-b793-46f4-8886-33cc45047cf8.pdf" />
+    <Content Include="Content\Uploads\b133c69d-b793-46f4-8886-33cc45047cf8.pdf" />
+    <Content Include="Content\Uploads\b143c69d-b793-46f4-8886-33cc45047cf8.pdf" />
+    <Content Include="Content\Uploads\b153c69d-b793-46f4-8886-33cc45047cf8.pdf" />
+    <Content Include="Content\Uploads\b163c69d-b793-46f4-8886-33cc45047cf8.pdf" />
+    <Content Include="Content\Uploads\b173c69d-b793-46f4-8886-33cc45047cf8.pdf" />
+    <Content Include="Content\Uploads\b183c69d-b793-46f4-8886-33cc45047cf8.pdf" />
+    <Content Include="Content\Uploads\b193c69d-b793-46f4-8886-33cc45047cf8.pdf" />
+    <Content Include="Content\Uploads\b203c69d-b793-46f4-8886-33cc45047cf8.pdf" />
+    <Content Include="Content\Uploads\b213c69d-b793-46f4-8886-33cc45047cf8.pdf" />
+    <Content Include="Content\Uploads\b223c69d-b793-46f4-8886-33cc45047cf8.pdf" />
+    <Content Include="Content\Uploads\b233c69d-b793-46f4-8886-33cc45047cf8.pdf" />
+    <Content Include="Content\Uploads\b243c69d-b793-46f4-8886-33cc45047cf8.pdf" />
+    <Content Include="Content\Uploads\b253c69d-b793-46f4-8886-33cc45047cf8.pdf" />
+    <Content Include="Content\Uploads\b263c69d-b793-46f4-8886-33cc45047cf8.pdf" />
+    <Content Include="Content\Uploads\b273c69d-b793-46f4-8886-33cc45047cf8.pdf" />
+    <Content Include="Content\Uploads\b283c69d-b793-46f4-8886-33cc45047cf8.pdf" />
+    <Content Include="Content\Uploads\b293c69d-b793-46f4-8886-33cc45047cf8.pdf" />
+    <Content Include="Content\Uploads\b303c69d-b793-46f4-8886-33cc45047cf8.pdf" />
+    <Content Include="Content\Uploads\b313c69d-b793-46f4-8886-33cc45047cf8.pdf" />
+    <Content Include="Content\Uploads\b323c69d-b793-46f4-8886-33cc45047cf8.pdf" />
+    <Content Include="Content\Uploads\b333c69d-b793-46f4-8886-33cc45047cf8.pdf" />
+    <Content Include="Content\Uploads\b343c69d-b793-46f4-8886-33cc45047cf8.pdf" />
+    <Content Include="Content\Uploads\b353c69d-b793-46f4-8886-33cc45047cf8.pdf" />
+    <Content Include="Content\Uploads\b363c69d-b793-46f4-8886-33cc45047cf8.pdf" />
+    <Content Include="Content\Uploads\b373c69d-b793-46f4-8886-33cc45047cf8.pdf" />
+    <Content Include="Content\Uploads\b383c69d-b793-46f4-8886-33cc45047cf8.pdf" />
+    <Content Include="Content\Uploads\b393c69d-b793-46f4-8886-33cc45047cf8.pdf" />
+    <Content Include="Content\Uploads\b403c69d-b793-46f4-8886-33cc45047cf8.pdf" />
+    <Content Include="Content\Uploads\b413c69d-b793-46f4-8886-33cc45047cf8.pdf" />
+    <Content Include="Content\Uploads\b423c69d-b793-46f4-8886-33cc45047cf8.pdf" />
+    <Content Include="Content\Uploads\b433c69d-b793-46f4-8886-33cc45047cf8.pdf" />
+    <Content Include="Content\Uploads\b443c69d-b793-46f4-8886-33cc45047cf8.pdf" />
+    <Content Include="Content\Uploads\b953c69d-b793-46f4-8886-33cc45047cf8.pdf" />
+    <Content Include="Content\Uploads\d1682315-c188-4c98-a44f-4af8ba239c1c.pdf" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
     <Content Include="Scripts\jquery-3.3.1.min.js" />
@@ -382,7 +427,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Content\Uploads\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />

@@ -1,6 +1,6 @@
 ﻿@model Core.Course
 
-<h2 class="red">Лекция</h2>
+<h2>Учебный материал</h2>
 <hr />
 <dl class="dl-horizontal">
     <dt class="dark-blue">
@@ -15,14 +15,14 @@
     <dd>
         @Html.ActionLink(Model.Section.Description, "Details", "Sections", new { id = Model.Section.ID }, null)
     </dd>
-    <dt class="dark-blue">
-        @Html.Label("Ссылка")
+    <dt>
+        @Html.Label("Ссылка на материал")
     </dt>
     <dd>
-        @Html.ActionLink(Model.Link, "Uploads/" + Model.Link, "Content")
+        @Html.ActionLink("Ссылка", "Uploads/" + Model.Link, "Content")
     </dd>
 </dl>
 <p>
     @Html.ActionLink("Редактировать", "Edit", new { id = Model.ID }, new { @class = "btn btn-default"}) |
-    @Html.ActionLink("Список лекций", "Index")
+    @Html.ActionLink("Список учебных материалов", "Index")
 </p>

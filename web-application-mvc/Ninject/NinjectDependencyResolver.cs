@@ -41,6 +41,8 @@ namespace web_application_mvc.Ninject
             kernel.Bind<IUserService>().To<UserService>();
             kernel.Bind<IGroupSectionService>().To<GroupSectionService>();
             kernel.Bind<IReportQAService>().To<ReportQAService>();
+            kernel.Bind<ITaskService>().To<TaskService>();
+            kernel.Bind<IUserTaskService>().To<UserTaskService>();
         }
     }
 }

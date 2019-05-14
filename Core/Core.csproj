@@ -63,10 +63,12 @@
     <Compile Include="ReportQA.cs" />
     <Compile Include="Role.cs" />
     <Compile Include="Section.cs" />
+    <Compile Include="Task.cs" />
     <Compile Include="Template.cs" />
     <Compile Include="Test.cs" />
     <Compile Include="Type.cs" />
     <Compile Include="User.cs" />
+    <Compile Include="UserTask.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

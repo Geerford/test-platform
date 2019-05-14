@@ -38,6 +38,10 @@ namespace Interfaces
 
         IMMRepository<ReportQA> ReportQA { get; }
 
+        IMMRepository<UserTask> UserTask { get; }
+
+        IRepository<Task> Task { get; }
+
         void Save();
     }
 }

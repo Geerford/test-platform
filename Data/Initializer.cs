@@ -9,6 +9,7 @@ namespace Infrastructure.Data
     {
         protected override void Seed(Context database)
         {
+            #region Roles
             var roleStudent = new Role
             {
                 Description = "Проходящий практику",
@@ -24,14 +25,18 @@ namespace Infrastructure.Data
                 Description = "Администратор системы",
                 Value = "Администратор"
             };
+            #endregion
+            #region Groups
             var group1 = new Group
             {
-                Description = "ИФСТ",
-                Department = "ИнПИТ",
-                University = "СГТУ",
+                Description = "401",
+                Department = "Институт прокуратуры",
+                University = "СГЮА",
                 Start = DateTime.Now,
-                End = DateTime.Now.AddDays(30)
+                End = DateTime.Now.AddDays(30)                
             };
+            #endregion
+            #region Users
             var student1 = new User
             {
                 Email = "petrov@gmail.com",
@@ -82,9 +87,9 @@ namespace Infrastructure.Data
             database.User.Add(student2);
             database.User.Add(curator1);
             database.User.Add(admin);
-
             database.SaveChanges();
-
+            #endregion
+            #region Activity
             database.Activity.Add(new Activity
             {
                 Date = DateTime.Now,
@@ -96,6 +101,8 @@ namespace Infrastructure.Data
                 User = student2
             });
             database.SaveChanges();
+            #endregion
+            #region Template
             database.Template.Add(new Template
             {
                 Description = "Уровень владения профессиональными навыками"
@@ -104,7 +111,8 @@ namespace Infrastructure.Data
             {
                 Description = "Способность студента обучаться и применять знания на практике"
             });
-
+            #endregion
+            #region Curator
             database.Curator.Add(new Curator
             {
                 User = curator1,
@@ -115,6 +123,8 @@ namespace Infrastructure.Data
                 }
             });
             database.SaveChanges();
+            #endregion
+            #region Questions
             var type1 = new Core.Type
             {
                 Description = "Данный тип предназначен для выбора одного из правильных ответов",
@@ -475,7 +485,8 @@ namespace Infrastructure.Data
                     }
                 }
             };
-
+            #endregion
+            #region Sections
             var section1 = new Section
             {
                 Description = "Судебная экспертиза"
@@ -484,6 +495,12 @@ namespace Infrastructure.Data
             {
                 Description = "Уголовное право"
             };
+            var section3 = new Section
+            {
+                Description = "Общий профиль"
+            };
+            #endregion
+            #region Tests
             var test1 = new Test
             {
                 Description = "Тест по уголовному праву",
@@ -513,10 +530,35 @@ namespace Infrastructure.Data
                     question13
                 },
                 Section = section2,
-                Title = "Судебное экспертиза"
+                Title = "Судебная экспертиза"
             };
             database.Test.Add(test1);
             database.Test.Add(test2);
+            #endregion
+            #region Tasks
+            var task1 = new Task
+            {
+                Description = "Избили человека. Что делать?",
+                Title = "Задание по судебной экспертизе",
+                Section = section1
+            };
+            var task2 = new Task
+            {
+                Description = "Украли телефон. Что делать?",
+                Title = "Задание по уголовному праву",
+                Section = section2
+            };
+            var task3 = new Task
+            {
+                Description = "Украли сумку. Что делать?",
+                Title = "Задание общего профиля",
+                Section = section3
+            };
+            database.Task.Add(task1);
+            database.Task.Add(task2);
+            database.Task.Add(task3);
+            #endregion
+            #region Courses
             database.Course.Add(new Course
             {
                 Description = "Лекционные материалы по уголовному праву",
@@ -535,7 +577,213 @@ namespace Infrastructure.Data
                 Link = "b953c69d-b793-46f4-8886-33cc45047cf8.pdf",
                 Section = section2
             });
+            database.Course.Add(new Course
+            {
+                Description = "О разграничении компетенции прокуроров территориальных, военных и других специализированных прокуратур",
+                Link = "b113c69d-b793-46f4-8886-33cc45047cf8.pdf",
+                Section = section3
+            });
+            database.Course.Add(new Course
+            {
+                Description = "О совершенствовании прокурорского надзора за исполнением федерального законодательства органами государственной власти",
+                Link = "b123c69d-b793-46f4-8886-33cc45047cf8.pdf",
+                Section = section3
+            });
+            database.Course.Add(new Course
+            {
+                Description = "Об изменении организации прокурорского надзора за исполнением законов на транспорте и в таможенных органах и реорганизации транспортных прокуратур",
+                Link = "b133c69d-b793-46f4-8886-33cc45047cf8.pdf",
+                Section = section3
+            });
+            database.Course.Add(new Course
+            {
+                Description = "Об образовании при Генеральной прокуратуре РФ Научно-консультативного совета",
+                Link = "b143c69d-b793-46f4-8886-33cc45047cf8.pdf",
+                Section = section3
+            });
+            database.Course.Add(new Course
+            {
+                Description = "Об организации прокурорского надзора за законностью нормативных правовых актов органов государственной власти субъектов РФ и местного самоуправления",
+                Link = "b153c69d-b793-46f4-8886-33cc45047cf8.pdf",
+                Section = section3
+            });
+            database.Course.Add(new Course
+            {
+                Description = "Об организации прокурорского надзора за исполнением законов в жилищно-коммунальной сфере",
+                Link = "b163c69d-b793-46f4-8886-33cc45047cf8.pdf",
+                Section = section3
+            });
+            database.Course.Add(new Course
+            {
+                Description = "Об организации прокурорского надзора за исполнением законов в сфере оборонно-промышленного комплекса",
+                Link = "b173c69d-b793-46f4-8886-33cc45047cf8.pdf",
+                Section = section3
+            });
+            database.Course.Add(new Course
+            {
+                Description = "Об организации прокурорского надзора за исполнением законов в сфере противодействия легализации (отмыванию) доходов",
+                Link = "b183c69d-b793-46f4-8886-33cc45047cf8.pdf",
+                Section = section3
+            });
+            database.Course.Add(new Course
+            {
+                Description = "Об организации прокурорского надзора за исполнением законов о несовершеннолетних и молодежи",
+                Link = "b193c69d-b793-46f4-8886-33cc45047cf8.pdf",
+                Section = section3
+            });
+            database.Course.Add(new Course
+            {
+                Description = "Об организации прокурорского надзора за исполнением законов о противодействии терроризму",
+                Link = "b203c69d-b793-46f4-8886-33cc45047cf8.pdf",
+                Section = section3
+            });            
+            database.Course.Add(new Course
+            {
+                Description = "Об организации прокурорского надзора за исполнением законов о противодействии экстимистской деятельности",
+                Link = "b213c69d-b793-46f4-8886-33cc45047cf8.pdf",
+                Section = section3
+            });
+            database.Course.Add(new Course
+            {
+                Description = "Об организации прокурорского надзора за исполнением законов об охране",
+                Link = "b223c69d-b793-46f4-8886-33cc45047cf8.pdf",
+                Section = section3
+            });
+            database.Course.Add(new Course
+            {
+                Description = "Об организации прокурорского надзора за исполнением законов при осуществлении оперативно-розыскной деятельности",
+                Link = "b233c69d-b793-46f4-8886-33cc45047cf8.pdf",
+                Section = section3
+            });
+            database.Course.Add(new Course
+            {
+                Description = "Об организации прокурорского надзора за исполнением законов при приеме, регистрации и разрешении сообщений о преступлениях",
+                Link = "b243c69d-b793-46f4-8886-33cc45047cf8.pdf",
+                Section = section3
+            });
+            database.Course.Add(new Course
+            {
+                Description = "Об организации прокурорского надзора за исполнением законов, соблюдением прав и свобод человека и гражданина",
+                Link = "b253c69d-b793-46f4-8886-33cc45047cf8.pdf",
+                Section = section3
+            });
+            database.Course.Add(new Course
+            {
+                Description = "Об организации прокурорского надзора за исполнением законодательства в сфере миграции",
+                Link = "b263c69d-b793-46f4-8886-33cc45047cf8.pdf",
+                Section = section3
+            });
+            database.Course.Add(new Course
+            {
+                Description = "Об организации прокурорского надзора за исполнением законодательства о корупции",
+                Link = "b273c69d-b793-46f4-8886-33cc45047cf8.pdf",
+                Section = section3
+            });
+            database.Course.Add(new Course
+            {
+                Description = "Об организации прокурорского надзора за исполнением законодательства о налогах и сборах",
+                Link = "b283c69d-b793-46f4-8886-33cc45047cf8.pdf",
+                Section = section3
+            });
+            database.Course.Add(new Course
+            {
+                Description = "Об организации прокурорского надзора за исполнением законодательства о предупреждении и ликвидации чрезвычайных ситуаций природного характера и их последствий",
+                Link = "b293c69d-b793-46f4-8886-33cc45047cf8.pdf",
+                Section = section3
+            });
+            database.Course.Add(new Course
+            {
+                Description = "Об организации прокурорского надзора за исполнением требований закона о соблюдении разумного срока на досудебных стадиях уголовного судопроизводства",
+                Link = "b303c69d-b793-46f4-8886-33cc45047cf8.pdf",
+                Section = section3
+            });
+            database.Course.Add(new Course
+            {
+                Description = "Об организации прокурорского надзора за использованием законов судебными приставами",
+                Link = "b313c69d-b793-46f4-8886-33cc45047cf8.pdf",
+                Section = section3
+            });
+            database.Course.Add(new Course
+            {
+                Description = "Об организации прокурорского надзора за оперативно-розыскной деятельностью Временной оперативной группировки органов внутренних дел",
+                Link = "b323c69d-b793-46f4-8886-33cc45047cf8.pdf",
+                Section = section3
+            });
+            database.Course.Add(new Course
+            {
+                Description = "Об организации прокурорского надзора за оперативно-розыскной деятельностью",
+                Link = "b333c69d-b793-46f4-8886-33cc45047cf8.pdf",
+                Section = section3
+            });
+            database.Course.Add(new Course
+            {
+                Description = "Об организации прокурорского надзора за процессуальной деятельностью органов дознания",
+                Link = "b343c69d-b793-46f4-8886-33cc45047cf8.pdf",
+                Section = section3
+            });
+            database.Course.Add(new Course
+            {
+                Description = "Об организации прокурорского надзора за процессуальной деятельностью органов предварительного следствия",
+                Link = "b353c69d-b793-46f4-8886-33cc45047cf8.pdf",
+                Section = section3
+            });
+            database.Course.Add(new Course
+            {
+                Description = "Об организации прокурорского надзора за соблюдением законодательства о выборах Президенита РФ",
+                Link = "b363c69d-b793-46f4-8886-33cc45047cf8.pdf",
+                Section = section3
+            });
+            database.Course.Add(new Course
+            {
+                Description = "Об организации прокурорского надзора за соблюдением законодательства при содержании подозреваемых и обвиняемых",
+                Link = "b373c69d-b793-46f4-8886-33cc45047cf8.pdf",
+                Section = section3
+            });
+            database.Course.Add(new Course
+            {
+                Description = "Об организации прокурорского надзора за соблюдением конституционных прав граждан в уголовном судопроизводстве",
+                Link = "b383c69d-b793-46f4-8886-33cc45047cf8.pdf",
+                Section = section3
+            });
+            database.Course.Add(new Course
+            {
+                Description = "Об организации прокурорского надзора за соблюдением прав несовершенно летних на досудебных стадиях уголовного судопроизводства",
+                Link = "b393c69d-b793-46f4-8886-33cc45047cf8.pdf",
+                Section = section3
+            });
+            database.Course.Add(new Course
+            {
+                Description = "Об организации прокурорского надзора за соблюдением прав субъектов предпринимательской деятельности",
+                Link = "b403c69d-b793-46f4-8886-33cc45047cf8.pdf",
+                Section = section3
+            });
+            database.Course.Add(new Course
+            {
+                Description = "Об усилении прокурорского надзора и ведомственного контроля за законностью процессуальных действий и принимаемых решений об отказе в возбуждении уголовного дела при разрешении сообщений о преступлениях",
+                Link = "b413c69d-b793-46f4-8886-33cc45047cf8.pdf",
+                Section = section3
+            });
+            database.Course.Add(new Course
+            {
+                Description = "Следственный комитет Российской Федерации",
+                Link = "b423c69d-b793-46f4-8886-33cc45047cf8.pdf",
+                Section = section3
+            });
+            database.Course.Add(new Course
+            {
+                Description = "Закон о прокуратуре",
+                Link = "b433c69d-b793-46f4-8886-33cc45047cf8.pdf",
+                Section = section3
+            });
+            database.Course.Add(new Course
+            {
+                Description = "Конституция 2019",
+                Link = "b443c69d-b793-46f4-8886-33cc45047cf8.pdf",
+                Section = section3
+            });
             database.SaveChanges();
+            #endregion
+            #region Grades
             database.Grade.Add(new Grade
             {
                 Test = test1,
@@ -555,8 +803,26 @@ namespace Infrastructure.Data
                 Value = 0.85
             });
             database.SaveChanges();
+            #endregion
+            #region Other
             database.Type.Add(type2);
+            database.GroupSection.Add(new GroupSection
+            {
+                GroupID = 1,
+                SectionID = 1
+            });
+            database.GroupSection.Add(new GroupSection
+            {
+                GroupID = 1,
+                SectionID = 2
+            });
+            database.GroupSection.Add(new GroupSection
+            {
+                GroupID = 1,
+                SectionID = 3
+            });
             database.SaveChanges();
+            #endregion
         }
     }
 }

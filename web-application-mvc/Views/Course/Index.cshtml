@@ -1,6 +1,6 @@
 ﻿@model IEnumerable<Core.Course>
 
-<h2 class="red">Лекции</h2>
+<h2>Учебные материалы</h2>
 <table class="table">
     <tr class="light-blue">
         <th>
@@ -10,7 +10,7 @@
             @Html.Label("Раздел")
         </th>
         <th>
-            @Html.Label("Ссылка")
+            @Html.Label("Ссылка на материал")
         </th>
     </tr>
 
@@ -24,7 +24,7 @@
                 @Html.Raw(item.Section.Description)
             </td>
             <td>
-                @Html.ActionLink(item.Link, "Uploads/" + item.Link, "Content")
+                @Html.ActionLink("Ссылка", "Uploads/" + item.Link, "Content")
             </td>
         </tr>
     }

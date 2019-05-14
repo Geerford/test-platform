@@ -19,10 +19,12 @@ namespace web_application_mvc.Controllers
         IGroupSectionService groupSectionService;
         ISectionService sectionService;
         ITypeService typeService;
+        ITaskService taskService;
+        IUserTaskService userTaskService;
 
         public TestController(ITestService testService, IQuestionService questionService, IGradeService gradeService, 
             IUserService userService, IGroupSectionService groupSectionService, ISectionService sectionService,
-            ITypeService typeService)
+            ITypeService typeService, ITaskService taskService, IUserTaskService userTaskService)
         {
             this.testService = testService;
             this.questionService = questionService;
@@ -31,6 +33,8 @@ namespace web_application_mvc.Controllers
             this.groupSectionService = groupSectionService;
             this.sectionService = sectionService;
             this.typeService = typeService;
+            this.taskService = taskService;
+            this.userTaskService = userTaskService;
         }
 
         public ActionResult Index()
@@ -321,6 +325,103 @@ namespace web_application_mvc.Controllers
             });
             ViewBag.SectionID = new SelectList(sectionService.GetAll(), "ID", "Description");
             return View(test);
+        }
+
+        [Authorize]
+        public ActionResult Task()
+        {
+            var identity = (ClaimsIdentity)User.Identity;
+            var id = identity.Claims.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier).Value;
+            var user = userService.Get(int.Parse(id));
+            List<GroupSection> groupSections = new List<GroupSection>();
+            if (user.GroupID != null)
+            {
+                groupSections.AddRange(groupSectionService.GetAll().Where(x => x.GroupID == user.GroupID));
+            }
+            //Section by group
+            List<Section> sections = new List<Section>();
+            foreach (var item in sectionService.GetAll())
+            {
+                for (int i = 0; i < groupSections.Count; i++)
+                {
+                    if (item.ID == groupSections[i].SectionID)
+                    {
+                        sections.Add(item);
+                        groupSections.Remove(groupSections[i]);
+                    }
+                }
+            }
+            List<Task> tasks = new List<Task>();
+            foreach (var item in sections)
+            {
+                foreach (var task in item.Tasks)
+                {
+                    var past = userTaskService.GetAll().Where(x => x.TaskID == task.ID && x.UserID == user.ID)
+                        .FirstOrDefault();
+                    if (past == null && task.SectionID == item.ID)
+                    {
+                        tasks.Add(task);
+                    }
+                }
+            }
+
+            ChooseTaskViewModel model = new ChooseTaskViewModel
+            {
+                DropList = tasks.Select(q => new SelectListItem
+                {
+                    Text = q.Title,
+                    Value = q.ID.ToString()
+
+                }).ToList()
+            };
+            return View(model);
+        }
+
+        [HttpPost]
+        [Authorize]
+        public ActionResult Task(ChooseTaskViewModel task)
+        {
+            Task choosed = taskService.GetAll().Where(x => x.ID == task.ID).FirstOrDefault();
+            if (choosed != null)
+            {
+                return RedirectToAction("Laboratory", new { id = choosed.ID });
+            }
+            return View();
+        }
+
+        [Authorize]
+        public ActionResult Laboratory(int id)
+        {
+            Task task = taskService.GetAll().Where(x => x.ID == id).FirstOrDefault();
+            if (task != null)
+            {
+                return View(new StudentTaskViewModel
+                {
+                    ID = task.ID,
+                    Task = task.Description
+                });
+            }
+            return RedirectToAction("Task");
+        }
+
+        [HttpPost]
+        [Authorize]
+        public ActionResult Laboratory(StudentTaskViewModel model)
+        {
+            Task task = taskService.GetAll().Where(x => x.ID == model.ID).FirstOrDefault();
+            if (task != null)
+            {
+                var identity = (ClaimsIdentity)User.Identity;
+                var id = identity.Claims.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier).Value;
+                userTaskService.Create(new UserTask
+                {
+                    TaskID = model.ID,
+                    UserID = int.Parse(id),
+                    Answer = model.Answer
+                });
+                return RedirectToAction("Task");
+            }
+            return View();
         }
     }    
 }

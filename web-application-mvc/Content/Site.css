@@ -88,7 +88,200 @@ textarea {
 
 .layout-font-menu * {
     color: #fff !important;
-}   
+}
+
+/*CONTACTS*/
+.contact-banner {
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-end;
+    padding-bottom: 5%;
+    height: 735px;
+    max-height: 100vh;
+    background: url("assets/1.jpg") no-repeat top center;
+    background-size: cover;
+    opacity: 0.9;
+}
+
+.contact-banner__row {
+    width: 100%;
+    text-align: right;
+    color: #3c3950;
+    z-index: 3;
+    
+}
+
+    .contact-banner__row h1 {
+        padding-bottom: 20px;
+        font-size: 42px;
+        font-weight: 600;
+    }
+
+    .contact-banner__row h2 {
+        font-size: 30px;
+        font-weight: 400;
+    }
+
+.row-location {
+    background-color: #f0f3f2;
+    background-color: #f0f3f2;
+}
+
+    .row-location .row-location__address {
+        height: 500px;
+        padding-top: 2em;
+        padding-bottom: 2em;
+        align-items: center;
+        flex-direction: column;
+        justify-content: center;
+        display: -ms-flexbox !important;
+        display: flex !important;
+        background-color: inherit;
+    }
+
+        .row-location .row-location__address .logo {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background-color: #fff;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto;
+        }
+
+            .row-location .row-location__address .logo img {
+                margin: 20px;
+                width: 40px;
+                height: 40px;
+            }
+
+        .row-location .row-location__address h3 {
+            color: #3c3950;
+            font-weight: bold;
+            text-align: center;
+            font-size: 26px;
+            margin-bottom: 10px;
+        }
+
+        .row-location .row-location__address p {
+            text-align: center;
+            color: #3c3950;
+            font-size: 16px;
+            line-height: 26px;
+            margin-bottom: 10px;
+        }
+
+.row-location__map {
+    height: 500px;
+    max-height: 100vh;
+    padding: 0 !important;
+}
+
+.row-social {
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    height: 560px;
+    max-height: 100vh;
+    background: url("assets/2.jpg") no-repeat fixed center;
+    background-size: cover;
+    color: #3c3950;
+    padding-top: 10%;
+    opacity: 0.9;
+}
+
+    .row-social h2 {
+        text-align: center;
+        margin-bottom: 10px;
+        line-height: 1.1;
+        font-weight: 500;
+        text-rendering: optimizelegibility;
+        font-size: 50px;
+        z-index: 3;
+    }
+
+    .row-social p {
+        text-align: center;
+        line-height: 21px;
+        margin-bottom: 10px;
+        font-size: 25px;
+        z-index: 3;
+    }
+
+.row-social__icons {
+    margin-top: 4em;
+    padding-left: 2em;
+    padding-right: 2em;
+    justify-content: space-around;
+    z-index: 3;
+    display: -webkit-box;
+    display: -webkit-flex !important;
+    display: -moz-flex;
+    display: -ms-flexbox;
+    display: flex;
+}
+
+    .row-social__icons::before, .row-social__icons::after {
+        display: none !important;
+    }
+
+    .row-social__icons .icon {
+        display: block;
+        width: 120px;
+        height: 120px;
+        border: 2px solid #66d4d7;
+        border-radius: 50%;
+        padding: 15px;
+        text-align: center;
+    }
+
+        .row-social__icons .icon img {
+            width: 70%;
+            height: 86px;
+        }
+
+.row-message {
+    background-color: #fff;
+    padding-bottom: 60px;
+}
+
+.row-message__info {
+    padding-top: 3em;
+    padding-left: 80px !important;
+    padding-right: 80px !important;
+}
+
+    .row-message__info h2 {
+        color: #3c3950;
+        font-weight: bold;
+        text-align: center;
+        font-size: 30px;
+        margin-bottom: 30px;
+    }
+
+    .row-message__info p {
+        align-self: flex-start;
+        color: #3c3950;
+        font-size: 16px;
+        line-height: 26px;
+        margin-bottom: 1em;
+    }
+
+.row-message__form {
+    padding-top: 40px;
+}
+
+    .row-message__form label {
+        color: #999;
+        font-size: 14px;
+    }
+
+    .row-message__form .form-control {
+        background-color: #fcfcfc;
+        border: 1px solid rgba(0,0,0,0.1);
+        box-shadow: none !important;
+        min-width: 100%;
+    }  
 
 /**********************************************************************/
 

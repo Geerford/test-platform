@@ -33,13 +33,15 @@ namespace Infrastructure.Data.Repository
             return Database.Section.Where(x => x.ID == id)
                                 .Include(x => x.Courses)
                                 .Include(x => x.Tests)
+                                .Include(x => x.Tasks)
                                 .FirstOrDefault();
         }
 
         public IEnumerable<Section> GetAll()
         {
             return Database.Section.Include(x => x.Courses)
-                                   .Include(x => x.Tests);
+                                   .Include(x => x.Tests)
+                                   .Include(x => x.Tasks);
         }
 
         public void Update(Section item)

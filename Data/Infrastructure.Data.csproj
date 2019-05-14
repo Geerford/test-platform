@@ -66,10 +66,12 @@
     <Compile Include="Repository\ReportRepository.cs" />
     <Compile Include="Repository\RoleRepository.cs" />
     <Compile Include="Repository\SectionRepository.cs" />
+    <Compile Include="Repository\TaskRepository.cs" />
     <Compile Include="Repository\TemplateRepository.cs" />
     <Compile Include="Repository\TestRepository.cs" />
     <Compile Include="Repository\TypeRepository.cs" />
     <Compile Include="Repository\UserRepository.cs" />
+    <Compile Include="Repository\UserTaskRepository.cs" />
     <Compile Include="UnitOfWork.cs" />
   </ItemGroup>
   <ItemGroup>

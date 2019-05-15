@@ -354,3 +354,7 @@ textarea {
 .roboto {
     font-family: 'Roboto Condensed', sans-serif;
 }
+
+.textarea-max {
+    min-width: 100%;
+}

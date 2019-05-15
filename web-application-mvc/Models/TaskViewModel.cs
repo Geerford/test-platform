@@ -26,6 +26,19 @@ namespace web_application_mvc.Models
         public string Comment { get; set; }
     }
 
+    public class StudentTaskViewModelPartial
+    {
+        public int ID { get; set; }
+
+        public Task Task { get; set; }
+
+        public string Answer { get; set; }
+
+        public string Grade { get; set; }
+
+        public string Comment { get; set; }
+    }
+
     public class ChooseTaskViewModel
     {
         public int ID { get; set; }

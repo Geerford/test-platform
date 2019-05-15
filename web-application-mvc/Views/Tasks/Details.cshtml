@@ -5,7 +5,7 @@
         @Html.Label("Название", htmlAttributes: new { @class = "control-label col-md-2" })
     </dt>
     <dd>
-        @Html.DisplayFor(model => model.Title) 
+        @Html.DisplayFor(model => model.Title)
     </dd>
     <dt>
         @Html.Label("Раздел", htmlAttributes: new { @class = "control-label col-md-2" })
@@ -17,70 +17,73 @@
         @Html.Label("Описание", htmlAttributes: new { @class = "control-label col-md-2" })
     </dt>
     <dd>
-        @Html.DisplayFor(model => model.Description)
+        @Html.Raw(Model.Description)
     </dd>
 </dl>
-@if (Model.Students.ToList().Count > 0)
+@if (User.Identity.IsAuthenticated && (User.IsInRole("Администратор")))
 {
-    <h2>Пройденные тесты</h2>
-    <table class="table">
-        <tr>
-            <th>
-                @Html.Label("Фамилия")
-            </th>
-            <th>
-                @Html.Label("Имя")
-            </th>
-            <th>
-                @Html.Label("Отчество")
-            </th>
-            <th>
-                @Html.Label("Ответ")
-            </th>
-            <th>
-                @Html.Label("Оценка")
-            </th>
-            <th>
-                @Html.Label("Комментарий")
-            </th>
-        </tr>
-
-        @foreach (var item in Model.Students)
-        {
+    if (Model.Students.ToList().Count > 0)
+    {
+        <h2>Пройденные тесты</h2>
+        <table class="table">
             <tr>
-                <td>
-                    @Html.ActionLink(item.User.Surname, "Details", "Users", new { id = item.User.ID }, null)
-                </td>
-                <td>
-                    @Html.ActionLink(item.User.Name, "Details", "Users", new { id = item.User.ID }, null)
-                </td>
-                <td>
-                    @Html.ActionLink(item.User.Midname, "Details", "Users", new { id = item.User.ID }, null)
-                </td>
-                <td>
-                    @if (!string.IsNullOrEmpty(item.Answer))
-                    {
-                        @Html.Raw(item.Answer)
-                    }
-                </td>
-                <td>
-                    @if (!string.IsNullOrEmpty(item.Grade))
-                    {
-                        @Html.Raw(item.Grade)
-                    }
-                </td>
-                <td>
-                    @if (!string.IsNullOrEmpty(item.Comment))
-                    {
-                        @Html.Raw(item.Comment)
-                    }
-                </td>
+                <th>
+                    @Html.Label("Фамилия")
+                </th>
+                <th>
+                    @Html.Label("Имя")
+                </th>
+                <th>
+                    @Html.Label("Отчество")
+                </th>
+                <th>
+                    @Html.Label("Ответ")
+                </th>
+                <th>
+                    @Html.Label("Оценка")
+                </th>
+                <th>
+                    @Html.Label("Комментарий")
+                </th>
             </tr>
-        }
-    </table>
-}
 
-<p>
-    @Html.ActionLink("Редактировать", "Edit", new { id = Model.ID }) |
-    @Html.ActionLink("Список заданий", "Index")
-</p>
+            @foreach (var item in Model.Students)
+            {
+                <tr>
+                    <td>
+                        @Html.ActionLink(item.User.Surname, "Details", "Users", new { id = item.User.ID }, null)
+                    </td>
+                    <td>
+                        @Html.ActionLink(item.User.Name, "Details", "Users", new { id = item.User.ID }, null)
+                    </td>
+                    <td>
+                        @Html.ActionLink(item.User.Midname, "Details", "Users", new { id = item.User.ID }, null)
+                    </td>
+                    <td>
+                        @if (!string.IsNullOrEmpty(item.Answer))
+                        {
+                            @Html.Raw(item.Answer)
+                        }
+                    </td>
+                    <td>
+                        @if (!string.IsNullOrEmpty(item.Grade))
+                        {
+                            @Html.Raw(item.Grade)
+                        }
+                    </td>
+                    <td>
+                        @if (!string.IsNullOrEmpty(item.Comment))
+                        {
+                            @Html.Raw(item.Comment)
+                        }
+                    </td>
+                </tr>
+            }
+        </table>
+    }
+
+    <p>
+        @Html.ActionLink("Редактировать", "Edit", new { id = Model.ID }) |
+        @Html.ActionLink("Список заданий", "Index")
+    </p>
+}

@@ -8,7 +8,7 @@ using web_application_mvc.Models;
 
 namespace web_application_mvc.Controllers
 {
-    [Authorize(Roles = "Администратор")]
+    
     public class TasksController : Controller
     {
         ITaskService taskService;
@@ -26,12 +26,14 @@ namespace web_application_mvc.Controllers
         }
 
         // GET: Tasks
+        [Authorize(Roles = "Администратор")]
         public ActionResult Index()
         {
             return View(taskService.GetAll());
         }
 
         // GET: Tasks/Details/5
+        [Authorize]
         public ActionResult Details(int? id)
         {
             if (id == null)
@@ -49,6 +51,7 @@ namespace web_application_mvc.Controllers
             {
                 ID = task.ID,
                 Description = task.Description,
+                Title = task.Title,
                 Section = task.Section,
                 Students = userTaskService.GetAll().Where(x => x.TaskID == task.ID)
                     .Select(x => new AdminInnerTaskModel
@@ -63,6 +66,7 @@ namespace web_application_mvc.Controllers
         }
 
         // GET: Tasks/Create
+        [Authorize(Roles = "Администратор")]
         public ActionResult Create()
         {
             ViewBag.SectionID = new SelectList(sectionService.GetAll(), "ID", "Description");
@@ -72,6 +76,7 @@ namespace web_application_mvc.Controllers
         // POST: Tasks/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Администратор")]
         public ActionResult Create([Bind(Include = "ID,Title,Description,SectionID")] Task task)
         {
             if (ModelState.IsValid)
@@ -84,6 +89,7 @@ namespace web_application_mvc.Controllers
         }
 
         // GET: Tasks/Edit/5
+        [Authorize(Roles = "Администратор")]
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -102,6 +108,7 @@ namespace web_application_mvc.Controllers
         // POST: Tasks/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Администратор")]
         public ActionResult Edit([Bind(Include = "ID,Title,Description,SectionID")] Task task)
         {
             if (ModelState.IsValid)
@@ -114,6 +121,7 @@ namespace web_application_mvc.Controllers
         }
 
         // GET: Tasks/Delete/5
+        [Authorize(Roles = "Администратор")]
         public ActionResult Delete(int? id)
         {
             if (id == null)
@@ -148,6 +156,7 @@ namespace web_application_mvc.Controllers
         // POST: Tasks/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Администратор")]
         public ActionResult DeleteConfirmed(int id)
         {
             Task task = taskService.Get(id);

@@ -29,13 +29,10 @@
                     @if (User.Identity.IsAuthenticated && (User.IsInRole("Администратор")))
                     {
                         <li>@Html.ActionLink("Статистика", "Index", "Statistics")</li>
-                        <li>@Html.ActionLink("Отчеты", "Index", "Reports")</li>
                         <li>@Html.ActionLink("Тесты", "Index", "Tests")</li>
                         <li>@Html.ActionLink("Группы", "Index", "Groups")</li>
                         <li>@Html.ActionLink("Кураторы", "Index", "Curators")</li>
                         <li>@Html.ActionLink("Пользователи", "Index", "Users")</li>
-                        <li>@Html.ActionLink("Оценки", "Index", "Grades")</li>
-                        <li>@Html.ActionLink("Посещения", "Index", "Activities")</li>
                         <li>@Html.ActionLink("Материалы", "Index", "Courses")</li>
                     }
                     @if (User.Identity.IsAuthenticated)

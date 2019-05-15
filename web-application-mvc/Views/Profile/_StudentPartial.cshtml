@@ -91,12 +91,15 @@
             <th>
                 @Html.Label("Комментарий от куратора")
             </th>
+            <th>
+                @Html.Label("Действия")
+            </th>
         </tr>
         @foreach (var item in Model.Tasks)
         {
             <tr>
                 <td>
-                    @Html.Raw(item.Task)
+                    @Html.Raw(item.Task.Title)
                 </td>
                 <td>
                     @Html.Raw(item.Answer)
@@ -112,6 +115,9 @@
                     {
                         @Html.Raw(item.Comment)
                     }
+                </td>
+                <td>
+                    @Html.ActionLink("Подробнее", "Details", "Tasks", new { id = item.Task.ID }, null)
                 </td>
             </tr>
         }

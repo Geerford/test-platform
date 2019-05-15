@@ -9,7 +9,7 @@ namespace web_application_mvc.Models
 
         public IEnumerable<Activity> Activities { get; set; }
 
-        public IEnumerable<CuratorTaskViewModel> Tasks { get; set; }
+        public IEnumerable<StudentTaskViewModelPartial> Tasks { get; set; }
     }
 
     public class CuratorProfileViewModel

@@ -80,13 +80,13 @@ namespace web_application_mvc.Controllers
             var identity = (ClaimsIdentity)User.Identity;
             var id = identity.Claims.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier).Value;
             var user = userService.Get(int.Parse(id));
-            List<CuratorTaskViewModel> tasks = new List<CuratorTaskViewModel>();
+            List<StudentTaskViewModelPartial> tasks = new List<StudentTaskViewModelPartial>();
             foreach (UserTask task in userTaskService.GetAll().Where(x => x.UserID == user.ID))
             {
-                tasks.Add(new CuratorTaskViewModel
+                tasks.Add(new StudentTaskViewModelPartial
                 {
                     ID = task.ID,
-                    Task = taskService.Get(task.TaskID).Description,
+                    Task = taskService.Get(task.TaskID),
                     Answer = task.Answer,
                     Comment = task.Comment,
                     Grade = task.Grade

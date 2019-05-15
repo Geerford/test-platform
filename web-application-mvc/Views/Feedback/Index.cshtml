@@ -48,7 +48,7 @@
             @Html.ActionLink(item.Task.Title, "Details", "Tasks", new { id = item.Task.ID }, null)
         </td>
         <td>
-            @Html.ActionLink(item.Task.Description, "Details", "Tasks", new { id = item.Task.ID }, null)
+            @Html.Raw(item.Task.Description)
         </td>
         <td>
             @if (!string.IsNullOrEmpty(item.Answer))

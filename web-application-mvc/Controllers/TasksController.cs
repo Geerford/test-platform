@@ -51,6 +51,7 @@ namespace web_application_mvc.Controllers
             {
                 ID = task.ID,
                 Description = task.Description,
+                Right = task.Right,
                 Title = task.Title,
                 Section = task.Section,
                 Students = userTaskService.GetAll().Where(x => x.TaskID == task.ID)
@@ -140,6 +141,7 @@ namespace web_application_mvc.Controllers
                 ID = task.ID,
                 Title = task.Title,
                 Description = task.Description,
+                Right = task.Right,
                 Section = task.Section,
                 Students = userTaskService.GetAll().Where(x => x.TaskID == task.ID)
                     .Select(x => new AdminInnerTaskModel

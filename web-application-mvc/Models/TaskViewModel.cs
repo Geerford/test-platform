@@ -54,6 +54,8 @@ namespace web_application_mvc.Models
 
         public string Description { get; set; }
 
+        public string Right { get; set; }
+
         public Section Section { get; set; }
 
         public IEnumerable<AdminInnerTaskModel> Students { get; set; }

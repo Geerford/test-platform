@@ -19,6 +19,12 @@
     <dd>
         @Html.Raw(Model.Description)
     </dd>
+    <dt>
+        @Html.Label("Правильный ответ", htmlAttributes: new { @class = "control-label col-md-2" })
+    </dt>
+    <dd>
+        @Html.Raw(Model.Right)
+    </dd>
 </dl>
 @if (User.Identity.IsAuthenticated && (User.IsInRole("Администратор")))
 {

@@ -24,7 +24,7 @@
                     {
                         <li>@Html.ActionLink("Тесты", "Index", "Test")</li>
                         <li>@Html.ActionLink("Задания", "Task", "Test")</li>
-                        <li>@Html.ActionLink("Материалы", "Index", "Course")</li>
+                        <li>@Html.ActionLink("Коллекции материалов", "Index", "Course")</li>
                     }
                     @if (User.Identity.IsAuthenticated && (User.IsInRole("Администратор")))
                     {
@@ -33,7 +33,7 @@
                         <li>@Html.ActionLink("Группы", "Index", "Groups")</li>
                         <li>@Html.ActionLink("Кураторы", "Index", "Curators")</li>
                         <li>@Html.ActionLink("Пользователи", "Index", "Users")</li>
-                        <li>@Html.ActionLink("Материалы", "Index", "Courses")</li>
+                        <li>@Html.ActionLink("Коллекции материалов", "Index", "Courses")</li>
                     }
                     @if (User.Identity.IsAuthenticated)
                     {
@@ -50,7 +50,7 @@
         <hr />
         <footer>
             <div class="footer-text">
-                &copy; @DateTime.Now.Year
+                @DateTime.Now.Year,
                 @Html.ActionLink("Техника безопасности", "Safety", "Home")
             </div>
         </footer>

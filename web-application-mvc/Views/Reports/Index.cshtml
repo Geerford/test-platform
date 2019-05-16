@@ -1,6 +1,6 @@
 ﻿@model IEnumerable<Core.Report>
 
-<h2 class="red">Список отчетов</h2>
+<h2 class="red">Список отчетов по студентам</h2>
 <table class="table">
     <tr class="light-blue">
         <th>
@@ -25,28 +25,91 @@
 
     @foreach (var item in Model)
     {
-        <tr>
-            <td>
-                @Html.ActionLink(item.User.Surname, "Details", new { id = item.ID })
-            </td>
-            <td>
-                @Html.ActionLink(item.User.Name, "Details", new { id = item.ID })
-            </td>
-            <td>
-                @Html.ActionLink(item.User.Midname, "Details", new { id = item.ID })
-            </td>
-            <td>
-                @Html.ActionLink(item.User.Group.Description, "Details", new { id = item.ID })
-            </td>
-            <td>
-                @Html.ActionLink(item.Link, "Details", new { id = item.ID })
-            </td>
-            <td>
-                @Html.ActionLink("Редактировать", "Edit", new { id = item.ID }) |
-                @Html.ActionLink("Подробнее", "Details", new { id = item.ID }) |
-                @Html.ActionLink("Удалить", "Delete", new { id = item.ID })
-            </td>
-        </tr>
+        if (item.User != null)
+        {
+            <tr>
+                <td>
+                    @Html.ActionLink(item.User.Surname, "Details", new { id = item.ID })
+                </td>
+                <td>
+                    @Html.ActionLink(item.User.Name, "Details", new { id = item.ID })
+                </td>
+                <td>
+                    @Html.ActionLink(item.User.Midname, "Details", new { id = item.ID })
+                </td>
+                <td>
+                    @Html.ActionLink(item.User.Group.Description, "Details", new { id = item.ID })
+                </td>
+                <td>
+                    @Html.ActionLink("Скачать", "Uploads/" + item.Link, "Content")
+                </td>
+                <td>
+                    @Html.ActionLink("Редактировать", "Edit", new { id = item.ID }) |
+                    @Html.ActionLink("Подробнее", "Details", new { id = item.ID }) |
+                    @Html.ActionLink("Удалить", "Delete", new { id = item.ID })
+                </td>
+            </tr>
+        }
     }
 </table>
 @Html.ActionLink("Добавить", "Create", null, new { @class = "btn btn-default" })
+
+<h2 class="red">Список отчетов по группам</h2>
+<table class="table">
+    <tr class="light-blue">
+        <th>
+            @Html.Label("Университет")
+        </th>
+        <th>
+            @Html.Label("Институт")
+        </th>
+        <th>
+            @Html.Label("Группа")
+        </th>
+        <th>
+            @Html.Label("Дата начала практики")
+        </th>
+        <th>
+            @Html.Label("Дата окончания практики")
+        </th>
+        <th>
+            @Html.Label("Ссылка")
+        </th>
+        <th>
+            @Html.Label("Действия")
+        </th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        if (item.Group != null)
+        {
+            <tr>
+                <td>
+                    @Html.ActionLink(item.Group.University, "Details", new { id = item.ID })
+                </td>
+                <td>
+                    @Html.ActionLink(item.Group.Department, "Details", new { id = item.ID })
+                </td>
+                <td>
+                    @Html.ActionLink(item.Group.Description, "Details", new { id = item.ID })
+                </td>
+                <td>
+                    @Html.ActionLink(item.Group.Start.ToShortDateString(), "Details", new { id = item.ID })
+                </td>
+                <td>
+                    @Html.ActionLink(item.Group.End.ToShortDateString(), "Details", new { id = item.ID })
+                </td>
+                <td>
+                    @Html.ActionLink("Скачать", "Uploads/" + item.Link, "Content")
+                </td>
+                <td>
+                    @Html.ActionLink("Редактировать", "EditGroup", new { id = item.ID }) |
+                    @Html.ActionLink("Подробнее", "DetailsGroup", new { id = item.ID }) |
+                    @Html.ActionLink("Удалить", "Delete", new { id = item.ID })
+                </td>
+            </tr>
+        }
+    }
+</table>
+@Html.ActionLink("Добавить", "CreateGroup", null, new { @class = "btn btn-default" })

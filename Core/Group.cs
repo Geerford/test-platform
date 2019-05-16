@@ -22,5 +22,7 @@ namespace Core
         public DateTime End { get; set; }
 
         public virtual ICollection<User> Students { get; set; }
+
+        public virtual Report Report { get; set; }
     }
 }

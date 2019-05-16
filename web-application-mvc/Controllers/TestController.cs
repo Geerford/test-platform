@@ -61,17 +61,16 @@ namespace web_application_mvc.Controllers
                     }
                 }
             }
+            //TODO
             List<Test> tests = new List<Test>();
             foreach (var item in sections)
             {
-                foreach(var grade in user.Grades)
+                foreach (var test in item.Tests)
                 {
-                    foreach(var test in item.Tests)
+                    var grade = user.Grades.Where(x => x.TestID == test.ID).FirstOrDefault();
+                    if(grade == null)
                     {
-                        if (grade.TestID != test.ID )
-                        {
-                            tests.Add(test);
-                        }
+                        tests.Add(test);
                     }
                 }
             }
@@ -143,7 +142,7 @@ namespace web_application_mvc.Controllers
                     AnswersVM result = questionService.GetAll().Where(x => x.ID == answser.QuestionID)
                         .FirstOrDefault().Answers.Where(d => d.Correct).Select(a => new AnswersVM
                     {
-                        QuestionID = a.ID,
+                        QuestionID = answser.QuestionID,
                         Answer = a.Desctiption,
                         IsCorrect = a.Desctiption.ToLower().Equals(answser.Answer.ToLower())
                     }).FirstOrDefault();
@@ -155,7 +154,7 @@ namespace web_application_mvc.Controllers
                     AnswersVM result = questionService.GetAll().Where(x => x.ID == answser.QuestionID)
                     .FirstOrDefault().Answers.Where(d => d.Correct).Select(a => new AnswersVM
                     {
-                        QuestionID = a.ID,
+                        QuestionID = answser.QuestionID,
                         Answer = a.Desctiption,
                         IsCorrect = false
                     }).FirstOrDefault();

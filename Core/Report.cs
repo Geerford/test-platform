@@ -10,5 +10,7 @@ namespace Core
         public string Link { get; set; }
 
         public virtual User User { get; set; }
+
+        public virtual Group Group { get; set; }
     }
 }

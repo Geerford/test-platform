@@ -1,6 +1,6 @@
 ﻿@model Core.Course
 
-<h2>Учебный материал</h2>
+<h2>Материал</h2>
 <hr />
 <dl class="dl-horizontal">
     <dt class="dark-blue">
@@ -19,10 +19,9 @@
         @Html.Label("Ссылка на материал")
     </dt>
     <dd>
-        @Html.ActionLink("Ссылка", "Uploads/" + Model.Link, "Content")
+        @Html.ActionLink("Скачать", "Uploads/" + Model.Link, "Content")
     </dd>
 </dl>
 <p>
-    @Html.ActionLink("Редактировать", "Edit", new { id = Model.ID }, new { @class = "btn btn-default"}) |
     @Html.ActionLink("Список учебных материалов", "Index")
 </p>

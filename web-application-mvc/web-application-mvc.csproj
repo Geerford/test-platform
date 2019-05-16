@@ -424,6 +424,8 @@
     <Content Include="Views\Feedback\Edit.cshtml" />
     <Content Include="Views\Feedback\Index.cshtml" />
     <Content Include="Views\Home\_MailPartial.cshtml" />
+    <Content Include="Views\Reports\CreateGroup.cshtml" />
+    <Content Include="Views\Reports\EditGroup.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

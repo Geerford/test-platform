@@ -19,7 +19,7 @@
         @Html.Label("Ссылка")
     </dt>
     <dd>
-        @Html.ActionLink(Model.Link, "Uploads/" + Model.Link, "Content")
+        @Html.ActionLink("Скачать", "Uploads/" + Model.Link, "Content")
     </dd>
 </dl>
 @using (Html.BeginForm()) {

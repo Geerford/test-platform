@@ -62,6 +62,10 @@ namespace Infrastructure.Data
             modelBuilder.Entity<User>()
                         .HasOptional(u => u.Report)
                         .WithOptionalPrincipal(r => r.User);
+
+            modelBuilder.Entity<Group>()
+                        .HasOptional(u => u.Report)
+                        .WithOptionalPrincipal(r => r.Group);
             #endregion
 
             #region One to Many

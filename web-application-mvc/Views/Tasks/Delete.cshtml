@@ -19,7 +19,13 @@
         @Html.Label("Описание", htmlAttributes: new { @class = "control-label col-md-2" })
     </dt>
     <dd>
-        @Html.DisplayFor(model => model.Description)
+        @Html.Raw(Model.Description)
+    </dd>
+    <dt>
+        @Html.Label("Правильный ответ", htmlAttributes: new { @class = "control-label col-md-2" })
+    </dt>
+    <dd>
+        @Html.Raw(Model.Right)
     </dd>
 </dl>
 @if (Model.Students.ToList().Count > 0)

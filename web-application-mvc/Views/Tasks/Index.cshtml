@@ -30,7 +30,7 @@
             @Html.DisplayFor(modelItem => item.Section.Description)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Description)
+            @Html.Raw(item.Description)
         </td>
         <td>
             @Html.ActionLink("Редактировать", "Edit", new { id = item.ID }) |

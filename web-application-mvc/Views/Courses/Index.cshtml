@@ -1,6 +1,6 @@
 ﻿@model IEnumerable<Core.Course>
 
-<h2>Учебные материалы</h2>
+<h2>Коллекции материалов</h2>
 <table class="table">
     <tr class="light-blue">
         <th>
@@ -21,16 +21,15 @@
     {
         <tr>
             <td>
-                @Html.ActionLink(item.Description, "Details", new { id = item.ID })
+                @Html.Raw(item.Description)
             </td>
             <td>
-                @Html.ActionLink(item.Section.Description, "Details", new { id = item.ID })
+                @Html.Raw(item.Section.Description)
             </td>
             <td>
-                @Html.ActionLink("Ссылка", "Details", new { id = item.ID })
+                @Html.ActionLink("Скачать", "Uploads/" + item.Link, "Content")
             </td>
             <td>
-                @Html.ActionLink("Редактировать", "Edit", new { id = item.ID }) |
                 @Html.ActionLink("Подробнее", "Details", new { id = item.ID }) |
                 @Html.ActionLink("Удалить", "Delete", new { id = item.ID })
             </td>

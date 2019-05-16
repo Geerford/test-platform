@@ -70,6 +70,19 @@
         }
     </dd>
     <dt class="dark-blue">
+        @Html.Label("Ознакомлен с ТБ")
+    </dt>
+    <dd>
+        @if (Model.Safety)
+        {
+            @Html.Raw("Да")
+        }
+        else
+        {
+            @Html.Raw("Нет")
+        }
+    </dd>
+    <dt class="dark-blue">
         @Html.Label("Куратор")
     </dt>
     <dd>

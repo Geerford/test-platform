@@ -12,6 +12,8 @@ namespace Core
         [Required(ErrorMessage = "Данное поле должно быть заполнено")]
         public string Title { get; set; }
 
+        public string Right { get; set; }
+
         public int SectionID { get; set; }
 
         public Section Section { get; set; }

@@ -33,6 +33,12 @@
         @Html.ActionLink(Model.Task.Description, "Details", "Tasks", new { id = Model.Task.ID }, null)
     </dd>
     <dt>
+        @Html.Label("Правильный ответ")
+    </dt>
+    <dd>
+        @Html.ActionLink(Model.Task.Right, "Details", "Tasks", new { id = Model.Task.ID }, null)
+    </dd>
+    <dt>
         @Html.Label("Ответ студента")
     </dt>
     <dd>

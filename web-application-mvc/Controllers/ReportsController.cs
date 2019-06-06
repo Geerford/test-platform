@@ -1000,7 +1000,12 @@ namespace web_application_mvc.Controllers
             {
                 Alignment = Element.ALIGN_CENTER
             });
-            document.Add(new Paragraph(5, "\u00a0"));
+            document.Add(new Paragraph(70, "\u00a0"));
+            document.Add(new Paragraph(new Phrase($"Успеваемость группы", fontHeader))
+            {
+                Alignment = Element.ALIGN_CENTER
+            });
+            document.Add(new Paragraph(10, "\u00a0"));
             PdfPTable table = new PdfPTable(6)
             {
                 WidthPercentage = 90,
@@ -1011,54 +1016,42 @@ namespace web_application_mvc.Controllers
             {
                 Padding = 2,
                 HorizontalAlignment = Element.ALIGN_CENTER,
-                VerticalAlignment = Element.ALIGN_MIDDLE,
-                BorderColor = BaseColor.WHITE,
-                BorderWidth = 0
+                VerticalAlignment = Element.ALIGN_MIDDLE
             };
             table.AddCell(cellHeader1);
             PdfPCell cellHeader2 = new PdfPCell(new Phrase("Имя", fontHeader))
             {
                 Padding = 2,
                 HorizontalAlignment = Element.ALIGN_CENTER,
-                VerticalAlignment = Element.ALIGN_MIDDLE,
-                BorderColor = BaseColor.WHITE,
-                BorderWidth = 0
+                VerticalAlignment = Element.ALIGN_MIDDLE
             };
             table.AddCell(cellHeader2);
             PdfPCell cellHeader3 = new PdfPCell(new Phrase("Отчество", fontHeader))
             {
                 Padding = 2,
                 HorizontalAlignment = Element.ALIGN_CENTER,
-                VerticalAlignment = Element.ALIGN_MIDDLE,
-                BorderColor = BaseColor.WHITE,
-                BorderWidth = 0
+                VerticalAlignment = Element.ALIGN_MIDDLE
             };
             table.AddCell(cellHeader3);
             PdfPCell cellHeader4 = new PdfPCell(new Phrase("Оценка по тестам", fontHeader))
             {
                 Padding = 2,
                 HorizontalAlignment = Element.ALIGN_CENTER,
-                VerticalAlignment = Element.ALIGN_MIDDLE,
-                BorderColor = BaseColor.WHITE,
-                BorderWidth = 0
+                VerticalAlignment = Element.ALIGN_MIDDLE
             };
             table.AddCell(cellHeader4);
             PdfPCell cellHeader5 = new PdfPCell(new Phrase("Оценка по заданиям", fontHeader))
             {
                 Padding = 2,
                 HorizontalAlignment = Element.ALIGN_CENTER,
-                VerticalAlignment = Element.ALIGN_MIDDLE,
-                BorderColor = BaseColor.WHITE,
-                BorderWidth = 0
+                VerticalAlignment = Element.ALIGN_MIDDLE
             };
             table.AddCell(cellHeader5);
             PdfPCell cellHeader6 = new PdfPCell(new Phrase("Общая оценка", fontHeader))
             {
                 Padding = 2,
                 HorizontalAlignment = Element.ALIGN_CENTER,
-                VerticalAlignment = Element.ALIGN_MIDDLE,
-                BorderColor = BaseColor.WHITE,
-                BorderWidth = 0
+                VerticalAlignment = Element.ALIGN_MIDDLE
             };
             table.AddCell(cellHeader6);
             int coef = 5;
@@ -1068,58 +1061,45 @@ namespace web_application_mvc.Controllers
                 {
                     PaddingBottom = 2,
                     HorizontalAlignment = Element.ALIGN_CENTER,
-                    VerticalAlignment = Element.ALIGN_MIDDLE,
-                    BorderColor = BaseColor.WHITE,
-                    BorderWidth = 0
+                    VerticalAlignment = Element.ALIGN_MIDDLE
                 };
                 table.AddCell(cellSurname);
                 PdfPCell cellName = new PdfPCell(new Phrase(student.Student.Name, fontBase))
                 {
                     PaddingBottom = 2,
                     HorizontalAlignment = Element.ALIGN_CENTER,
-                    VerticalAlignment = Element.ALIGN_MIDDLE,
-                    BorderColor = BaseColor.WHITE,
-                    BorderWidth = 0
+                    VerticalAlignment = Element.ALIGN_MIDDLE
                 };
                 table.AddCell(cellName);
                 PdfPCell cellMidname = new PdfPCell(new Phrase(student.Student.Midname, fontBase))
                 {
                     PaddingBottom = 2,
                     HorizontalAlignment = Element.ALIGN_CENTER,
-                    VerticalAlignment = Element.ALIGN_MIDDLE,
-                    BorderColor = BaseColor.WHITE,
-                    BorderWidth = 0
+                    VerticalAlignment = Element.ALIGN_MIDDLE
                 };
                 table.AddCell(cellMidname);
                 PdfPCell cellGradeTest = new PdfPCell(new Phrase(string.Format("{0:0.##}", student.TestAVG * coef), fontBase))
                 {
                     PaddingBottom = 2,
                     HorizontalAlignment = Element.ALIGN_CENTER,
-                    VerticalAlignment = Element.ALIGN_MIDDLE,
-                    BorderColor = BaseColor.WHITE,
-                    BorderWidth = 0
+                    VerticalAlignment = Element.ALIGN_MIDDLE
                 };
                 table.AddCell(cellGradeTest);
                 PdfPCell cellGradeTask = new PdfPCell(new Phrase(string.Format("{0:0.##}", student.TaskAVG * coef), fontBase))
                 {
                     PaddingBottom = 2,
                     HorizontalAlignment = Element.ALIGN_CENTER,
-                    VerticalAlignment = Element.ALIGN_MIDDLE,
-                    BorderColor = BaseColor.WHITE,
-                    BorderWidth = 0
+                    VerticalAlignment = Element.ALIGN_MIDDLE
                 };
                 table.AddCell(cellGradeTask);
                 PdfPCell cellGradeSum = new PdfPCell(new Phrase(string.Format("{0:0.##}", student.SUM * coef), fontBase))
                 {
                     PaddingBottom = 2,
                     HorizontalAlignment = Element.ALIGN_CENTER,
-                    VerticalAlignment = Element.ALIGN_MIDDLE,
-                    BorderColor = BaseColor.WHITE,
-                    BorderWidth = 0
+                    VerticalAlignment = Element.ALIGN_MIDDLE
                 };
                 table.AddCell(cellGradeSum);
             }
-            document.Add(new Paragraph(70, "\u00a0"));
             document.Add(table);
             document.Close();
             return filename;

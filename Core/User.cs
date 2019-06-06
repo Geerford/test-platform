@@ -9,12 +9,15 @@ namespace Core
         public int ID { get; set; }
 
         [Required(ErrorMessage = "Данное поле должно быть заполнено")]
+        [RegularExpression(@"^[a-zA-Zа-яА-Я]+$", ErrorMessage = "Используйте символы алфавита")]
         public string Name { get; set; }
 
         [Required(ErrorMessage = "Данное поле должно быть заполнено")]
+        [RegularExpression(@"^[a-zA-Zа-яА-Я]+$", ErrorMessage = "Используйте символы алфавита")]
         public string Surname { get; set; }
 
         [Required(ErrorMessage = "Данное поле должно быть заполнено")]
+        [RegularExpression(@"^[a-zA-Zа-яА-Я]+$", ErrorMessage = "Используйте символы алфавита")]
         public string Midname { get; set; }
 
         [Required(ErrorMessage = "Почта должна быть заполнена")]

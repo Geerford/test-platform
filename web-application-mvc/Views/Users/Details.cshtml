@@ -63,14 +63,14 @@
     <dd>
         @if (Model.Status)
         {
-            @Html.Raw("Активирован")
+            @Html.Raw("Подтвержден")
         }
         else
         {
-            @Html.Raw("Деактивирован")
+            @Html.Raw("Неподтвержден")
         }
     </dd>
-    <dt class="dark-blue">
+    @*<dt class="dark-blue">
         @Html.Label("Ознакомлен с ТБ")
     </dt>
     <dd>
@@ -82,7 +82,7 @@
         {
             @Html.Raw("Нет")
         }
-    </dd>
+    </dd>*@
     <dt class="dark-blue">
         @Html.Label("Куратор")
     </dt>

@@ -30,9 +30,9 @@
         <th>
             @Html.Label("Статус")
         </th>
-        <th>
+        @*<th>
             @Html.Label("Ознакомлен с ТБ")
-        </th>
+        </th>*@
         <th>
             @Html.Label("Куратор")
         </th>
@@ -75,14 +75,14 @@
         <td>
             @if (item.Status)
             {
-                @Html.ActionLink("Активирован", "Details", new { id = item.ID })
+                @Html.ActionLink("Подтвержден", "Details", new { id = item.ID })
             }
             else
             {
-                @Html.ActionLink("Деактивирован", "Details", new { id = item.ID })
+                @Html.ActionLink("Неподтвержден", "Details", new { id = item.ID })
             }
         </td>
-        <td>
+        @*<td>
             @if (item.Safety)
             {
                 @Html.ActionLink("Да", "Details", new { id = item.ID })
@@ -91,7 +91,7 @@
             {
                 @Html.ActionLink("Нет", "Details", new { id = item.ID })
             }
-        </td>
+        </td>*@
         <td>
             @if (item.CurrentCurator != null)
             {

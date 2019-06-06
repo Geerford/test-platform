@@ -14,6 +14,7 @@ namespace web_application_mvc.Models
         public string Midname { get; set; }
 
         [Required(ErrorMessage = "Данное поле должно быть заполнено")]
+        [RegularExpression(@"^[\w-]+(\.[\w-]+)*@([a-z0-9-]+(\.[a-z0-9-]+)*?\.[a-z]{2,6}|(\d{1,3}\.){3}\d{1,3})(:\d{4})?$", ErrorMessage = "Введите корректную почту")]
         public string Email { get; set; }
 
         [Required(ErrorMessage = "Данное поле должно быть заполнено")]
@@ -26,6 +27,7 @@ namespace web_application_mvc.Models
         public string PasswordConfirm { get; set; }
 
         [Required(ErrorMessage = "Данное поле должно быть заполнено")]
+        [RegularExpression(@"^(\+\s?)?((?<!\+.*)\(\+?\d+([\s\-\.]?\d+)?\)|\d+)([\s\-\.]?(\(\d+([\s\-\.]?\d+)?\)|\d+))*(\s?(x|ext\.?)\s?\d+)?$", ErrorMessage = "Введите корректный телефон")]
         public string Phone { get; set; }
     }
 }

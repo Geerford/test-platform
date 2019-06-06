@@ -8,6 +8,7 @@ namespace Core
         [Key]
         public int ID { get; set; }
 
+        [Required(ErrorMessage = "Данное поле должно быть заполнено")]
         public string Description { get; set; }
 
         public ICollection<Course> Courses { get; set; }

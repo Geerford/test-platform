@@ -9,6 +9,7 @@ namespace Core
         public int ID { get; set; }
 
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:yyyy-MM-dd}")]
+        [Required(ErrorMessage = "Данное поле должно быть заполнено")]
         public DateTime Date { get; set; }
 
         public int UserID { get; set; }

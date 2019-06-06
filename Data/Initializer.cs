@@ -729,24 +729,24 @@ namespace Infrastructure.Data
             database.Task.Add(task5);
             #endregion
             #region Courses
-            database.Course.Add(new Course
-            {
-                Description = "Лекционные материалы по уголовному праву",
-                Link = "6a6f40db-981a-41f9-8c76-473f95351791.pdf",
-                Section = section1
-            });
-            database.Course.Add(new Course
-            {
-                Description = "Лекционные материалы по уголовному праву",
-                Link = "d1682315-c188-4c98-a44f-4af8ba239c1c.pdf",
-                Section = section1
-            });
-            database.Course.Add(new Course
-            {
-                Description = "Лекционные материалы по судебной экспертизе",
-                Link = "b953c69d-b793-46f4-8886-33cc45047cf8.pdf",
-                Section = section2
-            });
+            //database.Course.Add(new Course
+            //{
+            //    Description = "Уголовное право как отрасль права и как наука. Понятие, предмет и метод уголовного права",
+            //    Link = "6a6f40db-981a-41f9-8c76-473f95351791.pdf",
+            //    Section = section1
+            //});
+            //database.Course.Add(new Course
+            //{
+            //    Description = "Уголовное законодательство Российской Федерации, его задачи и принципы",
+            //    Link = "d1682315-c188-4c98-a44f-4af8ba239c1c.pdf",
+            //    Section = section1
+            //});
+            //database.Course.Add(new Course
+            //{
+            //    Description = "Теоретические, процессуальные и организационные основы судебной экспертизы",
+            //    Link = "b953c69d-b793-46f4-8886-33cc45047cf8.pdf",
+            //    Section = section2
+            //});
             database.Course.Add(new Course
             {
                 Description = "О разграничении компетенции прокуроров территориальных, военных и других специализированных прокуратур",

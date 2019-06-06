@@ -49,16 +49,21 @@ namespace web_application_mvc.Controllers
                 var authenticationResult = authService.SignIn(model);
                 if (authenticationResult.IsSuccess)
                 {
-                    Core.Activity firstActivity = activityService.GetAll().FirstOrDefault();
-                    Core.Activity lastActivity = activityService.GetAll().LastOrDefault();
-                    if(lastActivity.Date.Day != DateTime.Now.Day)
+                    var user = service.GetAll().FirstOrDefault(x => x.Email.Equals(model.Email));
+                    Core.Activity lastActivity = activityService.GetAll().LastOrDefault(x => x.UserID == user.ID);
+                    if(lastActivity == null || lastActivity.Date.Day != DateTime.Now.Day)
                     {
                         activityService.Create(new Core.Activity
                         {
                             Date = DateTime.Now,
-                            UserID = service.GetAll().FirstOrDefault(x => x.Email.Equals(model.Email)).ID
+                            UserID = user.ID
                         });
-                    }                    
+                    }
+                    if (!user.Status)
+                    {
+                        ModelState.AddModelError("Ваша учетная запись не активирована", authenticationResult.ErrorMessage);
+                        return View(model);
+                    }
                     return RedirectToLocal(returnUrl);
                 }
                 ModelState.AddModelError("", authenticationResult.ErrorMessage);
@@ -106,7 +111,7 @@ namespace web_application_mvc.Controllers
             }
             if (ModelState.IsValid)
             {
-                service.Create(new Core.User
+                var user = new Core.User
                 {
                     Name = model.Name,
                     Surname = model.Surname,
@@ -115,9 +120,15 @@ namespace web_application_mvc.Controllers
                     Password = model.Password,
                     Phone = model.Phone,
                     RoleID = roleService.GetAll().FirstOrDefault(x => x.Value.Equals("Студент")).ID
-                });
+                };
+                service.Create(user);
                 IAuthenticationManager authenticationManager = System.Web.HttpContext.Current.GetOwinContext().Authentication;
                 var authService = new Authentication(authenticationManager, service);
+                activityService.Create(new Core.Activity
+                {
+                    Date = DateTime.Now,
+                    UserID = user.ID
+                });
                 var authenticationResult = authService.SignIn(new LoginViewModel
                 {
                     Email = model.Email,

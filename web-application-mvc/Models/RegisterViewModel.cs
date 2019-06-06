@@ -21,7 +21,7 @@ namespace web_application_mvc.Models
         [DataType(DataType.Password)]   
         public string Password { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Данное поле должно быть заполнено")]
         [Compare("Password", ErrorMessage = "Пароли не совпадают")]
         [DataType(DataType.Password)]
         public string PasswordConfirm { get; set; }

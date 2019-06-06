@@ -33,10 +33,11 @@
                         <li>@Html.ActionLink("Группы", "Index", "Groups")</li>
                         <li>@Html.ActionLink("Кураторы", "Index", "Curators")</li>
                         <li>@Html.ActionLink("Пользователи", "Index", "Users")</li>
-                        <li>@Html.ActionLink("Коллекции материалов", "Index", "Courses")</li>
+                        <li>@Html.ActionLink("Коллекции", "Index", "Courses")</li>
                     }
                     @if (User.Identity.IsAuthenticated)
                     {
+                        <li>@Html.ActionLink("Статистика", "Index", "Statistics")</li>
                         <li>@Html.ActionLink("Профиль", "Index", "Profile")</li>
                     }
                     <li>@Html.ActionLink("Контакты", "Contacts", "Home")</li>

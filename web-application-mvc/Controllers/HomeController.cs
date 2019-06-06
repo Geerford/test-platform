@@ -59,9 +59,11 @@ namespace web_application_mvc.Controllers
                 IsBodyHtml = true
             };
             // адрес smtp-сервера и порт, с которого будем отправлять письмо
-            SmtpClient smtp = new SmtpClient("webmail.prisma.ru", 25);
-            smtp.Credentials = new NetworkCredential("feedback@prisma.ru", "password");
-            smtp.EnableSsl = true;
+            SmtpClient smtp = new SmtpClient("webmail.prisma.ru", 25)
+            {
+                Credentials = new NetworkCredential("feedback@prisma.ru", "password"),
+                EnableSsl = true
+            };
             smtp.Send(m);
             return PartialView();
         }

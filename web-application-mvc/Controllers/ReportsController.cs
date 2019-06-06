@@ -12,7 +12,7 @@ using web_application_mvc.Models;
 
 namespace web_application_mvc.Controllers
 {
-    [Authorize(Roles = "Администратор")]
+    //[Authorize(Roles = "Администратор")]
     public class ReportsController : Controller
     {
         IReportService reportService;
@@ -98,48 +98,121 @@ namespace web_application_mvc.Controllers
                 }
                 
                 var student = userService.Get(report.ID);
+
+                //List<Grade> grades = gradeService.GetAll().Where(x => x.UserID == report.ID).ToList();
+                //List<Test> tests = new List<Test>();
+                //foreach (var section in groupSectionService.GetAll().Where(x => x.GroupID == student.GroupID))
+                //{
+                //    tests.AddRange(testService.GetAll().Where(x => x.SectionID == section.SectionID));
+                //}
+                //double gradeAVG = grades.Select(y => y.Value).Sum() / tests.Count;
+
+                //List<UserTask> taskGrades = userTaskService.GetAll().Where(x => x.UserID == report.ID).ToList();
+                //List<Task> tasks = new List<Task>();
+                //foreach (var section in groupSectionService.GetAll().Where(x => x.GroupID == student.GroupID))
+                //{
+                //    tasks.AddRange(taskService.GetAll().Where(x => x.SectionID == section.SectionID));
+                //}
+                //double gradeTaskAVG = taskGrades.Select(y =>
+                //{
+                //    switch (y.Grade)
+                //    {
+                //        case "Отлично":
+                //            return 1;
+                //        case "Хорошо":
+                //            return 0.75;
+                //        case "Удовлетворительно":
+                //            return 0.5;
+                //        case "Неудовлетворительно":
+                //            return 0.25;
+                //        default:
+                //            return 0;
+                //    }
+                //}).Sum() / tasks.Count;
+
+                #region Activity
+                double period = (student.Group.End - student.Group.Start).TotalDays;
+                List<Activity> activities = activityService.GetAll().Where(x => x.User.ID == report.ID).ToList();
+                int count = activities.Count();
+                double percent = 0;
+                if (period > 0)
+                {
+                    percent = (count / period) * 100;
+                }
+                #endregion
+                #region Test
                 List<Grade> grades = gradeService.GetAll().Where(x => x.UserID == report.ID).ToList();
-                
                 List<Test> tests = new List<Test>();
                 foreach (var section in groupSectionService.GetAll().Where(x => x.GroupID == student.GroupID))
                 {
                     tests.AddRange(testService.GetAll().Where(x => x.SectionID == section.SectionID));
                 }
-                double gradeAVG = grades.Select(y => y.Value).Sum() / tests.Count;
-                
+                Dictionary<Test, double> gradesTests = new Dictionary<Test, double>();
+                foreach(var test in tests)
+                {
+                    foreach(var grade in grades)
+                    {
+                        if(grade.TestID == test.ID)
+                        {
+                            gradesTests.Add(test, grade.Value);
+                            break;
+                        }
+                    }
+                    if (!gradesTests.ContainsKey(test))
+                    {
+                        gradesTests.Add(test, 0);
+                    }                    
+                }
+                #endregion
+                #region Task
                 List<UserTask> taskGrades = userTaskService.GetAll().Where(x => x.UserID == report.ID).ToList();
                 List<Task> tasks = new List<Task>();
                 foreach (var section in groupSectionService.GetAll().Where(x => x.GroupID == student.GroupID))
                 {
                     tasks.AddRange(taskService.GetAll().Where(x => x.SectionID == section.SectionID));
                 }
-                double gradeTaskAVG = taskGrades.Select(y => 
+                Dictionary<Task, double> gradesTasks = new Dictionary<Task, double>();
+                foreach (var task in tasks)
                 {
-                    switch (y.Grade)
+                    foreach (var grade in taskGrades)
                     {
-                        case "Отлично":
-                            return 5;
-                        case "Хорошо":
-                            return 4;
-                        case "Удовлетворительно":
-                            return 3;
-                        case "Неудовлетворительно":
-                            return 2;
-                        default:
-                            return 0;
-                    }
-                }).Sum() / tasks.Count;
+                        if (grade.TaskID == task.ID)
+                        {
+                            double normalize;
+                            switch (grade.Grade)
+                            {
+                                case "Отлично":
+                                    normalize = 1;
+                                    break;
+                                case "Хорошо":
+                                    normalize = 0.75;
+                                    break;
+                                case "Удовлетворительно":
+                                    normalize = 0.5;
+                                    break;
+                                case "Неудовлетворительно":
+                                    normalize = 0.25;
+                                    break;
+                                default:
+                                    normalize = 0;
+                                    break;
+                            }
 
-                double period = (student.Group.End - student.Group.Start).TotalDays;
-                int count = activityService.GetAll().Where(x => x.User.ID == report.ID).Count();
-                double percent = 0;
-                if (period > 0)
-                {
-                    percent = (count / period) * 100;
+                            gradesTasks.Add(task, normalize);
+                            break;
+                        }
+                    }
+                    if (!gradesTasks.ContainsKey(task))
+                    {
+                        gradesTasks.Add(task, 0);
+                    }
                 }
+                #endregion
+
+
                 Report result = new Report
                 {
-                    Link = CreatePDF(student, gradeAVG, gradeTaskAVG, percent, report.Templates)
+                    Link = CreatePDF(student, gradesTests, gradesTasks, percent, report.Templates, activities)
                 };
                 var oldReport = student.Report;
                 student.Report = result;
@@ -290,49 +363,88 @@ namespace web_application_mvc.Controllers
                     System.IO.File.Delete(path + report.ReportLink);
                 }
                 var student = userService.Get(report.ID);
-                //TEST GRADES
+                #region Activity
+                double period = (student.Group.End - student.Group.Start).TotalDays;
+                List<Activity> activities = activityService.GetAll().Where(x => x.User.ID == report.ID).ToList();
+                int count = activities.Count();
+                double percent = 0;
+                if (period > 0)
+                {
+                    percent = (count / period) * 100;
+                }
+                #endregion
+                #region Test
                 List<Grade> grades = gradeService.GetAll().Where(x => x.UserID == report.ID).ToList();
                 List<Test> tests = new List<Test>();
                 foreach (var section in groupSectionService.GetAll().Where(x => x.GroupID == student.GroupID))
                 {
                     tests.AddRange(testService.GetAll().Where(x => x.SectionID == section.SectionID));
                 }
-                double gradeAVG = grades.Select(y => y.Value).Sum() / tests.Count;
-                //TASK GRADES
+                Dictionary<Test, double> gradesTests = new Dictionary<Test, double>();
+                foreach (var test in tests)
+                {
+                    foreach (var grade in grades)
+                    {
+                        if (grade.TestID == test.ID)
+                        {
+                            gradesTests.Add(test, grade.Value);
+                            break;
+                        }
+                    }
+                    if (!gradesTests.ContainsKey(test))
+                    {
+                        gradesTests.Add(test, 0);
+                    }
+                }
+                #endregion
+                #region Task
                 List<UserTask> taskGrades = userTaskService.GetAll().Where(x => x.UserID == report.ID).ToList();
                 List<Task> tasks = new List<Task>();
                 foreach (var section in groupSectionService.GetAll().Where(x => x.GroupID == student.GroupID))
                 {
                     tasks.AddRange(taskService.GetAll().Where(x => x.SectionID == section.SectionID));
                 }
-                double gradeTaskAVG = taskGrades.Select(y =>
+                Dictionary<Task, double> gradesTasks = new Dictionary<Task, double>();
+                foreach (var task in tasks)
                 {
-                    switch (y.Grade)
+                    foreach (var grade in taskGrades)
                     {
-                        case "Отлично":
-                            return 5;
-                        case "Хорошо":
-                            return 4;
-                        case "Удовлетворительно":
-                            return 3;
-                        case "Неудовлетворительно":
-                            return 2;
-                        default:
-                            return 0;
-                    }
-                }).Sum() / tasks.Count;
+                        if (grade.TaskID == task.ID)
+                        {
+                            double normalize;
+                            switch (grade.Grade)
+                            {
+                                case "Отлично":
+                                    normalize = 1;
+                                    break;
+                                case "Хорошо":
+                                    normalize = 0.75;
+                                    break;
+                                case "Удовлетворительно":
+                                    normalize = 0.5;
+                                    break;
+                                case "Неудовлетворительно":
+                                    normalize = 0.25;
+                                    break;
+                                default:
+                                    normalize = 0;
+                                    break;
+                            }
 
-                double period = (student.Group.End - student.Group.Start).TotalDays;
-                int count = activityService.GetAll().Where(x => x.User.ID == report.ID).Count();
-                double percent = 0;
-                if (period > 0)
-                {
-                    percent = (count / period) * 100;
+                            gradesTasks.Add(task, normalize);
+                            break;
+                        }
+                    }
+                    if (!gradesTasks.ContainsKey(task))
+                    {
+                        gradesTasks.Add(task, 0);
+                    }
                 }
+                #endregion
                 Report result = new Report
                 {
                     ID = report.ReportID,
-                    Link = CreatePDF(student, gradeAVG, gradeTaskAVG, percent, report.Templates)
+                    Link = CreatePDF(student, gradesTests, gradesTasks, percent, report.Templates, activities)
                 };
                 student.Report = result;
                 userService.Edit(student);
@@ -496,7 +608,8 @@ namespace web_application_mvc.Controllers
             base.Dispose(disposing);
         }
 
-        private string CreatePDF(User student, double grade, double gradeTask, double percent, Dictionary<string, string> templates)
+        #region PDF
+        private string CreatePDF(User student, Dictionary<Test, double> tests, Dictionary<Task, double> tasks, double percent, Dictionary<string, string> templates, List<Activity> activities)
         {
             var document = new Document(PageSize.A4, 15, 15 , 20, 15);
             string filename = System.Guid.NewGuid().ToString() + ".pdf";
@@ -509,7 +622,13 @@ namespace web_application_mvc.Controllers
 
             PdfWriter.GetInstance(document, new FileStream(path, FileMode.Create));
             document.Open();
-            
+
+            System.Drawing.Image image = System.Drawing.Image.FromFile(System.Web.HttpContext.Current.Server.MapPath("~/Content/assets/emblem.png"));
+            iTextSharp.text.Image emblem = iTextSharp.text.Image.GetInstance(image, System.Drawing.Imaging.ImageFormat.Png);
+            emblem.Alignment = Element.ALIGN_CENTER;
+            emblem.ScaleToFit(1000f, 60f);
+            document.Add(emblem);
+
             document.Add(new Paragraph(new Phrase($"Отчет по практике с {student.Group.Start.ToShortDateString()} по {student.Group.End.ToShortDateString()}", fontBase))
             {
                 Alignment = Element.ALIGN_CENTER
@@ -534,111 +653,321 @@ namespace web_application_mvc.Controllers
             {
                 Alignment = Element.ALIGN_RIGHT,
             });
-            PdfPTable table = new PdfPTable(2)
-            {             
+            PdfPTable table;
+            #region Templates
+            int count = 0;
+            foreach(var item in templates)
+            {
+                if (!string.IsNullOrEmpty(item.Value))
+                {
+                    ++count;
+                }
+            }
+            if(count > 0)
+            {
+                table = new PdfPTable(2)
+                {
+                    WidthPercentage = 90,
+                };
+                table.DefaultCell.BorderWidth = 0;
+                table.DefaultCell.HasBorder(iTextSharp.text.Rectangle.NO_BORDER);
+                PdfPCell cellHeader1 = new PdfPCell(new Phrase("Критерий", fontHeader))
+                {
+                    Padding = 2,
+                    HorizontalAlignment = Element.ALIGN_CENTER,
+                    VerticalAlignment = Element.ALIGN_MIDDLE,
+                    BorderColor = BaseColor.WHITE,
+                    BorderWidth = 0
+                };
+                table.AddCell(cellHeader1);
+                PdfPCell cellHeader2 = new PdfPCell(new Phrase("Отзыв", fontHeader))
+                {
+                    Padding = 2,
+                    HorizontalAlignment = Element.ALIGN_CENTER,
+                    VerticalAlignment = Element.ALIGN_MIDDLE,
+                    BorderColor = BaseColor.WHITE,
+                    BorderWidth = 0
+                };
+                table.AddCell(cellHeader2);
+                foreach (var template in templates)
+                {
+                    if (!string.IsNullOrEmpty(template.Value))
+                    {
+                        PdfPCell cellTemplate = new PdfPCell(new Phrase(template.Key, fontBase))
+                        {
+                            Padding = 10,
+                            HorizontalAlignment = Element.ALIGN_LEFT,
+                            VerticalAlignment = Element.ALIGN_MIDDLE,
+                            BorderColor = BaseColor.WHITE,
+                            BorderWidth = 0
+                        };
+                        table.AddCell(cellTemplate);
+                        PdfPCell cellAnswer = new PdfPCell(new Phrase(template.Value, fontBase))
+                        {
+                            Padding = 10,
+                            HorizontalAlignment = Element.ALIGN_JUSTIFIED,
+                            VerticalAlignment = Element.ALIGN_MIDDLE,
+                            BorderColor = BaseColor.WHITE,
+                            BorderWidth = 0
+                        };
+                        table.AddCell(cellAnswer);
+                    }                    
+                }
+                document.Add(table);
+            }            
+            #endregion
+            #region Activities
+            document.Add(new Paragraph(new Phrase($"Посещаемость", fontHeader))
+            {
+                Alignment = Element.ALIGN_CENTER
+            });
+            document.Add(new Paragraph(10, "\u00a0"));
+            table = new PdfPTable(4)
+            {
                 WidthPercentage = 90,
             };
             table.DefaultCell.BorderWidth = 0;
             table.DefaultCell.HasBorder(iTextSharp.text.Rectangle.NO_BORDER);
-            PdfPCell cellHeader1 = new PdfPCell(new Phrase("Критерий", fontHeader))
+            table.SetWidths(new float[] { 0.3f, 0.3f, 0.3f, 0.3f });
+            
+            #region HEADERS
+            string[] headers = new string[]
             {
-                Padding = 2,
-                HorizontalAlignment = Element.ALIGN_CENTER,
-                VerticalAlignment = Element.ALIGN_MIDDLE,
-                BorderColor = BaseColor.WHITE,
-                BorderWidth = 0
+                "Дата", "Присутствие", "Дата", "Присутствие"
             };
-            table.AddCell(cellHeader1);
-            PdfPCell cellHeader2 = new PdfPCell(new Phrase("Отзыв", fontHeader))
+            for (int i = 0; i < headers.Length; ++i)
             {
-                Padding = 2,
-                HorizontalAlignment = Element.ALIGN_CENTER,
-                VerticalAlignment = Element.ALIGN_MIDDLE,
-                BorderColor = BaseColor.WHITE,
-                BorderWidth = 0
-            };
-            table.AddCell(cellHeader2);
-            foreach (var template in templates)
-            {
-                PdfPCell cellTemplate = new PdfPCell(new Phrase(template.Key, fontBase))
+                table.AddCell(new PdfPCell(new Phrase(headers[i], fontHeader))
                 {
-                    Padding = 10,
-                    HorizontalAlignment = Element.ALIGN_LEFT,
-                    VerticalAlignment = Element.ALIGN_MIDDLE,
-                    BorderColor = BaseColor.WHITE,
-                    BorderWidth = 0
-                };
-                table.AddCell(cellTemplate);
-                PdfPCell cellAnswer = new PdfPCell(new Phrase(template.Value, fontBase))
-                {
-                    Padding = 10,
-                    HorizontalAlignment = Element.ALIGN_JUSTIFIED,
-                    VerticalAlignment = Element.ALIGN_MIDDLE,
-                    BorderColor = BaseColor.WHITE,
-                    BorderWidth = 0
-                };
-                table.AddCell(cellAnswer);
+                    HorizontalAlignment = Element.ALIGN_CENTER,
+                    VerticalAlignment = Element.ALIGN_MIDDLE
+                });
             }
-            //ACTIVITY PERCENT
-            PdfPCell cellActivity = new PdfPCell(new Phrase($"Посещаемость студента составила", fontBase))
+            #endregion
+
+            if (activities.Count > 0)
+            {
+                int days = (student.Group.End - student.Group.Start).Days;
+                for (int i = 0; i < days; i++)
+                {
+                    var day = student.Group.Start.AddDays(i);
+                    table.AddCell(new PdfPCell(new Phrase($"{day.ToShortDateString()}", fontBase))
+                    {
+                        Padding = 10,
+                        HorizontalAlignment = Element.ALIGN_RIGHT,
+                        VerticalAlignment = Element.ALIGN_MIDDLE,
+                        BorderColor = BaseColor.BLACK,
+                        BorderWidth = 1
+                    });
+                    if(activities.FirstOrDefault(x => x.Date.Date.Equals(day.Date)) != null){
+                        table.AddCell(new PdfPCell(new Phrase($"+", fontBase))
+                        {
+                            Padding = 10,
+                            HorizontalAlignment = Element.ALIGN_LEFT,
+                            VerticalAlignment = Element.ALIGN_MIDDLE,
+                            BorderColor = BaseColor.BLACK,
+                            BorderWidth = 1
+                        });
+                    }
+                    else
+                    {
+                        table.AddCell(new PdfPCell(new Phrase($"-", fontBase))
+                        {
+                            Padding = 10,
+                            HorizontalAlignment = Element.ALIGN_LEFT,
+                            VerticalAlignment = Element.ALIGN_MIDDLE,
+                            BorderColor = BaseColor.BLACK,
+                            BorderWidth = 1
+                        });
+                    }
+                }
+            }            
+            PdfPCell cellActivity = new PdfPCell(new Phrase($"Посещаемость студента составила", fontHeader))
             {
                 Padding = 10,
-                HorizontalAlignment = Element.ALIGN_JUSTIFIED,
+                HorizontalAlignment = Element.ALIGN_RIGHT,
                 VerticalAlignment = Element.ALIGN_MIDDLE,
-                BorderColor = BaseColor.WHITE,
-                BorderWidth = 0
+                BorderColor = BaseColor.BLACK,
+                BorderWidth = 1
             };
             table.AddCell(cellActivity);
             PdfPCell cellActivityBase = new PdfPCell(new Phrase($"{(int)percent}%", fontBase))
             {
                 Padding = 10,
-                HorizontalAlignment = Element.ALIGN_JUSTIFIED,
+                HorizontalAlignment = Element.ALIGN_LEFT,
                 VerticalAlignment = Element.ALIGN_MIDDLE,
-                BorderColor = BaseColor.WHITE,
-                BorderWidth = 0
+                BorderColor = BaseColor.BLACK,
+                BorderWidth = 1
             };
             table.AddCell(cellActivityBase);
-            //AVG GRADE TEST
-            PdfPCell cellGrade = new PdfPCell(new Phrase("Средняя оценка по тестированию составяет", fontBase))
+            document.Add(table);
+            document.Add(new Paragraph(70, "\u00a0"));
+            #endregion
+            #region TESTS
+            int coef = 5;
+            document.Add(new Paragraph(new Phrase($"Успеваемость по тестам", fontHeader))
+            {
+                Alignment = Element.ALIGN_CENTER
+            });
+            document.Add(new Paragraph(10, "\u00a0"));
+            table = new PdfPTable(2)
+            {
+                WidthPercentage = 90
+            };
+            table.DefaultCell.BorderWidth = 0;
+            table.DefaultCell.HasBorder(iTextSharp.text.Rectangle.NO_BORDER);
+            table.SetWidths(new float[] { 0.9f, 0.1f });
+            #region HEADERS
+            headers = new string[]
+            {
+                "Название теста", "Оценка"
+            };
+            for (int i = 0; i < headers.Length; ++i)
+            {
+                table.AddCell(new PdfPCell(new Phrase(headers[i], fontHeader))
+                {
+                    HorizontalAlignment = Element.ALIGN_CENTER,
+                    VerticalAlignment = Element.ALIGN_MIDDLE
+                });
+            }
+            #endregion
+            foreach (var item in tests)
+            {
+                table.AddCell(new PdfPCell(new Phrase($"{item.Key.Title}", fontBase))
+                {
+                    Padding = 10,
+                    HorizontalAlignment = Element.ALIGN_RIGHT,
+                    VerticalAlignment = Element.ALIGN_MIDDLE,
+                    BorderColor = BaseColor.BLACK,
+                    BorderWidth = 1
+                });
+                if(item.Value != 0)
+                {
+                    table.AddCell(new PdfPCell(new Phrase($"{item.Value * coef}", fontBase))
+                    {
+                        Padding = 10,
+                        HorizontalAlignment = Element.ALIGN_LEFT,
+                        VerticalAlignment = Element.ALIGN_MIDDLE,
+                        BorderColor = BaseColor.BLACK,
+                        BorderWidth = 1
+                    });
+                }
+                else
+                {
+                    table.AddCell(new PdfPCell(new Phrase($"{item.Value}", fontBase))
+                    {
+                        Padding = 10,
+                        HorizontalAlignment = Element.ALIGN_LEFT,
+                        VerticalAlignment = Element.ALIGN_MIDDLE,
+                        BorderColor = BaseColor.BLACK,
+                        BorderWidth = 1
+                    });
+                }                
+            }
+            PdfPCell cellGrade = new PdfPCell(new Phrase("Средняя оценка по тестированию составяет", fontHeader))
             {
                 Padding = 10,
-                HorizontalAlignment = Element.ALIGN_JUSTIFIED,
+                HorizontalAlignment = Element.ALIGN_RIGHT,
                 VerticalAlignment = Element.ALIGN_MIDDLE,
-                BorderColor = BaseColor.WHITE,
-                BorderWidth = 0
+                BorderColor = BaseColor.BLACK,
+                BorderWidth = 1
             };
             table.AddCell(cellGrade);
-            int coef = 5;
-            PdfPCell cellGradeBase = new PdfPCell(new Phrase($"{grade * coef}", fontBase))
+            double gradeTestAVG = tests.Sum(x => x.Value) / tests.Count();
+            PdfPCell cellGradeBase = new PdfPCell(new Phrase($"{gradeTestAVG * coef}", fontBase))
             {
                 Padding = 10,
-                HorizontalAlignment = Element.ALIGN_JUSTIFIED,
+                HorizontalAlignment = Element.ALIGN_LEFT,
                 VerticalAlignment = Element.ALIGN_MIDDLE,
-                BorderColor = BaseColor.WHITE,
-                BorderWidth = 0
+                BorderColor = BaseColor.BLACK,
+                BorderWidth = 1
             };
             table.AddCell(cellGradeBase);
-            //AVG GRADE TASK
-            PdfPCell cellGradeTask = new PdfPCell(new Phrase("Средняя оценка по заданиям составяет", fontBase))
+            document.Add(table);
+            document.Add(new Paragraph(15, "\u00a0"));
+            #endregion
+            #region TASKS
+            document.Add(new Paragraph(new Phrase($"Успеваемость по заданиям", fontHeader))
+            {
+                Alignment = Element.ALIGN_CENTER
+            });
+            document.Add(new Paragraph(10, "\u00a0"));
+            table = new PdfPTable(2)
+            {
+                WidthPercentage = 90,
+            };
+            table.DefaultCell.BorderWidth = 0;
+            table.DefaultCell.HasBorder(iTextSharp.text.Rectangle.NO_BORDER);
+            table.SetWidths(new float[] { 0.9f, 0.1f });
+            #region HEADERS
+            headers = new string[]
+            {
+                "Название задания", "Оценка"
+            };
+            for (int i = 0; i < headers.Length; ++i)
+            {
+                table.AddCell(new PdfPCell(new Phrase(headers[i], fontHeader))
+                {
+                    HorizontalAlignment = Element.ALIGN_CENTER,
+                    VerticalAlignment = Element.ALIGN_MIDDLE
+                });
+            }
+            #endregion
+            foreach (var item in tasks)
+            {
+                table.AddCell(new PdfPCell(new Phrase($"{item.Key.Title}", fontBase))
+                {
+                    Padding = 10,
+                    HorizontalAlignment = Element.ALIGN_RIGHT,
+                    VerticalAlignment = Element.ALIGN_MIDDLE,
+                    BorderColor = BaseColor.BLACK,
+                    BorderWidth = 1
+                });
+                if(item.Value != 0)
+                {
+                    table.AddCell(new PdfPCell(new Phrase($"{item.Value * coef}", fontBase))
+                    {
+                        Padding = 10,
+                        HorizontalAlignment = Element.ALIGN_LEFT,
+                        VerticalAlignment = Element.ALIGN_MIDDLE,
+                        BorderColor = BaseColor.BLACK,
+                        BorderWidth = 1
+                    });
+                }
+                else
+                {
+                    table.AddCell(new PdfPCell(new Phrase($"{item.Value}", fontBase))
+                    {
+                        Padding = 10,
+                        HorizontalAlignment = Element.ALIGN_LEFT,
+                        VerticalAlignment = Element.ALIGN_MIDDLE,
+                        BorderColor = BaseColor.BLACK,
+                        BorderWidth = 1
+                    });
+                }                
+            }
+            PdfPCell cellGradeTask = new PdfPCell(new Phrase("Средняя оценка по заданиям составяет", fontHeader))
             {
                 Padding = 10,
-                HorizontalAlignment = Element.ALIGN_JUSTIFIED,
+                HorizontalAlignment = Element.ALIGN_RIGHT,
                 VerticalAlignment = Element.ALIGN_MIDDLE,
-                BorderColor = BaseColor.WHITE,
-                BorderWidth = 0
+                BorderColor = BaseColor.BLACK,
+                BorderWidth = 1
             };
             table.AddCell(cellGradeTask);
-            PdfPCell cellGradeTaskBase = new PdfPCell(new Phrase($"{gradeTask * coef}", fontBase))
+            double gradeTaskAVG = tasks.Sum(x => x.Value) / tasks.Count();
+            PdfPCell cellGradeTaskBase = new PdfPCell(new Phrase($"{gradeTaskAVG * coef}", fontBase))
             {
                 Padding = 10,
-                HorizontalAlignment = Element.ALIGN_JUSTIFIED,
+                HorizontalAlignment = Element.ALIGN_LEFT,
                 VerticalAlignment = Element.ALIGN_MIDDLE,
-                BorderColor = BaseColor.WHITE,
-                BorderWidth = 0
+                BorderColor = BaseColor.BLACK,
+                BorderWidth = 1
             };
             table.AddCell(cellGradeTaskBase);
-            document.Add(new Paragraph(70, "\u00a0"));
             document.Add(table);
+            #endregion
+            //document.Add(new Paragraph(70, "\u00a0"));
             document.Close();
             return filename;
         }
@@ -656,6 +985,12 @@ namespace web_application_mvc.Controllers
 
             PdfWriter.GetInstance(document, new FileStream(path, FileMode.Create));
             document.Open();
+
+            System.Drawing.Image image = System.Drawing.Image.FromFile(System.Web.HttpContext.Current.Server.MapPath("~/Content/assets/emblem.png"));
+            iTextSharp.text.Image emblem = iTextSharp.text.Image.GetInstance(image, System.Drawing.Imaging.ImageFormat.Png);
+            emblem.Alignment = Element.ALIGN_CENTER;
+            emblem.ScaleToFit(1000f, 60f);
+            document.Add(emblem);
 
             document.Add(new Paragraph(new Phrase($"Отчет по практике группы {group.Description}", fontBase))
             {
@@ -731,8 +1066,8 @@ namespace web_application_mvc.Controllers
             {
                 PdfPCell cellSurname = new PdfPCell(new Phrase(student.Student.Surname, fontBase))
                 {
-                    Padding = 10,
-                    HorizontalAlignment = Element.ALIGN_LEFT,
+                    PaddingBottom = 2,
+                    HorizontalAlignment = Element.ALIGN_CENTER,
                     VerticalAlignment = Element.ALIGN_MIDDLE,
                     BorderColor = BaseColor.WHITE,
                     BorderWidth = 0
@@ -740,8 +1075,8 @@ namespace web_application_mvc.Controllers
                 table.AddCell(cellSurname);
                 PdfPCell cellName = new PdfPCell(new Phrase(student.Student.Name, fontBase))
                 {
-                    Padding = 10,
-                    HorizontalAlignment = Element.ALIGN_JUSTIFIED,
+                    PaddingBottom = 2,
+                    HorizontalAlignment = Element.ALIGN_CENTER,
                     VerticalAlignment = Element.ALIGN_MIDDLE,
                     BorderColor = BaseColor.WHITE,
                     BorderWidth = 0
@@ -749,8 +1084,8 @@ namespace web_application_mvc.Controllers
                 table.AddCell(cellName);
                 PdfPCell cellMidname = new PdfPCell(new Phrase(student.Student.Midname, fontBase))
                 {
-                    Padding = 10,
-                    HorizontalAlignment = Element.ALIGN_JUSTIFIED,
+                    PaddingBottom = 2,
+                    HorizontalAlignment = Element.ALIGN_CENTER,
                     VerticalAlignment = Element.ALIGN_MIDDLE,
                     BorderColor = BaseColor.WHITE,
                     BorderWidth = 0
@@ -758,8 +1093,8 @@ namespace web_application_mvc.Controllers
                 table.AddCell(cellMidname);
                 PdfPCell cellGradeTest = new PdfPCell(new Phrase(string.Format("{0:0.##}", student.TestAVG * coef), fontBase))
                 {
-                    Padding = 10,
-                    HorizontalAlignment = Element.ALIGN_JUSTIFIED,
+                    PaddingBottom = 2,
+                    HorizontalAlignment = Element.ALIGN_CENTER,
                     VerticalAlignment = Element.ALIGN_MIDDLE,
                     BorderColor = BaseColor.WHITE,
                     BorderWidth = 0
@@ -767,8 +1102,8 @@ namespace web_application_mvc.Controllers
                 table.AddCell(cellGradeTest);
                 PdfPCell cellGradeTask = new PdfPCell(new Phrase(string.Format("{0:0.##}", student.TaskAVG * coef), fontBase))
                 {
-                    Padding = 10,
-                    HorizontalAlignment = Element.ALIGN_JUSTIFIED,
+                    PaddingBottom = 2,
+                    HorizontalAlignment = Element.ALIGN_CENTER,
                     VerticalAlignment = Element.ALIGN_MIDDLE,
                     BorderColor = BaseColor.WHITE,
                     BorderWidth = 0
@@ -776,8 +1111,8 @@ namespace web_application_mvc.Controllers
                 table.AddCell(cellGradeTask);
                 PdfPCell cellGradeSum = new PdfPCell(new Phrase(string.Format("{0:0.##}", student.SUM * coef), fontBase))
                 {
-                    Padding = 10,
-                    HorizontalAlignment = Element.ALIGN_JUSTIFIED,
+                    PaddingBottom = 2,
+                    HorizontalAlignment = Element.ALIGN_CENTER,
                     VerticalAlignment = Element.ALIGN_MIDDLE,
                     BorderColor = BaseColor.WHITE,
                     BorderWidth = 0
@@ -789,5 +1124,6 @@ namespace web_application_mvc.Controllers
             document.Close();
             return filename;
         }
+        #endregion
     }
 }

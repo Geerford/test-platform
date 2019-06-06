@@ -7,7 +7,7 @@ using web_application_mvc.Models;
 
 namespace web_application_mvc.Controllers
 {
-    [Authorize(Roles = "Администратор")]
+    //[Authorize(Roles = "Администратор")]
     public class TestsController : Controller
     {
         ITestService testService;
@@ -22,6 +22,7 @@ namespace web_application_mvc.Controllers
         }
 
         // GET: Tests
+        [Authorize(Roles = "Администратор")]
         public ActionResult Index()
         {
             return View(testService.GetAll());
@@ -48,6 +49,7 @@ namespace web_application_mvc.Controllers
         }
 
         // GET: Tests/Create
+        [Authorize(Roles = "Администратор")]
         public ActionResult Create()
         {
             ViewBag.SectionID = new SelectList(sectionService.GetAll(), "ID", "Description");
@@ -57,6 +59,7 @@ namespace web_application_mvc.Controllers
         // POST: Tests/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Администратор")]
         public ActionResult Create([Bind(Include = "ID,Title,Description,SectionID")] Test test)
         {
             if (ModelState.IsValid)
@@ -70,6 +73,7 @@ namespace web_application_mvc.Controllers
         }
 
         // GET: Tests/Edit/5
+        [Authorize(Roles = "Администратор")]
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -88,6 +92,7 @@ namespace web_application_mvc.Controllers
         // POST: Tests/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Администратор")]
         public ActionResult Edit([Bind(Include = "ID,Title,Description,SectionID")] Test test)
         {
             if (ModelState.IsValid)
@@ -100,6 +105,7 @@ namespace web_application_mvc.Controllers
         }
 
         // GET: Tests/Delete/5
+        [Authorize(Roles = "Администратор")]
         public ActionResult Delete(int? id)
         {
             if (id == null)
@@ -122,6 +128,7 @@ namespace web_application_mvc.Controllers
         // POST: Tests/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Администратор")]
         public ActionResult DeleteConfirmed(int id)
         {
             Test test = testService.Get(id);

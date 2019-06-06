@@ -5,7 +5,7 @@ using Core;
 
 namespace web_application_mvc.Controllers
 {
-    [Authorize(Roles = "Администратор")]
+    //[Authorize(Roles = "Администратор")]
     public class UsersController : Controller
     {
         IUserService userService;
@@ -23,6 +23,7 @@ namespace web_application_mvc.Controllers
         }
 
         // GET: Users
+        [Authorize(Roles = "Администратор")]
         public ActionResult Index()
         {
             return View(userService.GetAll());
@@ -44,6 +45,7 @@ namespace web_application_mvc.Controllers
         }
 
         // GET: Users/Create
+        [Authorize(Roles = "Администратор")]
         public ActionResult Create()
         {
             ViewBag.CurrentCuratorID = new SelectList(curatorService.GetAll(), "ID", "User.Surname");
@@ -55,6 +57,7 @@ namespace web_application_mvc.Controllers
         // POST: Users/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Администратор")]
         public ActionResult Create([Bind(Include = "ID,Name,Surname,Midname,Email,Password,Phone,Status,RoleID,CurrentCuratorID,GroupID")] User user)
         {
             if (ModelState.IsValid)
@@ -69,6 +72,7 @@ namespace web_application_mvc.Controllers
         }
 
         // GET: Users/Edit/5
+        [Authorize(Roles = "Администратор")]
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -89,6 +93,7 @@ namespace web_application_mvc.Controllers
         // POST: Users/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Администратор")]
         public ActionResult Edit([Bind(Include = "ID,Name,Surname,Midname,Email,Password,Phone,Status,RoleID,CurrentCuratorID,GroupID")] User user)
         {
             if (ModelState.IsValid)
@@ -103,6 +108,7 @@ namespace web_application_mvc.Controllers
         }
 
         // GET: Users/Delete/5
+        [Authorize(Roles = "Администратор")]
         public ActionResult Delete(int? id)
         {
             if (id == null)
@@ -120,6 +126,7 @@ namespace web_application_mvc.Controllers
         // POST: Users/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Администратор")]
         public ActionResult DeleteConfirmed(int id)
         {
             User user = userService.Get(id);

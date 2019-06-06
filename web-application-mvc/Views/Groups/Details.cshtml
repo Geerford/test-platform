@@ -87,7 +87,10 @@
     </table>
     <hr />
 }
-<p>
-    @Html.ActionLink("Редактировать", "Edit", new { id = Model.ID }, new { @class = "btn btn-default"}) |
-    @Html.ActionLink("Список групп", "Index")
-</p>
+@if (User.Identity.IsAuthenticated && (User.IsInRole("Администратор")))
+{
+    <p>
+        @Html.ActionLink("Редактировать", "Edit", new { id = Model.ID }, new { @class = "btn btn-default" }) |
+        @Html.ActionLink("Список групп", "Index")
+    </p>
+}

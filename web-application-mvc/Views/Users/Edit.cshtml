@@ -61,7 +61,11 @@
             @Html.Label("Статус", htmlAttributes: new { @class = "dark-blue control-label col-md-2" })
             <div class="col-md-10">
                 <div class="checkbox">
-                    @Html.EditorFor(model => model.Status)
+                    @Html.DropDownListFor(model => model.Status, new SelectList(new[]
+                    {
+                        new SelectListItem { Value = false.ToString(), Text = "Неподтвержден" },
+                        new SelectListItem { Value = true.ToString(), Text = "Подтвержден" },
+                    }, "Value", "Text"), new { @class = "form-control" })
                     @Html.ValidationMessageFor(model => model.Status, "", new { @class = "text-danger" })
                 </div>
             </div>

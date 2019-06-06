@@ -25,6 +25,7 @@
                         <li>@Html.ActionLink("Тесты", "Index", "Test")</li>
                         <li>@Html.ActionLink("Задания", "Task", "Test")</li>
                         <li>@Html.ActionLink("Коллекции материалов", "Index", "Course")</li>
+                        <li>@Html.ActionLink("Профиль", "Index", "Profile")</li>
                     }
                     @if (User.Identity.IsAuthenticated && (User.IsInRole("Администратор")))
                     {
@@ -34,6 +35,7 @@
                         <li>@Html.ActionLink("Кураторы", "Index", "Curators")</li>
                         <li>@Html.ActionLink("Пользователи", "Index", "Users")</li>
                         <li>@Html.ActionLink("Коллекции", "Index", "Courses")</li>
+                        <li>@Html.ActionLink("Профиль", "Index", "Profile")</li>
                     }
                     @if (User.Identity.IsAuthenticated && (User.IsInRole("Старший сержант")))
                     {
@@ -48,13 +50,13 @@
     </div>
     <div class="container body-content body-margin">
         @RenderBody()
-        <hr />
+        @*<hr />
         <footer>
             <div class="footer-text">
                 2018 — @DateTime.Now.Year, @Html.ActionLink("Призма", "Contacts", "Home")
-                @*Html.ActionLink("Техника безопасности", "Safety", "Home")*@
+                @*Html.ActionLink("Техника безопасности", "Safety", "Home")@
             </div>
-        </footer>
+        </footer>*@
     </div>
 
     @Scripts.Render("~/bundles/jquery")

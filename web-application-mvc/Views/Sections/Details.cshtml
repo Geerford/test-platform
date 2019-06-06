@@ -34,7 +34,7 @@
             </tr>
         }
     </table>
-    <hr />
+    
 }
 @if (Model.Courses != null && Model.Courses.Count() > 0)
 {
@@ -60,9 +60,12 @@
             </tr>
         }
     </table>
-    <hr />
 }
-<p>
-    @Html.ActionLink("Редактировать", "Edit", new { id = Model.ID }, new { @class = "btn btn-default"}) |
-    @Html.ActionLink("Список разделов", "Index")
-</p>
+@if (User.Identity.IsAuthenticated && (User.IsInRole("Администратор")))
+{
+    <hr />
+    <p>
+        @Html.ActionLink("Редактировать", "Edit", new { id = Model.ID }, new { @class = "btn btn-default" }) |
+        @Html.ActionLink("Список разделов", "Index")
+    </p>
+}

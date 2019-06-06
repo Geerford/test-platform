@@ -71,18 +71,18 @@
         }
     </dd>
     @*<dt class="dark-blue">
-        @Html.Label("Ознакомлен с ТБ")
-    </dt>
-    <dd>
-        @if (Model.Safety)
-        {
-            @Html.Raw("Да")
-        }
-        else
-        {
-            @Html.Raw("Нет")
-        }
-    </dd>*@
+            @Html.Label("Ознакомлен с ТБ")
+        </dt>
+        <dd>
+            @if (Model.Safety)
+            {
+                @Html.Raw("Да")
+            }
+            else
+            {
+                @Html.Raw("Нет")
+            }
+        </dd>*@
     <dt class="dark-blue">
         @Html.Label("Куратор")
     </dt>
@@ -93,7 +93,10 @@
         }
     </dd>
 </dl>
-<p>
-    @Html.ActionLink("Редактировать", "Edit", new { id = Model.ID }, new { @class = "btn btn-default"}) |
-    @Html.ActionLink("Список пользователей", "Index")
-</p>
+@if (User.Identity.IsAuthenticated && (User.IsInRole("Администратор")))
+{
+    <p>
+        @Html.ActionLink("Редактировать", "Edit", new { id = Model.ID }, new { @class = "btn btn-default" }) |
+        @Html.ActionLink("Список пользователей", "Index")
+    </p>
+}    

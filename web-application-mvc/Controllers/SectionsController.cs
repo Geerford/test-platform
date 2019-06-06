@@ -5,7 +5,7 @@ using Core;
 
 namespace web_application_mvc.Controllers
 {
-    [Authorize(Roles = "Администратор")]
+    //[Authorize(Roles = "Администратор")]
     public class SectionsController : Controller
     {
         ISectionService sectionService;
@@ -20,6 +20,7 @@ namespace web_application_mvc.Controllers
         }
 
         // GET: Sections
+        [Authorize(Roles = "Администратор")]
         public ActionResult Index()
         {
             return View(sectionService.GetAll());
@@ -41,6 +42,7 @@ namespace web_application_mvc.Controllers
         }
 
         // GET: Sections/Create
+        [Authorize(Roles = "Администратор")]
         public ActionResult Create()
         {
             return View();
@@ -49,6 +51,7 @@ namespace web_application_mvc.Controllers
         // POST: Sections/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Администратор")]
         public ActionResult Create([Bind(Include = "ID,Description")] Section section)
         {
             if (ModelState.IsValid)
@@ -77,6 +80,7 @@ namespace web_application_mvc.Controllers
         // POST: Sections/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Администратор")]
         public ActionResult Edit([Bind(Include = "ID,Description")] Section section)
         {
             if (ModelState.IsValid)
@@ -88,6 +92,7 @@ namespace web_application_mvc.Controllers
         }
 
         // GET: Sections/Delete/5
+        [Authorize(Roles = "Администратор")]
         public ActionResult Delete(int? id)
         {
             if (id == null)
@@ -105,6 +110,7 @@ namespace web_application_mvc.Controllers
         // POST: Sections/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Администратор")]
         public ActionResult DeleteConfirmed(int id)
         {
             Section section = sectionService.Get(id);

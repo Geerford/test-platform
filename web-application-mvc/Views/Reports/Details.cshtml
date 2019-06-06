@@ -1,40 +1,86 @@
 ﻿@model Core.Report
 
-<h2 class="red">Отчет</h2>
-<hr />
+<h3 class="red">Вы действительно хотите удалить данный отчет?</h3>
 <dl class="dl-horizontal">
-    <dt class="dark-blue">
-        @Html.Label("Фамилия")
-    </dt>
-    <dd>
-        @Html.ActionLink(Model.User.Surname, "Details", "Users", new { id = Model.User.ID }, new { })
-    </dd>
-    <dt class="dark-blue">
-        @Html.Label("Имя")
-    </dt>
-    <dd>
-        @Html.ActionLink(Model.User.Name, "Details", "Users", new { id = Model.User.ID }, new { })
-    </dd>
-    <dt class="dark-blue">
-        @Html.Label("Отчество")
-    </dt>
-    <dd>
-        @Html.ActionLink(Model.User.Midname, "Details", "Users", new { id = Model.User.ID }, new { })
-    </dd>
-    <dt class="dark-blue">
-        @Html.Label("Группа")
-    </dt>
-    <dd>
-        @Html.ActionLink(Model.User.Group.Description, "Details", "Groups", new { id = Model.User.Group.ID }, new { })
-    </dd>
-    <dt class="dark-blue">
+    @if (Model.User != null)
+    {
+        <dt>
+            @Html.Label("Фамилия")
+        </dt>
+        <dd>
+            @Html.ActionLink(Model.User.Surname, "Details", "Users", new { id = Model.User.ID }, new { })
+        </dd>
+        <dt>
+            @Html.Label("Имя")
+        </dt>
+        <dd>
+            @Html.ActionLink(Model.User.Name, "Details", "Users", new { id = Model.User.ID }, new { })
+        </dd>
+        <dt>
+            @Html.Label("Отчество")
+        </dt>
+        <dd>
+            @Html.ActionLink(Model.User.Midname, "Details", "Users", new { id = Model.User.ID }, new { })
+        </dd>
+        <dt>
+            @Html.Label("Группа")
+        </dt>
+        <dd>
+            @Html.ActionLink(Model.User.Group.Description, "Details", "Groups", new { id = Model.User.Group.ID }, new { })
+        </dd>
+    }
+    @if (Model.Group != null)
+    {
+        <dt>
+            @Html.Label("Группа")
+        </dt>
+        <dd>
+            @Html.ActionLink(Model.Group.Description, "Details", "Groups", new { id = Model.Group.ID }, new { })
+        </dd>
+    }
+    <dt>
         @Html.Label("Ссылка")
     </dt>
     <dd>
         @Html.ActionLink("Скачать", "Uploads/" + Model.Link, "Content")
     </dd>
 </dl>
-<p>
-    @Html.ActionLink("Редактировать", "Edit", new { id = Model.ID }, new { @class = "btn btn-default"}) |
-    @Html.ActionLink("Список отчетов", "Index")
-</p>
+@if (Model.Group != null)
+{
+    <table class="table">
+        <tr class="light-blue">
+            <th>
+                @Html.Label("Фамилия")
+            </th>
+            <th>
+                @Html.Label("Имя")
+            </th>
+            <th>
+                @Html.Label("Отчество")
+            </th>
+        </tr>
+
+        @foreach (var item in Model.Group.Students)
+        {
+            <tr>
+                <td>
+                    @Html.ActionLink(item.Surname, "Details", new { id = item.ID })
+                </td>
+                <td>
+                    @Html.ActionLink(item.Name, "Details", new { id = item.ID })
+                </td>
+                <td>
+                    @Html.ActionLink(item.Midname, "Details", new { id = item.ID })
+                </td>
+            </tr>
+        }
+    </table>
+}
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    <div class="form-actions no-color">
+        <input type="submit" value="Удалить" class="btn btn-default" /> |
+        @Html.ActionLink("Список отчетов", "Index")
+    </div>
+}

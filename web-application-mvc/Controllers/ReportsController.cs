@@ -667,6 +667,11 @@ namespace web_application_mvc.Controllers
             }
             if(count > 0)
             {
+                document.Add(new Paragraph(new Phrase($"Отзыв от предприятия", fontHeader))
+                {
+                    Alignment = Element.ALIGN_CENTER
+                });
+                document.Add(new Paragraph(10, "\u00a0"));
                 table = new PdfPTable(2)
                 {
                     WidthPercentage = 90,
@@ -845,7 +850,7 @@ namespace web_application_mvc.Controllers
                 });
                 if(item.Value != 0)
                 {
-                    table.AddCell(new PdfPCell(new Phrase($"{item.Value * coef}", fontBase))
+                    table.AddCell(new PdfPCell(new Phrase(string.Format("{0:0.#}", item.Value * coef), fontBase))
                     {
                         Padding = 10,
                         HorizontalAlignment = Element.ALIGN_LEFT,
@@ -876,7 +881,7 @@ namespace web_application_mvc.Controllers
             };
             table.AddCell(cellGrade);
             double gradeTestAVG = tests.Sum(x => x.Value) / tests.Count();
-            PdfPCell cellGradeBase = new PdfPCell(new Phrase($"{gradeTestAVG * coef}", fontBase))
+            PdfPCell cellGradeBase = new PdfPCell(new Phrase(string.Format("{0:0.#}", gradeTestAVG * coef), fontBase))
             {
                 Padding = 10,
                 HorizontalAlignment = Element.ALIGN_LEFT,
@@ -927,7 +932,7 @@ namespace web_application_mvc.Controllers
                 });
                 if(item.Value != 0)
                 {
-                    table.AddCell(new PdfPCell(new Phrase($"{item.Value * coef}", fontBase))
+                    table.AddCell(new PdfPCell(new Phrase(string.Format("{0:0.#}", item.Value * coef), fontBase))
                     {
                         Padding = 10,
                         HorizontalAlignment = Element.ALIGN_LEFT,
@@ -958,7 +963,7 @@ namespace web_application_mvc.Controllers
             };
             table.AddCell(cellGradeTask);
             double gradeTaskAVG = tasks.Sum(x => x.Value) / tasks.Count();
-            PdfPCell cellGradeTaskBase = new PdfPCell(new Phrase($"{gradeTaskAVG * coef}", fontBase))
+            PdfPCell cellGradeTaskBase = new PdfPCell(new Phrase(string.Format("{0:0.#}", gradeTaskAVG * coef), fontBase))
             {
                 Padding = 10,
                 HorizontalAlignment = Element.ALIGN_LEFT,
@@ -982,7 +987,6 @@ namespace web_application_mvc.Controllers
                 BaseFont.IDENTITY_H, BaseFont.NOT_EMBEDDED);
             var fontBase = new iTextSharp.text.Font(font, 14, iTextSharp.text.Font.NORMAL, new BaseColor(Color.Black));
             var fontHeader = new iTextSharp.text.Font(font, 14, iTextSharp.text.Font.BOLD, new BaseColor(Color.Black));
-
 
             PdfWriter.GetInstance(document, new FileStream(path, FileMode.Create));
             document.Open();
@@ -1079,21 +1083,21 @@ namespace web_application_mvc.Controllers
                     VerticalAlignment = Element.ALIGN_MIDDLE
                 };
                 table.AddCell(cellMidname);
-                PdfPCell cellGradeTest = new PdfPCell(new Phrase(string.Format("{0:0.##}", student.TestAVG * coef), fontBase))
+                PdfPCell cellGradeTest = new PdfPCell(new Phrase(string.Format("{0:0.#}", student.TestAVG * coef), fontBase))
                 {
                     PaddingBottom = 2,
                     HorizontalAlignment = Element.ALIGN_CENTER,
                     VerticalAlignment = Element.ALIGN_MIDDLE
                 };
                 table.AddCell(cellGradeTest);
-                PdfPCell cellGradeTask = new PdfPCell(new Phrase(string.Format("{0:0.##}", student.TaskAVG * coef), fontBase))
+                PdfPCell cellGradeTask = new PdfPCell(new Phrase(string.Format("{0:0.#}", student.TaskAVG * coef), fontBase))
                 {
                     PaddingBottom = 2,
                     HorizontalAlignment = Element.ALIGN_CENTER,
                     VerticalAlignment = Element.ALIGN_MIDDLE
                 };
                 table.AddCell(cellGradeTask);
-                PdfPCell cellGradeSum = new PdfPCell(new Phrase(string.Format("{0:0.##}", student.SUM * coef), fontBase))
+                PdfPCell cellGradeSum = new PdfPCell(new Phrase(string.Format("{0:0.#}", student.SUM * coef), fontBase))
                 {
                     PaddingBottom = 2,
                     HorizontalAlignment = Element.ALIGN_CENTER,

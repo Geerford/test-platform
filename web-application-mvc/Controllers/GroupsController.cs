@@ -7,7 +7,7 @@ using Core;
 
 namespace web_application_mvc.Controllers
 {
-    [Authorize(Roles = "Администратор")]
+    //[Authorize(Roles = "Администратор")]
     public class GroupsController : Controller
     {
         IGroupService groupService;
@@ -25,6 +25,7 @@ namespace web_application_mvc.Controllers
         }
 
         // GET: Groups
+        [Authorize(Roles = "Администратор")]
         public ActionResult Index()
         {
             return View(groupService.GetAll());
@@ -55,6 +56,7 @@ namespace web_application_mvc.Controllers
         }
 
         // GET: Groups/Create
+        [Authorize(Roles = "Администратор")]
         public ActionResult Create()
         {
             ViewBag.Students = userService.GetAll().Where(x => x.GroupID == null && x.Role.Value.Equals("Студент")).ToList();
@@ -65,6 +67,7 @@ namespace web_application_mvc.Controllers
         // POST: Groups/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Администратор")]
         public ActionResult Create(FormCollection formval, [Bind(Include = "ID,Description,University,Department,Start,End")] Group group)
         {
             if (group.Start > group.End)
@@ -118,6 +121,7 @@ namespace web_application_mvc.Controllers
         }
 
         // GET: Groups/Edit/5
+        [Authorize(Roles = "Администратор")]
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -146,6 +150,7 @@ namespace web_application_mvc.Controllers
         // POST: Groups/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Администратор")]
         public ActionResult Edit(FormCollection formval, [Bind(Include = "ID,Description,University,Department,Start,End")] Group group)
         {
             if (group.Start > group.End)
@@ -255,6 +260,7 @@ namespace web_application_mvc.Controllers
         }
 
         // GET: Groups/Delete/5
+        [Authorize(Roles = "Администратор")]
         public ActionResult Delete(int? id)
         {
             if (id == null)
@@ -272,6 +278,7 @@ namespace web_application_mvc.Controllers
         // POST: Groups/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Администратор")]
         public ActionResult DeleteConfirmed(int id)
         {
             Group group = groupService.Get(id);

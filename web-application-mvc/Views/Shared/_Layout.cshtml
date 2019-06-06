@@ -35,7 +35,7 @@
                         <li>@Html.ActionLink("Пользователи", "Index", "Users")</li>
                         <li>@Html.ActionLink("Коллекции", "Index", "Courses")</li>
                     }
-                    @if (User.Identity.IsAuthenticated)
+                    @if (User.Identity.IsAuthenticated && (User.IsInRole("Старший сержант")))
                     {
                         <li>@Html.ActionLink("Статистика", "Index", "Statistics")</li>
                         <li>@Html.ActionLink("Профиль", "Index", "Profile")</li>
@@ -51,8 +51,8 @@
         <hr />
         <footer>
             <div class="footer-text">
-                @DateTime.Now.Year,
-                @*@Html.ActionLink("Техника безопасности", "Safety", "Home")*@
+                2018 — @DateTime.Now.Year, @Html.ActionLink("Призма", "Contacts", "Home")
+                @*Html.ActionLink("Техника безопасности", "Safety", "Home")*@
             </div>
         </footer>
     </div>

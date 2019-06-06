@@ -1,31 +1,40 @@
 ﻿@model IEnumerable<Core.Course>
 
-<h2>Учебные материалы</h2>
-<table class="table">
-    <tr class="light-blue">
-        <th>
-            @Html.Label("Описание")
-        </th>
-        <th>
-            @Html.Label("Раздел")
-        </th>
-        <th>
-            @Html.Label("Ссылка на материал")
-        </th>
-    </tr>
-
-    @foreach (var item in Model)
-    {
-        <tr>
-            <td>
-                @Html.Raw(item.Description)
-            </td>
-            <td>
-                @Html.Raw(item.Section.Description)
-            </td>
-            <td>
-                @Html.ActionLink("Скачать", "Uploads/" + item.Link, "Content")
-            </td>
+@if (Model.ToList().Count > 0)
+{
+    <h2>Учебные материалы</h2>
+    <table class="table">
+        <tr class="light-blue">
+            <th>
+                @Html.Label("Описание")
+            </th>
+            <th>
+                @Html.Label("Раздел")
+            </th>
+            <th>
+                @Html.Label("Ссылка на материал")
+            </th>
         </tr>
-    }
-</table>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.Raw(item.Description)
+                </td>
+                <td>
+                    @Html.Raw(item.Section.Description)
+                </td>
+                <td>
+                    @Html.ActionLink("Скачать", "Uploads/" + item.Link, "Content")
+                </td>
+            </tr>
+        }
+    </table>
+}
+else
+{
+    @Html.Raw("<p>У вас нет прав просматривать материалы. Свяжитесь с ")
+    @Html.ActionLink("администрацией", "Contacts", "Home", null, null)
+    @Html.Raw("</p>")
+}

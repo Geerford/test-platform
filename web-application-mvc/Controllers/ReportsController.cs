@@ -622,13 +622,14 @@ namespace web_application_mvc.Controllers
 
             PdfWriter.GetInstance(document, new FileStream(path, FileMode.Create));
             document.Open();
-
+            #region Shape
+            #region Emblem
             System.Drawing.Image image = System.Drawing.Image.FromFile(System.Web.HttpContext.Current.Server.MapPath("~/Content/assets/emblem.png"));
             iTextSharp.text.Image emblem = iTextSharp.text.Image.GetInstance(image, System.Drawing.Imaging.ImageFormat.Png);
             emblem.Alignment = Element.ALIGN_CENTER;
             emblem.ScaleToFit(1000f, 60f);
             document.Add(emblem);
-
+            #endregion
             document.Add(new Paragraph(new Phrase($"Отчет по практике с {student.Group.Start.ToShortDateString()} по {student.Group.End.ToShortDateString()}", fontBase))
             {
                 Alignment = Element.ALIGN_CENTER
@@ -653,6 +654,7 @@ namespace web_application_mvc.Controllers
             {
                 Alignment = Element.ALIGN_RIGHT,
             });
+            #endregion
             PdfPTable table;
             #region Templates
             int count = 0;
@@ -675,18 +677,14 @@ namespace web_application_mvc.Controllers
                 {
                     Padding = 2,
                     HorizontalAlignment = Element.ALIGN_CENTER,
-                    VerticalAlignment = Element.ALIGN_MIDDLE,
-                    BorderColor = BaseColor.WHITE,
-                    BorderWidth = 0
+                    VerticalAlignment = Element.ALIGN_MIDDLE
                 };
                 table.AddCell(cellHeader1);
                 PdfPCell cellHeader2 = new PdfPCell(new Phrase("Отзыв", fontHeader))
                 {
                     Padding = 2,
                     HorizontalAlignment = Element.ALIGN_CENTER,
-                    VerticalAlignment = Element.ALIGN_MIDDLE,
-                    BorderColor = BaseColor.WHITE,
-                    BorderWidth = 0
+                    VerticalAlignment = Element.ALIGN_MIDDLE
                 };
                 table.AddCell(cellHeader2);
                 foreach (var template in templates)
@@ -697,18 +695,14 @@ namespace web_application_mvc.Controllers
                         {
                             Padding = 10,
                             HorizontalAlignment = Element.ALIGN_LEFT,
-                            VerticalAlignment = Element.ALIGN_MIDDLE,
-                            BorderColor = BaseColor.WHITE,
-                            BorderWidth = 0
+                            VerticalAlignment = Element.ALIGN_MIDDLE
                         };
                         table.AddCell(cellTemplate);
                         PdfPCell cellAnswer = new PdfPCell(new Phrase(template.Value, fontBase))
                         {
                             Padding = 10,
                             HorizontalAlignment = Element.ALIGN_JUSTIFIED,
-                            VerticalAlignment = Element.ALIGN_MIDDLE,
-                            BorderColor = BaseColor.WHITE,
-                            BorderWidth = 0
+                            VerticalAlignment = Element.ALIGN_MIDDLE
                         };
                         table.AddCell(cellAnswer);
                     }                    
@@ -781,7 +775,15 @@ namespace web_application_mvc.Controllers
                         });
                     }
                 }
-            }            
+            }
+            document.Add(table);
+            table = new PdfPTable(2)
+            {
+                WidthPercentage = 90,
+            };
+            table.DefaultCell.BorderWidth = 0;
+            table.DefaultCell.HasBorder(iTextSharp.text.Rectangle.NO_BORDER);
+            table.SetWidths(new float[] { 0.8f, 0.2f });
             PdfPCell cellActivity = new PdfPCell(new Phrase($"Посещаемость студента составила", fontHeader))
             {
                 Padding = 10,
@@ -801,7 +803,7 @@ namespace web_application_mvc.Controllers
             };
             table.AddCell(cellActivityBase);
             document.Add(table);
-            document.Add(new Paragraph(70, "\u00a0"));
+            document.Add(new Paragraph(30, "\u00a0"));
             #endregion
             #region TESTS
             int coef = 5;
@@ -967,7 +969,6 @@ namespace web_application_mvc.Controllers
             table.AddCell(cellGradeTaskBase);
             document.Add(table);
             #endregion
-            //document.Add(new Paragraph(70, "\u00a0"));
             document.Close();
             return filename;
         }

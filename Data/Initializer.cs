@@ -35,21 +35,65 @@ namespace Infrastructure.Data
                 Start = DateTime.Now,
                 End = DateTime.Now.AddDays(30)                
             };
+            var group2 = new Group
+            {
+                Description = "402",
+                Department = "Институт прокуратуры",
+                University = "СГЮА",
+                Start = DateTime.Now,
+                End = DateTime.Now.AddDays(40)
+            };
             #endregion
             #region Users
             var student1 = new User
             {
-                Email = "petrov@gmail.com",
+                Email = "belousova@gmail.com",
                 Group = group1,
-                Midname = "Петрович",
-                Name = "Петр",
+                Midname = "Александровна",
+                Name = "Мария",
                 Password = "pass",
                 Phone = "+79022402402",
                 Role = roleStudent,
                 Status = true,
-                Surname = "Петров"
+                Surname = "Белоусова"
             };
             var student2 = new User
+            {
+                Email = "polancev@gmail.com",
+                Group = group1,
+                Midname = "Алексеевич",
+                Name = "Александр",
+                Password = "pass",
+                Phone = "+7902963453",
+                Role = roleStudent,
+                Status = true,
+                Surname = "Полянцев"
+            };
+            var student3 = new User
+            {
+                Email = "maslov@gmail.com",
+                Group = group1,
+                Midname = "Александрович",
+                Name = "Кирилл",
+                Password = "pass",
+                Phone = "+7902535343",
+                Role = roleStudent,
+                Status = true,
+                Surname = "Масленников"
+            };
+            var student4 = new User
+            {
+                Email = "antonov@gmail.com",
+                Group = group1,
+                Midname = "Романович",
+                Name = "Данила",
+                Password = "pass",
+                Phone = "+7934538192",
+                Role = roleStudent,
+                Status = true,
+                Surname = "Антонов"
+            };
+            var student5 = new User
             {
                 Email = "sidorov@gmail.com",
                 Group = group1,
@@ -61,16 +105,341 @@ namespace Infrastructure.Data
                 Status = true,
                 Surname = "Сидров"
             };
+
+            var student6 = new User
+            {
+                Email = "efirova@gmail.com",
+                Group = group1,
+                Midname = "Николаевна",
+                Name = "Таисия",
+                Password = "pass",
+                Phone = "+79271425639",
+                Role = roleStudent,
+                Status = true,
+                Surname = "Эфирова"
+            };
+            var student7 = new User
+            {
+                Email = "komzina@gmail.com",
+                Group = group1,
+                Midname = "Казимировна",
+                Name = "Марфа",
+                Password = "pass",
+                Phone = "+79879512637",
+                Role = roleStudent,
+                Status = true,
+                Surname = "Комзина"
+            };
+            var student8 = new User
+            {
+                Email = "anisimov@gmail.com",
+                Group = group1,
+                Midname = "Прохорович",
+                Name = "Адриан",
+                Password = "pass",
+                Phone = "+79872587485",
+                Role = roleStudent,
+                Status = true,
+                Surname = "Анисимов"
+            };
+            var student9 = new User
+            {
+                Email = "yasaveeva@gmail.com",
+                Group = group1,
+                Midname = "Андрияновна",
+                Name = "Дарья",
+                Password = "pass",
+                Phone = "+79375596478",
+                Role = roleStudent,
+                Status = true,
+                Surname = "Ясавеева"
+            };
+            var student10 = new User
+            {
+                Email = "ganichev@gmail.com",
+                Group = group1,
+                Midname = "Михаилович",
+                Name = "Феликс",
+                Password = "pass",
+                Phone = "+79372254455",
+                Role = roleStudent,
+                Status = true,
+                Surname = "Ганичев"
+            };
+            var student11 = new User
+            {
+                Email = "tarnovezzki@gmail.com",
+                Group = group1,
+                Midname = "Сократович",
+                Name = "Ярослав",
+                Password = "pass",
+                Phone = "+79877415896",
+                Role = roleStudent,
+                Status = true,
+                Surname = "Тарновецкий"
+            };
+            var student12 = new User
+            {
+                Email = "zimnakova@gmail.com",
+                Group = group1,
+                Midname = "Олеговна",
+                Name = "Альбина",
+                Password = "pass",
+                Phone = "+79275696965",
+                Role = roleStudent,
+                Status = true,
+                Surname = "Зимнякова"
+            };
+            var student13 = new User
+            {
+                Email = "alexandrova@gmail.com",
+                Group = group1,
+                Midname = "Василиевна",
+                Name = "Наталья",
+                Password = "pass",
+                Phone = "+79874569878",
+                Role = roleStudent,
+                Status = true,
+                Surname = "Александрова"
+            };
+            var student14 = new User
+            {
+                Email = "galigin@gmail.com",
+                Group = group1,
+                Midname = "Арсениевич",
+                Name = "Константин",
+                Password = "pass",
+                Phone = "+79054569878",
+                Role = roleStudent,
+                Status = true,
+                Surname = "Галыгин"
+            };
+            var student15 = new User
+            {
+                Email = "babanin@gmail.com",
+                Group = group1,
+                Midname = "Геннадиевич",
+                Name = "Олег",
+                Password = "pass",
+                Phone = "+79051259856",
+                Role = roleStudent,
+                Status = true,
+                Surname = "Бабанин"
+            };
+            var student16 = new User
+            {
+                Email = "rodikov@gmail.com",
+                Group = group1,
+                Midname = "Артемович",
+                Name = "Ефрем",
+                Password = "pass",
+                Phone = "+79875526373",
+                Role = roleStudent,
+                Status = true,
+                Surname = "Родиков"
+            };
+            var student17 = new User
+            {
+                Email = "kopeikina@gmail.com",
+                Group = group1,
+                Midname = "Владиленовна",
+                Name = "Евдокия",
+                Password = "pass",
+                Phone = "+79025471494",
+                Role = roleStudent,
+                Status = true,
+                Surname = "Копейкина"
+            };
+            var student18 = new User
+            {
+                Email = "bugaev@gmail.com",
+                Group = group1,
+                Midname = "Ираклиевич",
+                Name = "Эмиль",
+                Password = "pass",
+                Phone = "+79379476854",
+                Role = roleStudent,
+                Status = true,
+                Surname = "Бугаев"
+            };
+            var student19 = new User
+            {
+                Email = "gudkova@gmail.com",
+                Group = group2,
+                Midname = "Юлиевна",
+                Name = "Рада",
+                Password = "pass",
+                Phone = "+79875478532",
+                Role = roleStudent,
+                Status = true,
+                Surname = "Гудкова"
+            };
+            var student20 = new User
+            {
+                Email = "nabadchikov@gmail.com",
+                Group = group2,
+                Midname = "Сергеевич",
+                Name = "Владилен",
+                Password = "pass",
+                Phone = "+79375698512",
+                Role = roleStudent,
+                Status = true,
+                Surname = "Набадчиков"
+            };
+            var student21 = new User
+            {
+                Email = "oskin@gmail.com",
+                Group = group2,
+                Midname = "Платонович",
+                Name = "Павел",
+                Password = "pass",
+                Phone = "+79025478511",
+                Role = roleStudent,
+                Status = true,
+                Surname = "Оськин"
+            };
+            var student22 = new User
+            {
+                Email = "lobov@gmail.com",
+                Group = group2,
+                Midname = "Кондратович",
+                Name = "Евсей",
+                Password = "pass",
+                Phone = "+79059113245",
+                Role = roleStudent,
+                Status = true,
+                Surname = "Лобов"
+            };
+            var student23 = new User
+            {
+                Email = "kribzov@gmail.com",
+                Group = group2,
+                Midname = "Романович",
+                Name = "Валентин",
+                Password = "pass",
+                Phone = "+79875421985",
+                Role = roleStudent,
+                Status = true,
+                Surname = "Скребцов"
+            };
+            var student24 = new User
+            {
+                Email = "borshov@gmail.com",
+                Group = group2,
+                Midname = "Игоревич",
+                Name = "Матвей",
+                Password = "pass",
+                Phone = "+79876659887",
+                Role = roleStudent,
+                Status = true,
+                Surname = "Борщев"
+            };
+            var student25 = new User
+            {
+                Email = "sinizzin@gmail.com",
+                Group = group2,
+                Midname = "Захарович",
+                Name = "Максим",
+                Password = "pass",
+                Phone = "+79056516567",
+                Role = roleStudent,
+                Status = true,
+                Surname = "Синицын"
+            };
+            var student26 = new User
+            {
+                Email = "solovev@gmail.com",
+                Group = group2,
+                Midname = "Сидорович",
+                Name = "Потап",
+                Password = "pass",
+                Phone = "+79370220547",
+                Role = roleStudent,
+                Status = true,
+                Surname = "Соловьев"
+            };
+            var student27 = new User
+            {
+                Email = "habarov@gmail.com",
+                Group = group2,
+                Midname = "Маркович",
+                Name = "Кирилл",
+                Password = "pass",
+                Phone = "+79873665469",
+                Role = roleStudent,
+                Status = true,
+                Surname = "Хабаров"
+            };
+            var student28 = new User
+            {
+                Email = "rataev@gmail.com",
+                Group = group2,
+                Midname = "Георгиевич",
+                Name = "Кирилл",
+                Password = "pass",
+                Phone = "+79875474421",
+                Role = roleStudent,
+                Status = true,
+                Surname = "Ратаев"
+            };
+            var student29 = new User
+            {
+                Email = "shemakin@gmail.com",
+                Group = group2,
+                Midname = "Игоревич",
+                Name = "Григорий",
+                Password = "pass",
+                Phone = "+79373563964",
+                Role = roleStudent,
+                Status = true,
+                Surname = "Шемякин"
+            };
+            var student30 = new User
+            {
+                Email = "skvirzov@gmail.com",
+                Group = group2,
+                Midname = "Игоревич",
+                Name = "Вадим",
+                Password = "pass",
+                Phone = "+79876542181",
+                Role = roleStudent,
+                Status = true,
+                Surname = "Дворцов"
+            };
+            var student31 = new User
+            {
+                Email = "zimin@gmail.com",
+                Group = group2,
+                Midname = "Никитевич",
+                Name = "Вячеслав",
+                Password = "pass",
+                Phone = "+79876595951",
+                Role = roleStudent,
+                Status = true,
+                Surname = "Головко"
+            };
             var curator1 = new User
+            {
+                Email = "zizirev@gmail.com",
+                Group = group2,
+                Midname = "Назарович",
+                Name = "Арсений",
+                Password = "pass",
+                Phone = "+79098521456",
+                Role = roleWorker,
+                Status = true,
+                Surname = "Цызырев"
+            };
+            var curator2 = new User
             {
                 Email = "ivanov@gmail.com",
                 Midname = "Иванович",
-                Name = "Иван",
+                Name = "Дмитрий",
                 Password = "pass",
                 Phone = "+79022402402",
                 Role = roleWorker,
                 Status = true,
-                Surname = "Иванов"
+                Surname = "Михайлович"
             };
             var admin = new User
             {
@@ -85,7 +454,37 @@ namespace Infrastructure.Data
             };
             database.User.Add(student1);
             database.User.Add(student2);
+            database.User.Add(student3);
+            database.User.Add(student4);
+            database.User.Add(student5);
+            database.User.Add(student6);
+            database.User.Add(student7);
+            database.User.Add(student8);
+            database.User.Add(student9);
+            database.User.Add(student10);
+            database.User.Add(student11);
+            database.User.Add(student12);
+            database.User.Add(student13);
+            database.User.Add(student14);
+            database.User.Add(student15);
+            database.User.Add(student16);
+            database.User.Add(student17);
+            database.User.Add(student18);
+            database.User.Add(student19);
+            database.User.Add(student20);
+            database.User.Add(student21);
+            database.User.Add(student22);
+            database.User.Add(student23);
+            database.User.Add(student24);
+            database.User.Add(student25);
+            database.User.Add(student26);
+            database.User.Add(student27);
+            database.User.Add(student28);
+            database.User.Add(student29);
+            database.User.Add(student30);
+            database.User.Add(student31);
             database.User.Add(curator1);
+            database.User.Add(curator2);
             database.User.Add(admin);
             database.SaveChanges();
             #endregion
@@ -99,6 +498,51 @@ namespace Infrastructure.Data
             {
                 Date = DateTime.Now,
                 User = student2
+            });
+            database.Activity.Add(new Activity
+            {
+                Date = DateTime.Now,
+                User = student12
+            });
+            database.Activity.Add(new Activity
+            {
+                Date = DateTime.Now,
+                User = student3
+            });
+            database.Activity.Add(new Activity
+            {
+                Date = DateTime.Now,
+                User = student4
+            });
+            database.Activity.Add(new Activity
+            {
+                Date = DateTime.Now,
+                User = student5
+            });
+            database.Activity.Add(new Activity
+            {
+                Date = DateTime.Now,
+                User = student7
+            });
+            database.Activity.Add(new Activity
+            {
+                Date = DateTime.Now,
+                User = student8
+            });
+            database.Activity.Add(new Activity
+            {
+                Date = DateTime.Now,
+                User = student10
+            });
+            database.Activity.Add(new Activity
+            {
+                Date = DateTime.Now,
+                User = student27
+            });
+            database.Activity.Add(new Activity
+            {
+                Date = DateTime.Now,
+                User = student31
             });
             database.SaveChanges();
             #endregion
@@ -119,7 +563,43 @@ namespace Infrastructure.Data
                 Students = new List<User>
                 {
                     student1,
-                    student2
+                    student2,
+                    student3,
+                    student4,
+                    student5,
+                    student6,
+                    student7,
+                    student8,
+                    student9,
+                    student10,
+                    student11,
+                    student12,
+                    student13,
+                    student14
+                }
+            });
+            database.Curator.Add(new Curator
+            {
+                User = curator2,
+                Students = new List<User>
+                {
+                    student15,
+                    student16,
+                    student17,
+                    student18,
+                    student19,
+                    student20,
+                    student21,
+                    student22,
+                    student23,
+                    student24,
+                    student25,
+                    student26,
+                    student27,
+                    student28,
+                    student29,
+                    student30,
+                    student31
                 }
             });
             database.SaveChanges();
@@ -970,7 +1450,103 @@ namespace Infrastructure.Data
             {
                 Test = test2,
                 User = student2,
+                Value = 0.35
+            });
+            database.Grade.Add(new Grade
+            {
+                Test = test2,
+                User = student3,
+                Value = 0.25
+            });
+            database.Grade.Add(new Grade
+            {
+                Test = test2,
+                User = student5,
+                Value = 0.5
+            });
+            database.Grade.Add(new Grade
+            {
+                Test = test2,
+                User = student6,
                 Value = 0.85
+            });
+            database.Grade.Add(new Grade
+            {
+                Test = test1,
+                User = student7,
+                Value = 1
+            });
+            database.Grade.Add(new Grade
+            {
+                Test = test2,
+                User = student8,
+                Value = 1
+            });
+            database.Grade.Add(new Grade
+            {
+                Test = test2,
+                User = student12,
+                Value = 0.25
+            });
+            database.Grade.Add(new Grade
+            {
+                Test = test2,
+                User = student22,
+                Value = 0.5
+            });
+            database.Grade.Add(new Grade
+            {
+                Test = test2,
+                User = student31,
+                Value = 0.85
+            });
+            database.Grade.Add(new Grade
+            {
+                Test = test1,
+                User = student15,
+                Value = 0.3
+            });
+            database.Grade.Add(new Grade
+            {
+                Test = test1,
+                User = student16,
+                Value = 0.5
+            });
+            database.Grade.Add(new Grade
+            {
+                Test = test2,
+                User = student13,
+                Value = 0.1
+            });
+            database.Grade.Add(new Grade
+            {
+                Test = test1,
+                User = student25,
+                Value = 0.33
+            });
+            database.Grade.Add(new Grade
+            {
+                Test = test2,
+                User = student28,
+                Value = 0.7
+            });
+            database.Grade.Add(new Grade
+            {
+                Test = test2,
+                User = student29,
+                Value = 1
+            });
+            database.Grade.Add(new Grade
+            {
+                Test = test1,
+                User = student24,
+                Value = 1
+            });
+            database.Grade.Add(new Grade
+            {
+                Test = test2,
+                User = student25,
+                Value = 1
             });
             database.SaveChanges();
             #endregion
@@ -990,6 +1566,177 @@ namespace Infrastructure.Data
             {
                 GroupID = 1,
                 SectionID = 3
+            });
+            database.GroupSection.Add(new GroupSection
+            {
+                GroupID = 2,
+                SectionID = 1
+            });
+            database.GroupSection.Add(new GroupSection
+            {
+                GroupID = 2,
+                SectionID = 2
+            });
+            database.GroupSection.Add(new GroupSection
+            {
+                GroupID = 2,
+                SectionID = 3
+            });
+            database.UserTask.Add(new UserTask {
+                TaskID = 1,
+                UserID = 9,
+                Grade = "Хорошо",
+                Answer = "Ответ на вопрос"
+            });
+            database.UserTask.Add(new UserTask
+            {
+                TaskID = 3,
+                UserID = 9,
+                Grade = "Удовлетворительно",
+                Answer = "Ответ на вопрос"
+            });
+            database.UserTask.Add(new UserTask
+            {
+                TaskID = 4,
+                UserID = 15,
+                Grade = "Отлично",
+                Answer = "Ответ на вопрос"
+            });
+            database.UserTask.Add(new UserTask
+            {
+                TaskID = 5,
+                UserID = 15,
+                Grade = "Хорошо",
+                Answer = "Ответ на вопрос"
+            });
+            database.UserTask.Add(new UserTask
+            {
+                TaskID = 5,
+                UserID = 16,
+                Grade = "Хорошо",
+                Answer = "Ответ на вопрос"
+            });
+            database.UserTask.Add(new UserTask
+            {
+                TaskID = 1,
+                UserID = 25,
+                Grade = "Отлично",
+                Answer = "Ответ на вопрос"
+            });
+            database.UserTask.Add(new UserTask
+            {
+                TaskID = 1,
+                UserID = 9,
+                Grade = "Удовлетворительно",
+                Answer = "Ответ на вопрос"
+            });
+            database.UserTask.Add(new UserTask
+            {
+                TaskID = 3,
+                UserID = 29,
+                Grade = "Отлично",
+                Answer = "Ответ на вопрос"
+            });
+            database.UserTask.Add(new UserTask
+            {
+                TaskID = 4,
+                UserID = 29,
+                Grade = "Хорошо",
+                Answer = "Ответ на вопрос"
+            });
+            database.UserTask.Add(new UserTask
+            {
+                TaskID = 5,
+                UserID = 29,
+                Grade = "Отлично",
+                Answer = "Ответ на вопрос"
+            });
+
+            database.UserTask.Add(new UserTask
+            {
+                TaskID = 1,
+                UserID = 3,
+                Grade = "Хорошо",
+                Answer = "Ответ на вопрос"
+            });
+            database.UserTask.Add(new UserTask
+            {
+                TaskID = 3,
+                UserID = 3,
+                Grade = "Удовлетворительно",
+                Answer = "Ответ на вопрос"
+            });
+            database.UserTask.Add(new UserTask
+            {
+                TaskID = 4,
+                UserID = 3,
+                Grade = "Отлично",
+                Answer = "Ответ на вопрос"
+            });
+            database.UserTask.Add(new UserTask
+            {
+                TaskID = 5,
+                UserID = 3,
+                Grade = "Отлично",
+                Answer = "Ответ на вопрос"
+            });
+
+            database.UserTask.Add(new UserTask
+            {
+                TaskID = 1,
+                UserID = 18,
+                Grade = "Хорошо",
+                Answer = "Ответ на вопрос"
+            });
+            database.UserTask.Add(new UserTask
+            {
+                TaskID = 3,
+                UserID = 18,
+                Grade = "Удовлетворительно",
+                Answer = "Ответ на вопрос"
+            });
+            database.UserTask.Add(new UserTask
+            {
+                TaskID = 4,
+                UserID = 18,
+                Grade = "Отлично",
+                Answer = "Ответ на вопрос"
+            });
+            database.UserTask.Add(new UserTask
+            {
+                TaskID = 5,
+                UserID = 18,
+                Grade = "Удовлетворительно",
+                Answer = "Ответ на вопрос"
+            });
+
+            database.UserTask.Add(new UserTask
+            {
+                TaskID = 1,
+                UserID = 7,
+                Grade = "Отлично",
+                Answer = "Ответ на вопрос"
+            });
+            database.UserTask.Add(new UserTask
+            {
+                TaskID = 3,
+                UserID = 7,
+                Grade = "Удовлетворительно",
+                Answer = "Ответ на вопрос"
+            });
+            database.UserTask.Add(new UserTask
+            {
+                TaskID = 4,
+                UserID = 7,
+                Grade = "Хорошо",
+                Answer = "Ответ на вопрос"
+            });
+            database.UserTask.Add(new UserTask
+            {
+                TaskID = 5,
+                UserID = 7,
+                Grade = "Неудовлетворительно",
+                Answer = "Ответ на вопрос"
             });
             database.SaveChanges();
             #endregion

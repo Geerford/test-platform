@@ -421,7 +421,6 @@ namespace Infrastructure.Data
             var curator1 = new User
             {
                 Email = "zizirev@gmail.com",
-                Group = group2,
                 Midname = "Назарович",
                 Name = "Арсений",
                 Password = "pass",

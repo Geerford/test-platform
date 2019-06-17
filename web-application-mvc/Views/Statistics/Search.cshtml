@@ -84,16 +84,28 @@ else
                         @Html.ActionLink(item.Group.Description, "Details", "Groups", new { id = item.Group.ID }, null)
                     </td>
                 }
+                else
+                {
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                }
                 @if (item.CurrentCurator != null)
                 {
                     <td>
                         @Html.ActionLink(item.CurrentCurator.User.Name, "Details", "Users", new { id = item.CurrentCurator.User.ID }, null)
                         @Html.ActionLink(item.CurrentCurator.User.Surname, "Details", "Users", new { id = item.CurrentCurator.User.ID }, null)
                     </td>
+                    <td>
+                        @Html.ActionLink("Статистика", "Report", "Statistics", new { id = item.ID }, null)
+                    </td>
                 }
-                <td>
-                    @Html.ActionLink("Статистика", "Report", "Statistics", new { id = item.ID }, null)
-                </td>
+                else
+                {
+                    <td></td>
+                    <td></td>
+                }
+
             </tr>
         }
     </table>

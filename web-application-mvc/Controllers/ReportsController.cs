@@ -71,17 +71,15 @@ namespace web_application_mvc.Controllers
         // GET: Reports/Create
         public ActionResult Create()
         {
-            Dictionary<string, string> templates = new Dictionary<string, string>();
-            foreach(var item in templateService.GetAll())
-            {
-                templates.Add(item.Description, "");
-            }
-            ReportTemplateViewModel model = new ReportTemplateViewModel
-            {
-                Templates = templates
-            };
-            ViewBag.ID = new SelectList(userService.GetAll().Where(x => x.Role.Value.Equals("Студент")), "ID", "Surname");
-            return View(model);
+            ViewBag.ID = new SelectList(userService.GetAll()
+                .Where(x => x.Role.Value.Equals("Студент"))
+                .Select(s => new
+                {
+                    s.ID,
+                    Surname = $"{s.Surname} {s.Name}"
+                })
+                .OrderBy(y => y.Surname), "ID", "Surname");
+            return View();
         }
 
         // POST: Reports/Create
@@ -98,37 +96,6 @@ namespace web_application_mvc.Controllers
                 }
                 
                 var student = userService.Get(report.ID);
-
-                //List<Grade> grades = gradeService.GetAll().Where(x => x.UserID == report.ID).ToList();
-                //List<Test> tests = new List<Test>();
-                //foreach (var section in groupSectionService.GetAll().Where(x => x.GroupID == student.GroupID))
-                //{
-                //    tests.AddRange(testService.GetAll().Where(x => x.SectionID == section.SectionID));
-                //}
-                //double gradeAVG = grades.Select(y => y.Value).Sum() / tests.Count;
-
-                //List<UserTask> taskGrades = userTaskService.GetAll().Where(x => x.UserID == report.ID).ToList();
-                //List<Task> tasks = new List<Task>();
-                //foreach (var section in groupSectionService.GetAll().Where(x => x.GroupID == student.GroupID))
-                //{
-                //    tasks.AddRange(taskService.GetAll().Where(x => x.SectionID == section.SectionID));
-                //}
-                //double gradeTaskAVG = taskGrades.Select(y =>
-                //{
-                //    switch (y.Grade)
-                //    {
-                //        case "Отлично":
-                //            return 1;
-                //        case "Хорошо":
-                //            return 0.75;
-                //        case "Удовлетворительно":
-                //            return 0.5;
-                //        case "Неудовлетворительно":
-                //            return 0.25;
-                //        default:
-                //            return 0;
-                //    }
-                //}).Sum() / tasks.Count;
 
                 #region Activity
                 double period = (student.Group.End - student.Group.Start).TotalDays;
@@ -209,10 +176,9 @@ namespace web_application_mvc.Controllers
                 }
                 #endregion
 
-
                 Report result = new Report
                 {
-                    Link = CreatePDF(student, gradesTests, gradesTasks, percent, report.Templates, activities)
+                    Link = CreatePDF(student, gradesTests, gradesTasks, percent, report.Review, activities)
                 };
                 var oldReport = student.Report;
                 student.Report = result;
@@ -220,19 +186,6 @@ namespace web_application_mvc.Controllers
                 if(oldReport != null && oldReport.ID != 0)
                 {
                     reportService.Delete(oldReport);
-                }
-                foreach (var item in reportQAService.GetAll().Where(x => x.ReportID == report.ReportID).ToList())
-                {
-                    reportQAService.Delete(item);
-                }
-                foreach (var item in report.Templates)
-                {
-                    reportQAService.Create(new ReportQA
-                    {
-                        Description = item.Value,
-                        ReportID = result.ID,
-                        TemplateID = templateService.GetAll().Where(x => x.Description.Equals(item.Key)).FirstOrDefault().ID
-                    });
                 }
                 return RedirectToAction("Index");
             }
@@ -334,17 +287,11 @@ namespace web_application_mvc.Controllers
             {
                 return HttpNotFound();
             }
-            Dictionary<string, string> templates = new Dictionary<string, string>();
-            foreach (var item in templateService.GetAll())
-            {
-                templates.Add(item.Description, "");
-            }
             ReportTemplateViewModel model = new ReportTemplateViewModel
             {
                 ID = report.User.ID,
                 ReportID = report.ID,
-                ReportLink = report.Link,
-                Templates = templates
+                ReportLink = report.Link
             };
             ViewBag.ID = new SelectList(userService.GetAll().Where(x => x.Role.Value.Equals("Студент")), "ID", "Surname");
             return View(model);
@@ -444,24 +391,11 @@ namespace web_application_mvc.Controllers
                 Report result = new Report
                 {
                     ID = report.ReportID,
-                    Link = CreatePDF(student, gradesTests, gradesTasks, percent, report.Templates, activities)
+                    Link = CreatePDF(student, gradesTests, gradesTasks, percent, report.Review, activities)
                 };
                 student.Report = result;
                 userService.Edit(student);
                 reportService.Delete(reportService.Get(report.ReportID));
-                foreach (var item in reportQAService.GetAll().Where(x => x.ReportID == report.ReportID).ToList())
-                {
-                    reportQAService.Delete(item);
-                }
-                foreach (var item in report.Templates)
-                {
-                    reportQAService.Create(new ReportQA
-                    {
-                        Description = item.Value,
-                        ReportID = result.ID,
-                        TemplateID = templateService.GetAll().Where(x => x.Description.Equals(item.Key)).FirstOrDefault().ID
-                    });
-                }
                 return RedirectToAction("Index");
             }
             ViewBag.ID = new SelectList(userService.GetAll().Where(x => x.Role.Value.Equals("Студент")), "ID", "Surname");
@@ -609,7 +543,7 @@ namespace web_application_mvc.Controllers
         }
 
         #region PDF
-        private string CreatePDF(User student, Dictionary<Test, double> tests, Dictionary<Task, double> tasks, double percent, Dictionary<string, string> templates, List<Activity> activities)
+        private string CreatePDF(User student, Dictionary<Test, double> tests, Dictionary<Task, double> tasks, double percent, string review, List<Activity> activities)
         {
             var document = new Document(PageSize.A4, 15, 15 , 20, 15);
             string filename = System.Guid.NewGuid().ToString() + ".pdf";
@@ -656,65 +590,6 @@ namespace web_application_mvc.Controllers
             });
             #endregion
             PdfPTable table;
-            #region Templates
-            int count = 0;
-            foreach(var item in templates)
-            {
-                if (!string.IsNullOrEmpty(item.Value))
-                {
-                    ++count;
-                }
-            }
-            if(count > 0)
-            {
-                document.Add(new Paragraph(new Phrase($"Отзыв от предприятия", fontHeader))
-                {
-                    Alignment = Element.ALIGN_CENTER
-                });
-                document.Add(new Paragraph(10, "\u00a0"));
-                table = new PdfPTable(2)
-                {
-                    WidthPercentage = 90,
-                };
-                table.DefaultCell.BorderWidth = 0;
-                table.DefaultCell.HasBorder(iTextSharp.text.Rectangle.NO_BORDER);
-                PdfPCell cellHeader1 = new PdfPCell(new Phrase("Критерий", fontHeader))
-                {
-                    Padding = 2,
-                    HorizontalAlignment = Element.ALIGN_CENTER,
-                    VerticalAlignment = Element.ALIGN_MIDDLE
-                };
-                table.AddCell(cellHeader1);
-                PdfPCell cellHeader2 = new PdfPCell(new Phrase("Отзыв", fontHeader))
-                {
-                    Padding = 2,
-                    HorizontalAlignment = Element.ALIGN_CENTER,
-                    VerticalAlignment = Element.ALIGN_MIDDLE
-                };
-                table.AddCell(cellHeader2);
-                foreach (var template in templates)
-                {
-                    if (!string.IsNullOrEmpty(template.Value))
-                    {
-                        PdfPCell cellTemplate = new PdfPCell(new Phrase(template.Key, fontBase))
-                        {
-                            Padding = 10,
-                            HorizontalAlignment = Element.ALIGN_LEFT,
-                            VerticalAlignment = Element.ALIGN_MIDDLE
-                        };
-                        table.AddCell(cellTemplate);
-                        PdfPCell cellAnswer = new PdfPCell(new Phrase(template.Value, fontBase))
-                        {
-                            Padding = 10,
-                            HorizontalAlignment = Element.ALIGN_JUSTIFIED,
-                            VerticalAlignment = Element.ALIGN_MIDDLE
-                        };
-                        table.AddCell(cellAnswer);
-                    }                    
-                }
-                document.Add(table);
-            }            
-            #endregion
             #region Activities
             document.Add(new Paragraph(new Phrase($"Посещаемость", fontHeader))
             {
@@ -973,6 +848,32 @@ namespace web_application_mvc.Controllers
             };
             table.AddCell(cellGradeTaskBase);
             document.Add(table);
+            #endregion
+            #region Templates
+            if (!string.IsNullOrEmpty(review))
+            {
+                document.Add(new Paragraph(new Phrase($"Отзыв руководителя практики", fontHeader))
+                {
+                    Alignment = Element.ALIGN_CENTER
+                });
+                document.Add(new Paragraph(10, "\u00a0"));
+                table = new PdfPTable(1)
+                {
+                    WidthPercentage = 90,
+                };
+                table.DefaultCell.BorderWidth = 0;
+                table.DefaultCell.HasBorder(iTextSharp.text.Rectangle.NO_BORDER);
+                PdfPCell cellAnswer = new PdfPCell(new Phrase(review, fontBase))
+                {
+                    Padding = 10,
+                    HorizontalAlignment = Element.ALIGN_JUSTIFIED,
+                    VerticalAlignment = Element.ALIGN_MIDDLE,
+                    Border = iTextSharp.text.Rectangle.NO_BORDER,
+                    BorderWidth = 0
+                };
+                table.AddCell(cellAnswer);
+                document.Add(table);
+            }
             #endregion
             document.Close();
             return filename;

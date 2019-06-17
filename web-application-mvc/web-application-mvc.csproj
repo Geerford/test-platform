@@ -299,6 +299,7 @@
     <Content Include="Content\Uploads\b443c69d-b793-46f4-8886-33cc45047cf8.pdf" />
     <Content Include="Content\Uploads\b953c69d-b793-46f4-8886-33cc45047cf8.pdf" />
     <Content Include="Content\Uploads\d1682315-c188-4c98-a44f-4af8ba239c1c.pdf" />
+    <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
     <Content Include="Scripts\jquery-3.3.1.min.js" />

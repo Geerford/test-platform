@@ -1,5 +1,4 @@
 ﻿using Core;
-using System.Collections.Generic;
 
 namespace web_application_mvc.Models
 {
@@ -11,7 +10,7 @@ namespace web_application_mvc.Models
 
         public int ID { get; set; } 
 
-        public Dictionary<string, string> Templates { get; set; }
+        public string Review { get; set; } 
     }
 
     public class ReportGroupViewModel

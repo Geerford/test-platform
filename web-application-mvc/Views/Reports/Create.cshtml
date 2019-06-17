@@ -15,16 +15,13 @@
         </div>
         <div class="col-md-3"></div>
     </div>
-    @foreach (var item in Model.Templates)
-    {
-        <div class="form-group">
-            <label class="dark-blue control-label col-md-5" for=@item.Key>@item.Key</label>
-            <div class="col-md-4">
-                @Html.TextAreaFor(model => model.Templates[item.Key], new { @class = "form-control" })
-            </div>
-            <div class="col-md-3"></div>
+    <div class="form-group">
+        @Html.Label("Отзыв куратора", new { @class="dark-blue control-label col-md-5"})
+        <div class="col-md-4">
+            @Html.TextAreaFor(model => model.Review)
         </div>
-    }
+        <div class="col-md-3"></div>
+    </div>
 
     <div class="form-group">
         <div class="col-md-9"></div>
